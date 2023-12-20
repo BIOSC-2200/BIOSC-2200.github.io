@@ -25,37 +25,33 @@ library(dplyr)
 
 This document demonstrates some basic [webr](https://docs.r-wasm.org/webr/latest/) functionality.
 
-The data below are the first 10 of `r nrow(faithful)` sequential eruptions of the geyser Old Faithful in Yellowstone National Park.
 
-![](https://upload.wikimedia.org/wikipedia/commons/8/80/OldFaithful1948.jpg)
+## Timing of Old Faithful eruptions
+
+![](https://upload.wikimedia.org/wikipedia/commons/8/80/OldFaithful1948.jpg){fig-align="center" width="25%"}
+
+The data below show the first 10 of `r nrow(faithful)` sequential eruptions of the geyser Old Faithful in Yellowstone National Park^[Data from Härdle, W. (1991). Smoothing Techniques with Implementation in S. New York: Springer.].
 
 ```{r}
 faithful |> slice(1:10)
 ```
 
-The column `eruptions` represents the duration of the eruption in minutes. The column `waiting` represents the time until the next eruption.
+The column labeled `eruptions` represents the duration of the eruption in minutes. The column labeled `waiting` represents the time until the next eruption in minutes.
+
+We will start by exploring the waiting time for eruptions using a histogram. Histograms divide the data into a set number of groups (`bins`) and count up the number of observations (here, waiting times between eruptions). Depending on the number of bins, the resulting plot can take on different appearances, showing less (lower number of bins) or more (higher number of bins) detail.
+
+The code below will create a histogram of `waiting` times with the data divided into 5 bins. Click the button "Run code".
 
 ```{webr-r}
-p <- mtcars |> 
-   ggplot(aes(x = wt, y = mpg, color = factor(cyl))) + 
-   geom_point(shape = 21)
-
-p
+ggplot(faithful, aes(waiting)) +
+  geom_histogram(bins = 5, fill = "navy") +
+  labs(x = "Waiting time (min)", y = "Count") +
+  theme_light()
 ```
 
-We can modify this base graph (stored as the variable `p`), for instance by changing the background from grey to white. 
-```{webr-r}
-p + theme_minimal()
-```
+> What pattern(s) do you observe? Are there times where counts seem to be high, indicating that there are more eruptions with that waiting time?
 
-Now, replace the text in the previous cell to read: 
+- Try changing the code `bins = 5` to `bins = 10` by editing the code block above. Click the button "Run code" to remake the plot.
+- Try other values for `bins`: 20, 50, 100. Each time you edit the code, click the "Run code" button.
 
-```{r}
-#| eval: false
-
-p + 
-  labs(title = "Title", x = "Weight", y = "Miles-per-gallon") +
-  theme_minimal()
-```
-
-(You can click the clipboard icon at the upper-right of the cell above to copy its text) and click `Run Code` again.
+> Was your hypothesis about the distribution of waiting times between eruptions correct? Did you find a number of bins to divide the data into that you think best represented the distribution of waiting times?
