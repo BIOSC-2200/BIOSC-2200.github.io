@@ -1,7 +1,6 @@
 ---
 title: "webr-demo"
 engine: knitr
-author: 'Jeffrey M. Perkel'
 date: 'today'
 format: 
   html: 
@@ -13,16 +12,28 @@ filters:
 ---
 
 ```{r}
-#| label: setup
 #| echo: false
+#| message: false
+#| warning: false
 
 library(ggplot2)
+library(dplyr)
 ```
 
 
 ## WebR
 
-This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, allows users to create Quarto documents with code that runs at runtime instead of during document rendering. 
+This document demonstrates some basic [webr](https://docs.r-wasm.org/webr/latest/) functionality.
+
+The data below are the first 10 of `r nrow(faithful)` sequential eruptions of the geyser Old Faithful in Yellowstone National Park.
+
+![](https://upload.wikimedia.org/wikipedia/commons/8/80/OldFaithful1948.jpg)
+
+```{r}
+faithful |> slice(1:10)
+```
+
+The column `eruptions` represents the duration of the eruption in minutes. The column `waiting` represents the time until the next eruption.
 
 ```{webr-r}
 p <- mtcars |> 
@@ -48,12 +59,3 @@ p +
 ```
 
 (You can click the clipboard icon at the upper-right of the cell above to copy its text) and click `Run Code` again.
-
-```{r}
-#| echo: false
-
-mtcars |> 
-   ggplot(aes(x = wt, y = mpg, color = factor(cyl))) + 
-   geom_point(shape = 21)
-```
-
