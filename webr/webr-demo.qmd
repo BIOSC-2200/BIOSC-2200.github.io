@@ -12,6 +12,14 @@ filters:
   - webr
 ---
 
+```{r}
+#| label: setup
+#| echo: false
+
+library(ggplot2)
+```
+
+
 ## WebR
 
 This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, allows users to create Quarto documents with code that runs at runtime instead of during document rendering. 
@@ -40,3 +48,12 @@ p +
 ```
 
 (You can click the clipboard icon at the upper-right of the cell above to copy its text) and click `Run Code` again.
+
+```{r}
+#| echo: false
+
+mtcars |> 
+   ggplot(aes(x = wt, y = mpg, color = factor(cyl))) + 
+   geom_point(shape = 21)
+```
+
