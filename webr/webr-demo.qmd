@@ -5,7 +5,7 @@ date: 'today'
 format: 
   html: 
     self-contained: true
-    css: custom.css
+    css: ../custom.css
 webr: 
   packages: ['ggplot2', 'dplyr']
 filters: 
