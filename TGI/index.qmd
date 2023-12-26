@@ -1,7 +1,6 @@
 ---
 title: "Transmission of Genetic Information"
 engine: knitr
-date: "Spring 2024"
 format: 
   html: 
     self-contained: true
@@ -22,44 +21,49 @@ library(dplyr)
 ```
 
 
-## WebR
-
-This document demonstrates some basic [webr](https://docs.r-wasm.org/webr/latest/) functionality.
+## Overview
 
 
-## Timing of Old Faithful eruptions
+## Learning Objectives
 
-![](http://jacksonhole-traveler-production.s3.amazonaws.com/wp-content/uploads/2014/05/old-faithful-4OFS1059-1280x853.jpg){fig-align="center" width="50%"}
-
-The data below show the first 10 of `r nrow(faithful)` sequential eruptions of the geyser Old Faithful in Yellowstone National Park^[Data from Härdle, W. (1991). Smoothing Techniques with Implementation in S. New York: Springer.].
-
-```{r}
-faithful |> slice(1:10)
-```
-
-The column labeled `eruptions` represents the duration of the eruption in minutes. The column labeled `waiting` represents the time until the next eruption in minutes.
-
-We will start by exploring the waiting time for eruptions using a histogram. Histograms divide the data into a set number of groups (`bins`) and count up the number of observations (here, waiting times between eruptions). Depending on the number of bins, the resulting plot can take on different appearances, showing less (lower number of bins) or more (higher number of bins) detail.
-
-The code below will create a histogram of `waiting` times with the data divided into 5 bins. Click the button "Run Code".
-
-```{webr-r}
-ggplot(faithful, aes(waiting)) +
-  geom_histogram(bins = 5, fill = "navy") +
-  labs(x = "Waiting time (min)", y = "Count") +
-  theme_light()
-```
-
-> What pattern(s) do you observe? Are there waiting times where counts seem to be particularly high, indicating that there are more eruptions with that waiting time?
-
-<br/>
-<br/>
-
-- Try changing the code `bins = 5` to `bins = 10` by editing the code block above. Click the button "Run Code" to remake the plot.
-- Try other values for `bins`: 20, 50, 100. Each time you edit the code, click the "Run Code" button.
+- Calculate the probability of a particular gamete being produced from an individual, assuming independent assortment.
+- Calculate the probability of a particular genotype in the offspring for 1-3 genes, given independent assortment and random fertilization between two individuals.
+- Design genetic crosses to provide information about genes, alleles, and gene functions.
+- Use a Chi-squared test to determine how well data from a genetic cross fits theoretical predictions.
+- Explain how sample size is related to the certainty of estimates (CIs, Chi-squared test).
 
 
-> Was your hypothesis about the distribution of waiting times between eruptions correct? Did you find a number of bins to divide the data into that you think best represented the distribution of waiting times?
+## Review of independent assortment
 
-<br/>
-<br/>
+Leads to predictable probabilities
+
+
+## Probability
+
+Blood types (3 alleles + [co]dominance) and Rh factors are independent
+
+Proportions as probabilities and proportions as probabilities
+
+
+## What is a confidence interval?
+
+
+## Confidence intervals for proportions
+
+Effect of sample size on CIs
+
+
+## Chi-squared test
+
+Statistical test in reverse – significant test is a lack of fit
+
+
+## Using a Chi-squared test
+
+Days of birth
+
+> What is your prediction?
+
+
+## Case study: Detecting a recessive muscle mutation in mice
+
