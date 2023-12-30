@@ -1,4 +1,11 @@
 .blockquote {
   color: darkgreen;
   font-weight: bold;
+  background-color: lightgray;
+    border: 2px solid darkgreen;
+}
+
+.references {
+  padding-left: 50px ;
+  text-indent: -50px ;
 }
