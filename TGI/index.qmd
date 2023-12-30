@@ -46,7 +46,7 @@ ggplot2::theme_set(ggplot2::theme_light())
 
 Many topics within the study of genetics have a strong link to numerical or quantitative analysis. Long before the identification of DNA as the primary carrier of genetic information, both scientists and non-scientists were conducting breeding experiments. Initially these "experiments" had the goal of domesticating animals for human benefits (e.g., cattle, pigs, goats, dogs). Although not true experiments as we know them today, the end result of those efforts played a large part in the rise of agriculture and civilizations.
 
-At least ten of thousand years passed before the investigations of predictable breeding phenotypes in pea plants by Gregor Mendel (1822-1884), which ultimately led to modern genetics. The study of genetics during the first half of the 20th century was carried out without an understanding of the structure of DNA. Even without this specific knowledge, scientists were able to make great strides in understanding the patterns of evolution in populations. Much of this research was aided by simultaneous advances in statistics during the same time period, which in many cases were being developed to help make sense of the vast array of data that was being collected. 
+At least ten thousand years passed before the investigations of predictable breeding phenotypes in pea plants by Gregor Mendel (1822-1884), which ultimately led to modern genetics. The study of genetics during the first half of the 20th century was carried out without an understanding of the structure of DNA. Even without this specific knowledge, scientists were able to make great strides in understanding the patterns of evolution in populations. Much of this research was aided by simultaneous advances in statistics during the same time period, which in many cases were being developed to help make sense of the vast array of data that was being collected. 
 
 We have developed these exercises to give you an introduction to some of the statistical approaches that are used in the study of genetics. We hope that you will use these to further develop your understanding of topics in genetics that you are covering in lecture and that you will begin to gain some intuition about the the methods used to test hypotheses. Some of you might even wish to go deeper into understanding the math and computer code behind these exercises.
 
@@ -95,7 +95,7 @@ These code blocks will look like this, with a "Run Code" button:
 2 + 2
 ```
 
-Clicking the "Run Code" button will cause R to run the code and print the result (`4`). The simplest example is to just use R as a fancy calculator. If you haven't already, click "Run Code" above.
+Clicking the "Run Code" button will cause R to run the code and print the result (in this case `4` -- not very interesting, but we have to start somewhere). The simplest example is to just use R as a fancy calculator. If you haven't already, click "Run Code" above.
 
 Feel free to try different values and different operators (`+`, `-`, `*`, `/`, `^`). You can't break anything. The worst that will happen is that you will get a syntax error. Execute the code below to see what a syntax error looks like.
 
@@ -113,43 +113,43 @@ The learning objectives for this exercise are:
 - Calculate the probability of a particular gamete being produced from an individual, assuming independent assortment.
 - Calculate the probability of a particular genotype in the offspring, given independent assortment and random fertilization between two individuals.
 - Design genetic crosses to provide information about genes, alleles, and gene functions.
-- Use a Chi-squared test to determine how well data from a genetic cross fits theoretical predictions.
-- Explain how sample size is related to the certainty of estimates (CIs, Chi-squared test).
+- Use a chi-squared test to determine how well data from a genetic cross fits theoretical predictions.
+- Explain how sample size is related to the certainty of a chi-squared test.
 
 
 ## Review of Inheritance
 
-When gametes are produced, each gamete receives a single copy of each gene. Because each of the F~1~ parents has two copies, there are four possible alleles that can be passed on (for example two copies of *D* and two copies of *d* in @fig-punnett). A Punnett square can be used to enumerate the possible genotypic combinations that result from the proposed cross. By joining the genes from each parent, the resulting possible offspring genotypes can be determined. These genotypes can be converted into phenotypes if the nature of dominance of the alleles in known (@fig-punnett).
+When gametes are produced, each gamete receives a single copy of each gene. Because each of the F~1~ parents has two copies, there are four possible alleles that can be passed on (for example two copies of *D* and two copies of *d* in @fig-punnett). A Punnett square can be used to enumerate the possible genotype combinations that result from the proposed cross. By joining the genes from each parent, the resulting possible offspring genotypes can be determined. These genotypes can be converted into phenotypes if the nature of dominance of the alleles in known (@fig-punnett). In this example the *D* allele for the "tall" phenotype is dominant relative to the *d* allele.
 
 ![The process of gamete formation leads to predictable genotypic and phenotypic proportions in the F~2~ generation. Image modified from Klug et al. [-@Klug2019-cs]](../images/punnett.png){fig-alt="" #fig-punnett}
 
-The 1:2:1 genotypic ratio and 3:1 phenotypic ratio in the hererozygote cross example above represent theoretical probabilities for the distributions of genotypes and phenotypes. These ratios can be tested statistically to determine if a sample deviates significantly from the expected proportions.
+The 1:2:1 genotypic ratio and 3:1 phenotypic ratio in the heterozygote cross example above represent theoretical probabilities for the distributions of genotypes and phenotypes. These ratios can be tested statistically to determine if a sample deviates significantly from the expected proportions. The exercises that follow will allow you explore the statistics of genetics and give you some practice testing whether observations follow the predicted patterns. 
 
 
 ## Proportions and Probabilities
 
-When thinking about genotypes and phenotypes, it is often useful to sometimes think of counts as proportions and sometimes as probabilities. The 1:2:1 genotypic ratio can equally be thought of as 
+When thinking about genotypes and phenotypes, it can be useful to sometimes think of counts as *proportions* and sometimes as *probabilities.* The 1:2:1 genotypic ratio above can be thought of as 
 
-1. *Porportions*: 1/4 *DD*, 2/4 *Dd*, and 1/4 *dd*
+1. *Proportions*: 1/4 *DD*, 2/4 *Dd*, and 1/4 *dd*
 2. *Percentages*: 25% *DD*, 50% *Dd*, and 25% *dd*
 3. *Probabilities*: 0.25 *DD*, 0.5 *Dd*, and 0.25 *dd*
 
-This set of proportions and probabilities all sum to one and represents the full range of possible combinations.
+All are equal and mean the same thing. In some contexts, using one vs. another makes more sense. This set of proportions and probabilities all sum to one and represents the full range of possible combinations.
 
 Probabilities are very predictable in the long run but are often unpredictable in the short run. Consider only one gamete being produced, say a sperm. Each sperm that is produced from a heterozygote *Dd* can carry either the *D* or *d* allele.
 
-We can simulate the production of a single sperm with the following code. First we create an object that holds the possible `allele`s. The code `sample(allele, size = 1)` randomly samples 1 of the possible alleles. Run this code a few times to see the first few gametes produced.
+We can simulate the production of a single sperm with the following code. First we create an object that holds the possible `allele`s: "D" and "d". The code `sample(allele, size = 1)` randomly samples 1 of the possible alleles. Run this code a few times to see the first few gametes produced.
 
 ```{webr-r}
 allele <- c("D", "d")
 sample(allele, size = 1)
 ```
 
-You probably noticed that, quite often, sequences of *D* or *d* were produced.
+You probably noticed that, quite often, sequences of two or more *D* or *d* were produced randomly.
 
-The code block below repeats this sampling process 10 times and counts up the numbers of *D* and *d* gametes produced. `replicate()` generates the samples and `table()` counts.
+The code block below repeats this sampling process 10 times and counts up the numbers of *D* and *d* gametes produced. The function `replicate()` generates the samples and `table()` counts *D*s and *d*s.
 
-> How many *D* and *d* gametes do you predict? How confident are you in your answer?
+> How many *D* and *d* gametes do you predict from a total of 10? How confident are you in your answer?
 
 <textarea rows="2" cols="75">
 Enter your prediction here.
@@ -164,7 +164,7 @@ Run the code a few times to generate new samples of 10 gametes. Revisit your pre
 
 Now gradually increase the number of gametes produced by changing `n = 10` to `n = 50`, `n = 100`, etc.
 
-> What happens to the relative counts of *D* and *d* as `n` increases? What does this tell you about our ability to predict the exact counts either when sample sizes are small or when sample sizes are large? In general, how often do you see exactly 50% *D* and 50% *d*?
+> What happens to the relative counts of *D* and *d* as `n` increases? What does this tell you about our ability to predict the exact counts either when sample sizes are small *or* when sample sizes are large? In general, how often do you see exactly 50% *D* and 50% *d*?
 
 <textarea rows="3" cols="75">
 
@@ -181,29 +181,28 @@ Blood typing in humans primarily uses the ABO system, although almost 30 other b
 
 A and/or B refer to the presence of A and/or B antigens of the surface of the red blood cells. O denotes the absence of both A and B antigens. The [American Red Cross](https://www.redcrossblood.org/donate-blood/blood-types.html) has a website with animations about what blood types are compatible with other blood types. In general, A must be matched with A and B with B or a cross-reaction will take place. Because type O blood lacks both A and B antigens, it is considered a "universal donor". And because type AB blood has both A and B antigens, it is considered a "universal recipient".
 
-
 @fig-ABOgenes shows the Punnett square for human blood types. Each parent can provide alleles for A, B, or no antigens (O), leading to a complex 1:2:1:1:1:2:1 ratio.
 
 ![The Punnett square for human ABO alleles and associated blood types. Image from [learn.genetics](https://learn.genetics.utah.edu/)](https://learn-genetics.b-cdn.net/basics/blood/images/inherit.png){width=50% fig-align="center" fig-alt="" #fig-ABOgenes}
 
-The right side of @fig-ABOgenes shows the blood phenotypes (i.e., phenotypes) associated with each of the possible genotypes. Although there are 7 possible genotypes, there are only 4 possible blood types: A, B, AB, and O.
+The right side of @fig-ABOgenes shows the blood types (i.e., phenotypes) associated with each of the possible genotypes. Although there are 7 possible genotypes, there are only 4 possible blood types: A, B, AB, and O.
 
-You may have wondered why there is no type AO or BO blood and how type AB blood is produced. 
+Looking at the figure, you may have wondered (1) why there is no type AO or BO blood and (2) how type AB blood is produced. 
 
 1. Because the O allele has no associated antigen, an individual with A+O alleles will have type A blood and an individual with B+O will have type B blood (the same is true for O+A and O+B). So we can say that A and B are **dominant** with respect to O.
-2. Because the A and B alleles produce A and B antigens, respectively, an individual with A+B or B+A will have type AB blood. The A and B alleles are thus **codominant**.
+2. Because the A and B alleles produce A and B antigens, respectively, an individual with A+B or B+A will have type AB blood. The A and B alleles are thus **co-dominant**.
 
 
 ### Rh Factor
 
-Another important feature of red blood cells that is important for transplant medicine and the Rh factor. Blood's Rh factor is more complicated than the ABO system, with approximately 50 different antigens involved [@Dean2005-dm]. Because a few proteins are most commonly involved, this system can be summarized and *Rh+* and *Rh-* (Rh-positive and Rh-negative). 
+Another important feature of red blood cells that is important for transplant medicine is the Rh factor. The genetics of Rh factor is much more complicated than the ABO system, with approximately 50 different proteins involved [@Dean2005-dm]. Because a few proteins are most commonly involved, this system can be summarized as *Rh+* and *Rh-* (Rh-positive and Rh-negative) without going into all the details. 
 
-ABO type and Rh factor are determined by separate genes, meaning that Rh factor is inherited separately from ABO type. Thus the rules of **Independent Assortment** apply. Each ABO blood type can be associated with Rh+ or Rh-.
+ABO type and Rh factor are determined by separate sets of genes, meaning that Rh factor is inherited separately from ABO type. Thus the rules of **Independent Assortment** apply. Each ABO blood type can be associated with Rh+ or Rh-.
 
 
 ### Probabilities of blood types in a population
 
-The distributions of A, B, AB, and O blood types as well as Rh factors differs among populations. Among a hypothetical population, blood type probabilities for all the combinations of AB antigens and Rh status are summarized in the following table.
+The distributions of A, B, AB, and O blood types as well as Rh factors differs among populations. In a hypothetical population, blood type probabilities for all the combinations of ABO types and Rh status are summarized in the following table.
 
 ```{r}
 #| echo: false
@@ -226,7 +225,7 @@ BT |> gt() |>
 
 ```
 
-The relative proportions of the eight different blood types can be shown on a bar chart, where the height of the bar is proportional to the probability of an individual having a specific ABO/Rh combination: 
+Looking at tables of numbers is difficult, so we will plot the data. The relative proportions of the eight different blood types can be shown on a bar chart, where the height of the bar is proportional to the probability of an individual having a specific ABO/Rh combination: 
 
 ```{r}
 #| echo: false
@@ -240,17 +239,20 @@ ggplot(BT, aes(x = Type, y = Probability)) +
 
 Visualizing the table above in this way really emphasizes the relative rarity of Rh-negative blood types in this population.
 
-Note that sum of all the probabilities is 1:
+Note that sum of all the probabilities is 1. When studying the range of probabilities for an event (here a person's blood type), it is important that all the probabilities add up to 1, which means that we have accounted for all the possible outcomes.
 
 ```{webr-r}
-0.005 + 0.270 + 0.001 + 0.070 + 0.004 + 0.250 + 0.010 + 0.390
+sum(c(0.005, 0.270, 0.001, 0.070, 0.004, 0.250, 0.010, 0.390))
 ```
+
+`sum()` adds up the values passed to it. `c()` makes a collection of numbers, which here is the set of probabilities.
 
 If a large number of people have their blood typed, the proportions of people with each blood type should be approximately equal to the overall proportions in the table and figure above.
 
+
 ### Combining probabilities
 
-Because of independent assortment, each of the 8 possible ABO types + Rh factor are independent of each other. We can use the rules of addition to determine the probability that a randomly selected individual has a certain blood type. The first few are provided for you. See if you can figure out the rest (here we are just using R as a fancy calculator).
+Because of independent assortment, each of the 8 possible ABO types + Rh factor are independent of each other, which is to say that no one person can have multiple blood types. We can use the rules of addition to determine the probability that a randomly selected individual has a certain blood type. The first few are provided for you. See if you can figure out the rest (here we are just using R as a calculator).
 
 Type O blood
 
@@ -282,12 +284,46 @@ Any ABO type with Rh+
 
 ```
 
+These are all examples of the *Addition Rule* for probabilities. For independent events, you can add the individual probabilities to get the overall probability for a set of events. Generally these take the form of A *or* B -- like rolling a 1 or a 2 from a single die roll. Each has a probability of 1/6, so the probability of 1 or 2 is 1/6 + 1/6 = 2/6 = 1/3.
+
+For conditional events, which result from independent assortment, we have to multiply two probabilities (the *Multiplication Rule* for probabilities). The flowchart below shows the calculation of the probabilities for O+ and O- blood types. 
+
+Starting from the left, we have all blood types. In this population, 40% have type O blood (including both Rh+ and Rh-), and 60% have all the other types combined. 
+
+In this example we will only follow the type O blood paths. Among those with type O blood, 97.5% have the Rh+ phenotype, and the remaining 2.5% have the Rh- phenotype. Because ABO type and Rh factor assort independently, the separate probabilities are multiplied to get the final probabilities. $0.4 \times 0.025 = 0.01$ and $0.4 \times 0.975 = 0.39$.
+
+```{r}
+#| echo: false
+
+library(ggflowchart)
+
+FC <- tribble(
+  ~ from, ~ to,
+  "All\nBlood", "Type O\n0.40",
+  "All\nBlood", "Not Type O\n0.60",
+  "Type O\n0.40", "Rh+\n0.975",
+  "Type O\n0.40", "Rh-\n0.025",
+  "Rh+\n0.975", "Type O+\n0.39",
+  "Rh-\n0.025", "Type O-\n0.01"
+)
+
+ggflowchart(FC,
+            horizontal = TRUE,
+            arrow_size = 0.25,
+            text_size = 4,
+            x_nudge = 0.1)
+```
+
+We could repeat this process for types A, B, and AB, and make a giant chart with all the possibilities.
+
 
 ### Sampling from a population
 
-The probabilities the the table above represent what are known as "long-run" probabilities, meaning that if we sample more and more people (up to the entire population size), the proportions that we observe will match the expected probabilities.
+The probabilities the the blood type table above represent what are known as "long-run" probabilities, meaning that if we sample more and more people (up to the entire population size), the proportions that we observe will match the expected probabilities.
 
-What happens if we sample from a smaller sample? Questions like this become very important when thinking about blood donation programs. Not everyone donates blood and the specific population from which blood is sampled can have a dramatic effect on the relative supply of different blood types in a community.
+What happens if we sample from a small group, one that is much smaller than the entire population?
+
+Questions like this become very important when thinking about blood donation programs. Not everyone donates blood and the specific population from which blood is sampled can have a dramatic effect on the relative supply of different blood types in a community.
 
 ```{webr-r}
 #| context: setup
@@ -314,9 +350,9 @@ blood_sample <- function(people = 100) {
 
 ```
 
-The function below mimics the process of blood donations from a random sample of `people`. Random samples (i.e., donors) are drawn from a distribution where the probability of each of teh eight blood types occurring is the same as in the table above.
+The function below mimics the process of blood donations from a random sample of `people`. Random samples (i.e., donors) are drawn from a distribution where the probability of each of the eight blood types occurring is the same as in the table above.
 
-The gray bars are the expected counts, and the red points are the observed counts in this sample. Run the code a few times and examine the plot.
+The gray bars are the expected counts, and the red points are the observed counts in a particular sample. Run the code a few times and examine how the plot changes each time.
 
 ```{webr-r}
 blood_sample(people = 100)
@@ -337,56 +373,46 @@ Go back to the code block above. Try raising the number of people sampled and se
 </textarea>
 
 
-## What is a confidence interval?
+## Goodness of fit
 
+At this point you gaining some intuition for how the random processes that are a normal part of sampling can lead to quite variable results each time a new sample is taken. Sometimes a sample will closely match the predicted probabilities:
 
+- Occasionally 5 *D* alleles and 5 *d* alleles are present when 10 gametes are produced
+- Occasionally the counts of blood types in a sample of 100 people agree well with the predictions
 
-### Confidence intervals for proportions
+In both cases, as we increase the sample size (500, 1000, 10000, etc.), the observed counts more closely match the predicted counts.
 
-Effect of sample size on CIs
+It would be good to have a way to explicitly test whether the observed counts in a sample are a close match to what we expect. Essentially we want to know:
 
+1. Do these observations represent a random sample from a given population?
+2. Do these counts differ significantly from the expected counts for a given population?
 
-### Confidence intervals for blood types
+These questions are basically asking the same thing. Both are answered by a statistical test for counts: a "goodness of fit" test. The name is fairly self-explanatory -- we are testing how "good" the observations "fit" the expected.
 
+There are many different goodness of fit tests in statistics, but the one that is used most often in genetics is the **chi-squared test**^[Also called the chi-square test or the $\chi^2$ test]. That is the test we will use here.
 
-## Statistical test for proportions
-
-
-## Goodness of fit and the chi-squared test
-
-The chi-squared test^[Also called the chi-square test or the $\chi^2$ test]
-
-Statistical test in reverse – significant test is a lack of fit
+Although the chi-squared test is fairly straightforward as we will see, the equation is a little daunting at first:
 
 $$\chi^2 = \sum_{i=1}^n \frac{(Observed_i - Expected_i)^2}{Expected_i}$$
 
-```{r}
-#| echo: false
+We can decode this "statistical sentence" piece by piece.
 
-shade_chisq <- function(p, df) {
-  crit <- qchisq(p, df, lower.tail = FALSE)
-  M <- data.frame(x = seq(0.1, crit * 1.5, length = 200))
-  M$y <- dchisq(M$x, df)
-  p <- ggplot(M, aes(x, y)) +
-    geom_line() +
-    geom_ribbon(data = subset(M, x > crit),
-                aes(ymax = y), ymin = 0,
-                fill = "navy", alpha = 0.5) +
-    ylim(c(0, 1.1 * max(M$y))) +
-    labs(x = "Chi-squared Statistic", y = "Relative Probability")
-  return(p)
-}
+1. $\chi^2$ is the value that we are going to calculate. It is a single number that represents the test statistic.
+2. $\Sigma$ is the shorthand for a summation, adding a set of numbers together
+    - $i = 1$ tells us where to start adding
+    - $n$ tells us where to stop adding. In this case $n$ represents the number of groups we are testing.
+3. $(Observed_i - Expected_i)^2$ says to subtract the expected count from the observed count and then square that number, which is itself divided by the expect count ($Expected_i$). The subscript $i$s are related to the $i = 1$ to $n$ for the summation, just accounting for the fact that we'll do this calculation once for each group.
 
-shade_chisq(0.05, df = 6)
+You can think of the equation as a shorthand way to tell you what to do with all the counts you have. In plain language:
 
-```
+- For each group:
+    - Subtract the expected count from the observed count, square it, and divide by the expected count
+- Add up all those numbers to get the $\chi^2$ value.
 
 
-## Using a Chi-squared test
+### Using a chi-squared test
 
-Days of birth
-
-Day of the week for 350 births 
+Before we get to the case study, we will take slight detour and apply the chi-squared test to a data set. The data below are the number of births on each day of the week for 350 consecutive births in a hospital (not all the births on each day happened on the same day -- that would be a very busy hospital).
 
 ```{webr-r}
 DOB <- tribble(
@@ -403,27 +429,331 @@ DOB <- tribble(
 DOB
 ```
 
+Execute the code to save the data into R. If you are interested in what the code does:
+
+- `tribble()` is a function that lets us enter data line by line. Here we are making columns for `Day` and `Births`. Each row represents one pair. Sunday has 33 births. Monday has 41, and so on.
+- `mutate()` just puts the days in the correct order.
+
+We can plot these data with the code block below.
 
 ```{webr-r}
 ggplot(DOB, aes(x = Day, y = Births)) +
-  geom_col(fill = "goldenrod")
+  geom_col(fill = "goldenrod") +
+  theme_light()
 ```
 
-> What is the predicted number of births per day?
+For these data, the chi-squared test asks whether the number of births per day is equal across all the days. Since we expect that births happen randomly with respect to day of week (i.e., babies should have no concept of what day it is day), this seems like a reasonable null hypothesis.
+
+> Looking at the plot above, do you predict that births are evenly distributed (null hypothesis) or unevenly distributed?
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+> If births are not evenly distributed throughout the week, what do you think might explain this pattern? What reason(s) might lead to more births on some days vs. others?
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+We will find out.
+
+Thinking back to the equation for the chi-squared test, let's figure out what we need to calculate. We have the observed counts (33, 41, 63, etc.). We need to figure out what the expect count per day is. See if you can reason out what number that is.
+
+> What is the expected count of births per day?
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+We can also use R to do the calculation:
 
 ```{webr-r}
-sum(DOB$Births) / 7
+Expected <- sum(DOB$Births) / 7
+Expected
 ```
 
+Here are using `sum()` to add up the `Births` column of the `DOB` data. With 350 births spread over 7 days, we expect 50 per day. Now that we have the expected value, we can calculate $\chi^2$.
+
+```{webr-r}
+DOB <- DOB |> 
+  mutate(Obs_Exp = Births - Expected,
+         Obs_Exp_Sq = Obs_Exp^2)
+DOB
+```
+
+We have done several things all at once in this code block. `mutate()` makes new columns. First we make a column `Obs_Exp` which is the observed count of `Births` minus `Expected` (50). We then use this new column to calculate the square of `Obs_Exp`.
+
+Looking at the printout of the data, we can see that some days have more births than expected (Tuesday, Wednesday, Friday) and some have less (Sunday, Monday, Thursday, Saturday). All the squares are positive, as we expect (the squaring here is the derivation of the name $\chi^2$).
+
+All that remains is to divide the `Obs_Exp2` by `Expected`:
+
+```{webr-r}
+DOB <- DOB |> 
+  mutate(Obs_Exp_Sq_Std = Obs_Exp_Sq / Expected)
+DOB
+```
+
+This last step normalizes the squared deviation by the expected count. You can imagine if there are a lot of observations, then the squared deviation can get quite large.
+
+Finally, we add up the values in the last column. These values represent each day's contribution to the overall $\chi^2$ value.
+
+```{webr-r}
+X2 <- sum(DOB$Obs_Exp_Sq_Std)
+X2
+```
+
+We have a value of 15.24. What do we do with it? Just on it's own, the $\chi^2$ statistic doesn't mean anything. We need a value to compare it to.
+
+The way that the chi-squared test is set up, the test value (15.24) is compared to the value that marks the cutoff for some specified percentage of a chi-squared distribution.
+
+The figure below shows the probability plot for a chi-squared distribution with 6 degrees of freedom^[6 degrees of freedom because we have 7 groups (days). For this test degrees of freedom is $n - 1$.] Like the sets of blood types probabilities, this also sums to 1. But instead of adding up individual probabilities, here we calculate (integrate) the area under the curve. The area under the line is 1.
+
+The area shaded in purple represents 5% of the area under the line. Most commonly in statistics, 5% is used as the cutoff when deciding that a particular test is "significant" or not. This means that we accept that 5% of the time we say that the test is significant when it is not.^[For those interested, 5% is known as the alpha-level for the test.]
+
+```{r}
+#| echo: false
+
+shade_chisq <- function(p, df) {
+  crit <- qchisq(p, df, lower.tail = FALSE)
+  M <- data.frame(x = seq(0.1, crit * 1.5, length = 200))
+  M$y <- dchisq(M$x, df)
+  p <- ggplot(M, aes(x, y)) +
+    geom_line() +
+    geom_ribbon(data = subset(M, x > crit),
+                aes(ymax = y), ymin = 0,
+                fill = "purple", alpha = 0.5) +
+    ylim(c(0, 1.1 * max(M$y))) +
+    labs(x = "Chi-squared Statistic", y = "Relative Probability")
+  return(p)
+}
+
+shade_chisq(0.05, df = 6)
+
+```
+
+If the observed data were really drawn from a uniform distribution, meaning that counts for each day are equal, then 5% of the time, the $\chi^2$ statistic will fall somewhere in the purple area.
+
+For our test, all we need to know is the position on the x-axis of the left-hand edge of the purple area. This value is about 12.6 (you can confirm this because the left edge is just past the thin vertical line at 12.5). 12.6 is known as the *critical value* for the test.
+
+If the $\chi^2$ statistic is greater than the critical value, then we are able to reject the null hypothesis. Which says that these observations do not follow the expected distribution.
+
+The test statistic we calculated was 15.24, which is greater than 12.6. So here we reject the null hypothesis. It appears that births do not happen randomly throughout the week.
+
+### Shortcut
+
+R has a built-in function to carry out the calculations for us. Although it is very informative to work through the calculations manually, it's much easier to just let the function do the work for us. That function is `chisq.test()`.
 
 ```{webr-r}
 chisq.test(DOB$Births)
 ```
 
-> What is your prediction?
+The output shows much the same information that we already calculated: the $\chi^2$ statistic of 15.24 and 6 degrees of freedom. One new value is the exact *P*-value. All that we knew above was that *P* was less than 0.05. Now we know that it is exactly 0.01847.
+
+If we plot the chi-squared distribution again, we can add the observed statistic. *P* = 0.01847 means that 1.847% of the area under the line falls to the right of the black dot.
+
+```{r}
+#| echo: false
+
+shade_chisq(0.05, df = 6) +
+  geom_point(x = 15.24, y = 0, size = 5)
+
+```
+
+Take a few minutes to explore how the sample size impacts the $\chi^2$ statistic and *P*-value. We can easily scale the data up and down: 
+
+```{webr-r}
+chisq.test(DOB$Births * 10)
+```
+
+```{webr-r}
+chisq.test(DOB$Births / 10)
+```
+
+> Do the results make sense to you based on what you know about how sample size impacts our certainty when making inferences about a sample?
+
+<textarea rows="3" cols="75">
+
+</textarea>
 
 
-## Case study: Detecting a recessive muscle mutation in mice
+## Case study: Confirming a recessive muscle mutation in mice
+
+In the early 1990's, Ted Garland and colleagues began a [long-term experiment](https://sites.google.com/ucr.edu/hrmice/home) breeding experiment using house mice (*Mus musculus*). The goal of this experiment was to explore the inter-relatedness of traits involved in physiology, anatomy, brain function, immunology, behavior, and many others. 
+
+From a random, genetically diverse initial population, the research team established eight separate groups of mice. Four of the groups would be artificially selected for high levels of voluntary activity (measured using a running wheel attached to the cage) and the other four would be bred randomly. [Here is a link](https://biology.ucr.edu/people/faculty/Garland/Herron_and_Freeman_2014_pages_39-40_Garland.pdf) to a book section that describes the experiment.
+
+Because wheel-activity, the trait being selected, is heritable, the two sets of lines rapidly diverged (@fig-run).
+
+![Total wheel revolutions per day for 4 selected and 4 control lines of mice across the first 10 generations of selection. From Swallow et al. [-@Swallow1998-xo]](../images/garland1.png){width=50% fig-align="center" fig-alt="" #fig-run}
+
+Among other phenotypes, Garland and colleagues were interested in studying muscle physiology. Did the selected mice evolve to have different muscle masses or muscle fiber types? They were routines weighing the calf muscles of mice as part of their research and generated plots that looked like this:
+
+```{r}
+#| echo: false
+#| fig-height: 3
+#| fig-align: center
+
+MM <- readr::read_rds("../data/MouseMuscle.rds") |> 
+  mutate(Line = factor(Line)) |> 
+  drop_na()
+
+ggplot(MM, aes(x = Body_Mass, y = Muscle_Mass, color = Line)) +
+  facet_grid(. ~ Sex) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("aquamarine4", "navy", "firebrick4")) +
+  labs(x = "Body Mass (g)", y = "Muscle Mass (g)") +
+  theme(strip.background = NULL,
+        strip.text = element_text(color = "black", face = "bold",
+                                  size = 12),
+        axis.title = element_text(face = "bold"))
+```
+
+This plot shows the mass of the calf muscles plotted against body mass. In general you expect to find that larger mice will have larger muscles. But you do not expect that one of the lines of mice would have such small muscles compared to the others. Over and over they found that some of the mice had muscles that weighed only about 50% as much as they should. In other words, some of the time mice had muscles that were only half as large as predicted.
+
+They found this small muscle phenotype in three different lines, and estimated the prevalence across generations (@fig-mmgen). These authors also found that the small muscle phenotype was favored by selection in these mice [@Houle-Leroy2003-tm].
+
+![Proportion of mice exhibiting the small muscle phenotype in three lines. The squares in this plot (Line 3) are the same line as the blue points in the plot above. From Garland et al. [-@Garland2002-it]](../images/garland2.png){width=50% fig-align="center" fig-alt="" #fig-mmgen}
+
+### Developing an hypothesis
+
+Garland and colleagues examined pedigrees of mice that showed the small muscle phenotype. They found patterns like the ones below. In the pedigrees, hatching indicates that the mouse has the small muscle phenotype.
+
+
+```{r}
+#| echo: false
+#| fig-height: 4
+
+library(pedtools)
+
+set.seed(32474)
+
+pd1 <- nuclearPed(nch = 10, father = "Male",
+                 mother = "Female", 
+                 sex = sample(1:2, size = 10, replace = TRUE),
+                 children = 1:10)
+
+plot(pd1, hatched = c("Female", "Male", as.character(1:10)))
+```
+
+```{r}
+#| echo: false
+#| fig-height: 4
+
+pd2 <- nuclearPed(nch = 10, father = "Male",
+                 mother = "Female", 
+                 sex = sample(1:2, size = 8, replace = TRUE),
+                 children = 1:8)
+
+plot(pd2, hatched = as.character(c(1, 3, 4, 8)))
+```
+
+
+> What kind of inheritance pattern do you think could explain the observed distribution of phenotypes (dominant vs. recessive, sex-linked vs. autosomal)? Briefly explain your reasoning.
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+
+### Testing the hypothesis
+
+Garland and colleagues hypothesized that the small muscle phenotype was caused by an autosomal recessive allele. They set out to determine if their hypothesis was correct by designing a test cross.
+
+The original strain of mice that had been used to produce the 8 lines was outbred, meaning that it had extensive genetic variability.^[Otherwise selective breeding would not have worked]. For the test cross, they chose to use a standard inbred strain of mouse: C57/Bl6 ("C57 Black 6"). This mouse did not show the small muscle phenotype.
+
+For the other parental line, they chose all mice that had the small muscle phenotype.
+
+> Using a piece of paper, set up a Punnett square with a homozygous dominant C57/Bl6 father (*MM* genotype) and a homozygous recessive small muscle phenotype mother (*mm* genotype). What genotypes and phenotypes do you predict if the hypothesis is correct? Describe your results below.
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+The F~1~ generation should all be *Mm* (all combinations of alleles will be *Mm*). The resulting muscle phenotypes will be normal if the allele is recessive (a single copy of *M* is enough to result in the normal phenotype).
+
+Garland and colleagues found the expected phenotypic pattern (but still didn't know the underlying genotypes). Next they set up a second cross between the F~1~ mice resulting from the first cross and the small muscle phenotype parental female mice (this is called a "backcross").
+
+> Using a piece of paper, set up a Punnett square with a heterozygous father (*Mm* genotype) and a homozygous recessive small muscle phenotype mother (*mm* genotype). What genotypes and phenotypes do you predict if the hypothesis is correct? Describe your results below.
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+In this cross, genotypes of half of the mice should be heterozygous (*Mm*) and half homozygous for the small muscle allele (*mm*). The phenotypic ratio will also be 1:1, because the heterozygous mice will have the normal muscle phenotype.
+
+
+### Results
+
+In total, there were 404 mice in the F~2~ backcross generation [@hannon_phenotypic_2008a]. The authors weighed the calf muscles of all the mice (called "triceps surae" here). The results are shown in @fig-f2.
+
+![Observed muscle masses  compared to body mass in a sample of 404 F~2~ backcross mice. From Hannon et al. [-@hannon_phenotypic_2008a]](../images/garland3.png){width=50% fig-align="center" fig-alt="" #fig-f2}
+
+> What is your prediction for the phenotypic ratio from jsut looking at the plot above? Does it appear that there is a 1:1 ratio of normal to small muscle mice?
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+Based on the observed muscle masses, 201 mice were classified as having the small muscle phenotype and 203 were classified and normal.
+
+```{r}
+#| echo: false
+
+tribble(
+  ~ Phenotype, ~ Count,
+  "Normal", 203,
+  "Small Muscle", 201
+) |> 
+  gt() |> 
+  cols_label(Phenotype = md("**Phenotype**"),
+             Count = md("**Count**"))
+
+```
+
+
+### Testing the results
+
+Now it's your turn. In the code block below, we set up the data just like we did for the date of birth example.
+
+```{webr-r}
+MM <- tribble(
+  ~ Phenotype, ~ Count,
+  "Normal", 203,
+  "Small Muscle", 201
+)
+MM
+```
+
+> Based on the observed counts, what do you predict that the test will show? Will the counts differ from a 1:1 ratio or will they not differ (the null hypothesis)?
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+
+In the code block below, use the counts above to carry out a chi-squared test for the data. You just need to add the column with the data. Look at the example above if you need a hint.
+
+```{webr-r}
+chisq.test()
+```
+
+> What are the $\chi^2$ value, the degrees of freedom, and the associated *P*-value? What does this test tell you about the observed ratio of counts?
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+> How do you think the results might have been different if the authors had only measured 40 mice instead of ~400? Feel free to change the numbers above and re-run the test.
+
+<textarea rows="3" cols="75">
+
+</textarea>
+
+
+### Epilogue
+
+The "mini-muscle" allele was confirmed as an autosomal recessive, just as Garland and colleagues hypothesized. After some work on the genetics of the small muscle phenotype, it was mapped to a 2.6 Mb region on chromosome 11 that encompassed about 100 genes [@Hartmann2008-ft]. After several more years of more research, the allele was identified as a single nucleotide polymorphism (SNP) in the Myosin Heavy Chain 4 gene [@Kelly2013-td]. Homozygous mice with two copies of this allele (*Myh4*^-/-^) fail to produce a certain type of myosin, which results in small muscles that produce less force but do not fatigue as quickly as unaffected muscles.
 
 
 ## References
