@@ -370,7 +370,7 @@ blood_sample(people = 100)
 
 </textarea>
 
-Go back to the code block above. Try raising the number of people sampled and see how the distribution changes?
+Go back to the code block above. Try increasing the number of people sampled and see how the distribution changes?
 
 > What looks different when 1000 or 10000 people are sampled?
 
@@ -404,12 +404,12 @@ $$\chi^2 = \sum_{i=1}^n \frac{(Observed_i - Expected_i)^2}{Expected_i}$$
 We can decode this "statistical sentence" piece by piece.
 
 1. $\chi^2$ is the value that we are going to calculate. It is a single number that represents the test statistic.
-2. $\Sigma$ is the shorthand for a summation, adding a set of numbers together
+2. $\Sigma$ is the symbol for a summation, adding a set of numbers together
     - $i = 1$ tells us where to start adding
     - $n$ tells us where to stop adding. In this case $n$ represents the number of groups we are testing.
 3. $(Observed_i - Expected_i)^2$ says to subtract the expected count from the observed count and then square that number, which is itself divided by the expect count ($Expected_i$). The subscript $i$s are related to the $i = 1$ to $n$ for the summation, just accounting for the fact that we'll do this calculation once for each group.
 
-You can think of the equation as a shorthand way to tell you what to do with all the counts you have. In plain language:
+You can think of the equation as an efficient way to tell you what to do with all the counts you have. In plain language:
 
 - For each group:
     - Subtract the expected count from the observed count, square it, and divide by the expected count
@@ -589,11 +589,11 @@ chisq.test(DOB$Births / 10)
 
 In the early 1990's, Ted Garland and colleagues began a [long-term experiment](https://sites.google.com/ucr.edu/hrmice/home) breeding experiment using house mice (*Mus musculus*). The goal of this experiment was to explore the inter-relatedness of traits involved in physiology, anatomy, brain function, immunology, behavior, and many others. 
 
-From a random, genetically diverse initial population, the research team established eight separate groups of mice. Four of the groups would be artificially selected for high levels of voluntary activity (measured using a running wheel attached to the cage) and the other four would be bred randomly. [Here is a link](https://biology.ucr.edu/people/faculty/Garland/Herron_and_Freeman_2014_pages_39-40_Garland.pdf) to a book section that describes the experiment.
+From a random, genetically diverse initial population, the research team established eight separate groups of mice. Four of the groups would be artificially selected for high levels of voluntary activity (measured using a running wheel attached to the cage) and the other four would be bred randomly. [Here is a link](https://biology.ucr.edu/people/faculty/Garland/Herron_and_Freeman_2014_pages_39-40_Garland.pdf) to a book section that describes the experiment. [Here is a movie of what the mice look like on the running wheels.](https://www.youtube.com/watch?v=RuqhC7g_XP0).
 
 Because wheel-activity, the trait being selected, is heritable, the two sets of lines rapidly diverged (@fig-run).
 
-![Total wheel revolutions per day for 4 selected and 4 control lines of mice across the first 10 generations of selection. From Swallow et al. [-@Swallow1998-xo]](../images/garland1.png){width=50% fig-align="center" fig-alt="" #fig-run}
+![Total wheel revolutions per day for 4 selected and 4 control lines of mice across the first 10 generations of selection. From Swallow et al. [-@Swallow1998-xo]](../images/garland1.png){width=75% fig-align="center" fig-alt="" #fig-run}
 
 Among other phenotypes, Garland and colleagues were interested in studying muscle physiology. Did the selected mice evolve to have different muscle masses or muscle fiber types? They were routinely weighing the calf muscles of mice as part of their research and generated plots that looked like this:
 
@@ -621,16 +621,16 @@ This plot shows the mass of the calf muscles plotted against body mass. In gener
 
 They found this small muscle phenotype in three different lines, and estimated the prevalence across generations (@fig-mmgen). These authors also found that the small muscle phenotype was favored by selection in these mice [@Houle-Leroy2003-tm].
 
-![Proportion of mice exhibiting the small muscle phenotype in three lines. The squares in this plot (Line 3) are the same line as the blue points in the plot above. From Garland et al. [-@Garland2002-it]](../images/garland2.png){width=50% fig-align="center" fig-alt="" #fig-mmgen}
+![Proportion of mice exhibiting the small muscle phenotype in three lines. The squares in this plot (Line 3) are the same line as the blue points in the plot above. From Garland et al. [-@Garland2002-it]](../images/garland2.png){width=75% fig-align="center" fig-alt="" #fig-mmgen}
 
-### Developing an hypothesis
+### Developing the hypothesis
 
 Garland and colleagues examined pedigrees of mice that showed the small muscle phenotype. They found patterns like the ones below. In the pedigrees, hatching indicates that the mouse has the small muscle phenotype.
 
 
 ```{r}
 #| echo: false
-#| fig-height: 4
+#| fig-height: 3
 
 library(pedtools)
 
@@ -646,7 +646,7 @@ plot(pd1, hatched = c("Female", "Male", as.character(1:10)))
 
 ```{r}
 #| echo: false
-#| fig-height: 4
+#| fig-height: 3
 
 pd2 <- nuclearPed(nch = 10, father = "Male",
                  mother = "Female", 
@@ -668,7 +668,7 @@ plot(pd2, hatched = as.character(c(1, 3, 4, 8)))
 
 Garland and colleagues hypothesized that the small muscle phenotype was caused by an autosomal recessive allele. They set out to determine if their hypothesis was correct by designing a test cross.
 
-The original strain of mice that had been used to produce the 8 lines was outbred, meaning that it had extensive genetic variability.^[Otherwise selective breeding would not have worked]. For the test cross, they chose to use a standard inbred strain of mouse: C57/Bl6 ("C57 Black 6"). This mouse did not show the small muscle phenotype.
+The original strain of mice that had been used to produce the 8 lines was outbred, meaning that it had extensive genetic variability.^[The specific strain *ICR* was chosen because it had a similar level of genetic variation as found in humans. If there were no genetic variation, then selective breeding would not have worked.] For the test cross, they chose to use a standard inbred strain of mouse: C57/Bl6 ("C57 Black 6"). This mouse did not show the small muscle phenotype.
 
 For the other parental line, they chose all mice that had the small muscle phenotype.
 
@@ -695,7 +695,7 @@ In this cross, genotypes of half of the mice should be heterozygous (*Mm*) and h
 
 In total, there were 404 mice in the F~2~ backcross generation [@hannon_phenotypic_2008a]. The authors weighed the calf muscles of all the mice (called "triceps surae" here). The results are shown in @fig-f2.
 
-![Observed muscle masses  compared to body mass in a sample of 404 F~2~ backcross mice. From Hannon et al. [-@hannon_phenotypic_2008a]](../images/garland3.png){width=50% fig-align="center" fig-alt="" #fig-f2}
+![Observed muscle masses  compared to body mass in a sample of 404 F~2~ backcross mice. From Hannon et al. [-@hannon_phenotypic_2008a].](../images/garland3.png){width=75% fig-align="center" fig-alt="" #fig-f2}
 
 > What is your prediction for the phenotypic ratio from jsut looking at the plot above? Does it appear that there is a 1:1 ratio of normal to small muscle mice?
 
