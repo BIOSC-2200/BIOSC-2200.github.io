@@ -9,6 +9,8 @@ format:
     self-contained: true
     css: ../custom.css
     link-external-newwindow: true
+  docx:
+    reference-doc: word-styles-reference-01.docx
 webr: 
   packages: ["ggplot2", "dplyr", "forcats", "tibble"]
 filters: 
@@ -183,13 +185,13 @@ To explore the concepts of independent assortment and probabilities, we will use
 
 ![Three of the components of blood are white blood cells (involved in the immune response), platelets (involved in blood clotting), and red blood cells, which primarily carry oxygen. Image from [learn.genetics](https://learn.genetics.utah.edu/)](https://learn-genetics.b-cdn.net/basics/blood/images/complexblood.png){width=100% fig-align="left" fig-alt="" #fig-RBC}
 
-Blood typing in humans primarily uses the ABO system, although almost 30 other blood typing systems exist, which focus on other aspect of red blood cell structure and physiology. 
+Blood typing in humans primarily uses the ABO system, although almost 30 other blood typing systems exist, which focus on other aspects of red blood cell structure and physiology. 
 
 A and/or B refer to the presence of A and/or B antigens of the surface of the red blood cells. O denotes the absence of both A and B antigens. The [American Red Cross](https://www.redcrossblood.org/donate-blood/blood-types.html) has a website with animations about what blood types are compatible with other blood types. In general, A must be matched with A and B with B or a cross-reaction will take place. Because type O blood lacks both A and B antigens, it is considered a "universal donor". And because type AB blood has both A and B antigens, it is considered a "universal recipient".
 
 @fig-ABOgenes shows the Punnett square for human blood types. Each parent can provide alleles for A, B, or no antigens (O), leading to a complex 1:2:1:1:1:2:1 ratio.
 
-![The Punnett square for human ABO alleles and associated blood types. Image from [learn.genetics](https://learn.genetics.utah.edu/)](https://learn-genetics.b-cdn.net/basics/blood/images/inherit.png){width=50% fig-align="center" fig-alt="" #fig-ABOgenes}
+![The possible gamete genotypes and combinations for human ABO alleles and associated blood types. Individuals don't have all of A, B and O -- this table illustrates the possibilities for individual gametes. Image from [learn.genetics](https://learn.genetics.utah.edu/)](https://learn-genetics.b-cdn.net/basics/blood/images/inherit.png){width=50% fig-align="center" fig-alt="" #fig-ABOgenes}
 
 The right side of @fig-ABOgenes shows the blood types (i.e., phenotypes) associated with each of the possible genotypes. Although there are 7 possible genotypes, there are only 4 possible blood types: A, B, AB, and O.
 
@@ -290,13 +292,13 @@ Any ABO type with Rh+
 
 ```
 
-These are all examples of the *Addition Rule* for probabilities. For independent events, you can add the individual probabilities to get the overall probability for a set of events. Generally these take the form of A *or* B -- like rolling a 1 or a 2 from a single die roll. Each has a probability of 1/6, so the probability of 1 or 2 is 1/6 + 1/6 = 2/6 = 1/3.
+These are all examples of the *Addition Rule* for probabilities. For independent events, you can add the individual probabilities to get the overall probability for a set of events. Generally these take the form of A *or* B -- like rolling a 1 or a 2 from a single die roll. Each has a probability of 1/6, so the probability of 1 *or* 2 is 1/6 + 1/6 = 2/6 = 1/3.
 
-For conditional events, which result from independent assortment, we have to multiply two probabilities (the *Multiplication Rule* for probabilities). The flowchart below shows the calculation of the probabilities for O+ and O- blood types. 
+For conditional events, the kinds of which result from independent assortment, we have to multiply two probabilities (the *Multiplication Rule* for probabilities). The flowchart below shows the calculation of the probabilities for O+ and O- blood types. 
 
 Starting from the left, we have all blood types. In this population, 40% have type O blood (including both Rh+ and Rh-), and 60% have all the other types combined. 
 
-In this example we will only follow the type O blood paths. Among those with type O blood, 97.5% have the Rh+ phenotype, and the remaining 2.5% have the Rh- phenotype. Because ABO type and Rh factor assort independently, the separate probabilities are multiplied to get the final probabilities. $0.4 \times 0.025 = 0.01$ and $0.4 \times 0.975 = 0.39$.
+In this example, we will only follow the type O blood paths. Among those with type O blood, 97.5% have the Rh+ phenotype, and the remaining 2.5% have the Rh- phenotype. Because ABO type and Rh factor assort independently, the separate probabilities are multiplied to get the final probabilities. $0.4 \times 0.025 = 0.01$ and $0.4 \times 0.975 = 0.39$. You can confirm that these match the probabilities in the table.
 
 ```{r}
 #| echo: false
@@ -403,13 +405,13 @@ $$\chi^2 = \sum_{i=1}^n \frac{(Observed_i - Expected_i)^2}{Expected_i}$$
 
 We can decode this "statistical sentence" piece by piece.
 
-1. $\chi^2$ is the value that we are going to calculate. It is a single number that represents the test statistic.
+1. $\chi^2$ is the value that we are going to calculate. It is a single number that represents the test statistic. Somewhat confusingly, this number is not, itself, squared. Think of "chi-squared" as just the number calculated on the right side of the equation.
 2. $\Sigma$ is the symbol for a summation, adding a set of numbers together
     - $i = 1$ tells us where to start adding
     - $n$ tells us where to stop adding. In this case $n$ represents the number of groups we are testing.
 3. $(Observed_i - Expected_i)^2$ says to subtract the expected count from the observed count and then square that number, which is itself divided by the expect count ($Expected_i$). The subscript $i$s are related to the $i = 1$ to $n$ for the summation, just accounting for the fact that we'll do this calculation once for each group.
 
-You can think of the equation as an efficient way to tell you what to do with all the counts you have. In plain language:
+You can consider the equation as an efficient way to tell you what to do with all the counts you have. In plain language:
 
 - For each group:
     - Subtract the expected count from the observed count, square it, and divide by the expected count
@@ -418,7 +420,7 @@ You can think of the equation as an efficient way to tell you what to do with al
 
 ### Using a chi-squared test
 
-Before we get to the case study, we will take slight detour and apply the chi-squared test to a data set. The data below are the number of births on each day of the week for 350 consecutive births in a hospital (not all the births on each day happened on the same day -- that would be a very busy hospital).
+Before we get to the case study, we will take slight detour and apply the chi-squared test to a new data set. The data below are the counts of births on each day of the week for 350 consecutive births in a hospital (not all the births on each day happened on the same day -- that would be one very busy hospital).
 
 ```{webr-r}
 DOB <- tribble(
@@ -448,7 +450,7 @@ ggplot(DOB, aes(x = Day, y = Births)) +
   theme_light()
 ```
 
-For these data, the chi-squared test asks whether the number of births per day is equal across all the days. Since we expect that births happen randomly with respect to day of week (i.e., babies should have no concept of what day it is day), this seems like a reasonable null hypothesis.
+For these data, the chi-squared test asks whether the number of births per day is equal across all the days. Since we expect that births happen randomly with respect to day of week (i.e., babies should have no concept of what day it is and should thus not prefer to be born on one day vs. another), this seems like a reasonable null hypothesis.
 
 > Looking at the plot above, do you predict that births are evenly distributed (null hypothesis) or unevenly distributed?
 
@@ -761,7 +763,7 @@ chisq.test()
 
 ### Epilogue
 
-The "mini-muscle" allele was confirmed as an autosomal recessive, just as Garland and colleagues hypothesized. The full description of the experiment and a large amount of data and discussion can be found in the original publication [@hannon_phenotypic_2008a]. 
+The "mini-muscle" allele was confirmed as [autosomal recessive](https://www.genome.gov/genetics-glossary/Autosomal-Recessive-Disorder), just as Garland and colleagues hypothesized. The full description of the experiment and a large amount of data and discussion can be found in the original publication [@hannon_phenotypic_2008a]. 
 
 After some work on the genetics of the small muscle phenotype, it was mapped to a 2.6 megabase region on chromosome 11 that contained about 100 genes [@Hartmann2008-ft]. After several more years of more research, the allele was finally identified as a single nucleotide polymorphism (SNP) located in the Myosin Heavy Chain 4 gene [@Kelly2013-td]. Homozygous mice with two copies of this allele (named *Myh4^minimsc^*) fail to produce one type of myosin, which results in small muscles that produce less contractile force but do not fatigue as quickly as unaffected muscles.
 
