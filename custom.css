@@ -2,10 +2,21 @@
   color: darkgreen;
   font-weight: bold;
   background-color: lightgray;
-    border: 2px solid darkgreen;
+  border: 2px solid darkgreen;
 }
 
 .references {
   padding-left: 50px ;
   text-indent: -50px ;
+}
+
+.QuestionPrompt {
+  color: darkgreen;
+  font-weight: bold;
+  background-color: lightgray;
+  border: 2px solid darkgreen;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
 }

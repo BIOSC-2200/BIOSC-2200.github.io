@@ -1,5 +1,6 @@
 # Genetics (BIO_SC 2200)
 
 1. [Transmission of Genetic Information](./TGI)
-2. Continuous Traits
-3. Genetics of Evolution
+1. [Case study: Investigating a newly discovered muscle mutation in mice](./TGI-Case-Study)
+1. Continuous Traits
+1. Genetics of Evolution
