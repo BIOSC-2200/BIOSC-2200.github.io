@@ -316,7 +316,7 @@ MM
 </textarea>
 
 
-In the code block below, use the counts above to carry out a chi-squared test for the data. You just need to add the column with the data. Look at the example above in the section "Shortcut" if you need a hint.
+In the code block below, use the counts above to carry out a chi-squared test for the data. You just need to add the column with the data.
 
 ```{webr-r}
 chisq.test()
