@@ -12,7 +12,7 @@ format:
   docx:
     reference-doc: word-styles-reference-01.docx
 webr: 
-  packages: ["ggplot2", "dplyr", "forcats", "tibble"]
+  packages: ["tibble"]
 filters: 
   - webr
 bibliography: ../Genetics_Discussion.bib
@@ -28,12 +28,11 @@ code-annotations: hover
 library(ggplot2)
 library(tidyr)
 library(dplyr)
+library(ggtext)
+library(pedtools)
 library(gt)
-library(grid)
-library(patchwork)
-library(magick)
 
-ggplot2::theme_set(ggplot2::theme_light())
+ggplot2::theme_set(cowplot::theme_cowplot())
 ```
 
 ```{webr-r}
@@ -42,9 +41,6 @@ ggplot2::theme_set(ggplot2::theme_light())
 #| message: false
 #| warning: false
 
-library(ggplot2)
-library(dplyr)
-library(forcats)
 library(tibble)
 
 ggplot2::theme_set(ggplot2::theme_light())
@@ -53,46 +49,130 @@ ggplot2::theme_set(ggplot2::theme_light())
 
 ## Preliminaries
 
-If you have not already, start with the first part of this exercise: [Transmission of Genetic Information](https://biosc-2200.github.io/TGI/). That page has the background and information you need to fully understand this case study.
+If you have not already worked through the first part of this exercise: [Transmission of Genetic Information](https://biosc-2200.github.io/TGI/), begin with that first. That page has the background and information you need to fully understand this case study.
 
 
 ## Introduction
 
-In the early 1990's, Dr. Theodore Garland and colleagues began a [long-term experiment](https://sites.google.com/ucr.edu/hrmice/home) breeding experiment using house mice (*Mus musculus*). The goal of this experiment was to explore the inter-relatedness of traits involved in physiology, anatomy, brain function, immunology, behavior, and many others. 
+In the early 1990's, Dr. Theodore Garland and colleagues began a [long-term breeding experiment](https://sites.google.com/ucr.edu/hrmice/home) using house mice (*Mus musculus*). The goal of this experiment was to explore the inter-relatedness of traits involved in physiology, anatomy, brain function, immunology, behavior, and many others. 
 
-From a random, genetically diverse initial population, the research team established eight separate groups of mice. Four of the groups would be artificially selected for high levels of voluntary activity (measured using a running wheel attached to the cage) and the other four would be bred randomly. [Here is a link](https://biology.ucr.edu/people/faculty/Garland/Herron_and_Freeman_2014_pages_39-40_Garland.pdf) to a book section that describes the experiment. [Here is a movie of what the mice look like on the running wheels.](https://www.youtube.com/watch?v=RuqhC7g_XP0).
+From a random, genetically diverse initial population, the research team established eight separate groups of mice. Four of the groups would be artificially selected for high levels of voluntary activity (measured using a running wheel with a sensor attached to the mouse's cage) and the other four would be bred randomly (these would also have a running wheel, but breeders were randomly chosen). [Here is a link](https://biology.ucr.edu/people/faculty/Garland/Herron_and_Freeman_2014_pages_39-40_Garland.pdf) to a book section that describes the experiment. [Here is a movie of what the mice look like on the running wheels](https://www.youtube.com/watch?v=RuqhC7g_XP0).
 
-Because wheel-activity, the trait being selected, is heritable, the two sets of lines rapidly diverged (@fig-run).
+Because wheel-activity, the trait being selected, is heritable, the two sets of lines rapidly diverged so that by generation 10, all four of the selected lines of mice were running more, on average, than the four control lines (@fig-run).
 
-![Total wheel revolutions per day for 4 selected and 4 control lines of mice across the first 10 generations of selection. From Swallow et al. [-@Swallow1998-xo]](../images/garland1.png){width=75% fig-align="center" fig-alt="" #fig-run}
 
-Among other phenotypes, Garland and colleagues were interested in studying muscle physiology. Did the selected mice evolve to have different muscle masses or muscle fiber types? They were routinely weighing the calf muscles of mice as part of their research and generated plots that looked like this:
+```{r}
+#| label: fig-run
+#| echo: false
+#| fig-height: 4
+#| fig-cap: Total wheel revolutions per day among female mice for 4 selected (red) and 4 control (blue) lines of mice across the first 10 generations of selection. Data from Swallow et al. [-@Swallow1998-xo].
+#| cap-location: bottom
+
+C <- readr::read_csv("../data/Control.csv",
+                     show_col_types = FALSE) |> 
+  mutate(Generation = rep(0:10, times = 4),
+         Line = rep(1:4, each = 11),
+         LineType = "Control Lines") |> 
+  rename(Revolutions = y)
+HR <- readr::read_csv("../data/HR.csv",
+                      show_col_types = FALSE) |> 
+  mutate(Generation = rep(0:10, times = 4),
+         Line = rep(5:8, each = 11),
+         LineType = "Selected Lines") |> 
+  rename(Revolutions = y)
+
+DD <- bind_rows(C, HR)
+
+ggplot(DD, aes(x = Generation, y = Revolutions,
+               group = Line,
+               color = LineType)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("navy", "firebrick"), name = NULL) +
+  scale_x_continuous(breaks = 0:10) +
+  scale_y_continuous(limits = c(0, 12000), labels = scales::comma) +
+  theme(legend.position = c(0.1, 0.9),
+        axis.title = element_text(face = "bold")) +
+  labs(y = "Revolutions / Day")
+```
+
+
+Among other phenotypes, Garland and colleagues were interested in studying muscle physiology. Did the selected mice evolve to have different muscle masses or muscle fiber types? They were routinely weighing the calf muscles of mice as part of their research and generated plots that looked like @fig-musclemass.
+
 
 ```{r}
 #| echo: false
-#| fig-height: 3
+#| label: fig-musclemass
+#| fig-height: 4
 #| fig-align: center
+#| fig-cap: The mass of the calf muscles plotted against body mass for both female and male mice. In general you expect to find that larger mice will have larger muscles, just like an adult human has larger muscles than a child. But you do not expect that one of the lines of mice would have such disproportionately small muscles compared to the others (the red points above).
 
 MM <- readr::read_rds("../data/MouseMuscle.rds") |> 
   mutate(Line = factor(Line)) |> 
   drop_na()
 
-ggplot(MM, aes(x = Body_Mass, y = Muscle_Mass, color = Line)) +
+ggplot(MM, aes(x = log10(Body_Mass),
+               y = log10(Muscle_Mass),
+               color = Line)) +
   facet_grid(. ~ Sex) +
   geom_point(size = 3) +
-  scale_color_manual(values = c("aquamarine4", "navy", "firebrick4")) +
-  labs(x = "Body Mass (g)", y = "Muscle Mass (g)") +
+  scale_color_manual(values = c("navy", "firebrick", "lightblue")) +
+  labs(x = "**log<sub>10</sub> Body Mass (g)**",
+       y = "**log<sub>10</sub> Muscle Mass (g)**") +
   theme(strip.background = NULL,
         strip.text = element_text(color = "black", face = "bold",
                                   size = 12),
-        axis.title = element_text(face = "bold"))
+        axis.title.x = element_markdown(),
+        axis.title.y = element_markdown())
 ```
 
-This plot shows the mass of the calf muscles plotted against body mass. In general you expect to find that larger mice will have larger muscles, just like an adult human has larger muscles than a child. But you do not expect that one of the lines of mice would have such disproportionately small muscles compared to the others. Generation after generation, they found that some of the mice had muscles that weighed only about 50% as much as they would be expected to based on their body mass. In other words, there appeared to be a subset of mice that had muscles which were only half as large as predicted.
 
-They found this small muscle phenotype in three different lines, and estimated the prevalence across generations (@fig-mmgen). These authors also found that the small muscle phenotype was favored by selection in these mice [@Houle-Leroy2003-tm].
+Generation after generation, they found that some of the mice had muscles that weighed only about 50% as much as they would be expected to based on their body mass (@fig-musclemass). In other words, there appeared to be a subset of mice that had muscles which were only half as large as predicted. The pattern was the same in both female and male mice.
 
-![Proportion of mice exhibiting the small muscle phenotype in three lines. The squares in this plot (Line 3) are the same line as the blue points in the plot above. From Garland et al. [-@Garland2002-it]](../images/garland2.png){width=75% fig-align="center" fig-alt="" #fig-mmgen}
+Overall, body mass was not that much lower in the selected lines of mice (as you can see in @fig-musclemass, with the exception of one very large mouse, most of the red points fall toward the left side of the plot), however, the muscles were much smaller than predicted (the red points are all lower than the two sets of blue points). They called this small muscle phenotype "Mini-muscle".
+
+Through studying many generations of mice, they detected this small muscle phenotype in three different lines, and estimated the prevalence across generations (@fig-mmgen). The researchers also found that the small muscle phenotype was being favored by selection in these mice [@Houle-Leroy2003-tm], because it appeared to be increasing in frequency across generations in lines 3 and 6, but just changing randomly in line 5, which was a control line.
+
+
+```{r}
+#| echo: false
+#| label: fig-mmgen
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: Frequency of mice exhibiting the small muscle phenotype in three lines aross the first 22 generations of selection. The squares in this plot (Line 3) are the same line as the red points in @fig-musclemass. Data from Garland et al. [-@Garland2002-it]
+
+L3 <- readr::read_csv("../data/Line_3.csv", show_col_types = FALSE) |> 
+  mutate(Generation = round(x),
+         Frequency = round(y, 2),
+         Line = "Selected Line 3")
+L5 <- readr::read_csv("../data/Line_5.csv", show_col_types = FALSE) |> 
+  mutate(Generation = round(x),
+         Frequency = round(y, 2),
+         Line = "Control Line 5")
+L6 <- readr::read_csv("../data/Line_6.csv", show_col_types = FALSE) |> 
+  mutate(Generation = round(x),
+         Frequency = round(y, 2),
+         Line = "Selected Line 6")
+
+DD <- bind_rows(L3, L5, L6) |> 
+  mutate(Line = forcats::fct_inorder(Line))
+
+ggplot(DD, aes(x = Generation, y = Frequency,
+               color = Line,
+               shape = Line)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  scale_shape_manual(values = c(15, 1, 16), guide = "none") +
+  scale_color_manual(values = c("firebrick", "skyblue", "firebrick2"),
+                     name = NULL) +
+  scale_x_continuous(breaks = 1:22) +
+  scale_y_continuous(breaks = seq(0, 0.8, by = 0.1)) +
+  theme(legend.position = c(0.05, 0.85),
+        axis.title = element_text(face = "bold")) +
+  labs(y = "Frequency of\nSmall Muscle Phenotype")
+
+```
+
 
 ### Developing the hypothesis
 
@@ -101,9 +181,9 @@ Garland and colleagues examined pedigrees of mice that showed the small muscle p
 
 ```{r}
 #| echo: false
-#| fig-height: 3
-
-library(pedtools)
+#| fig-height: 2.5
+#| fig-width: 6
+#| fig-align: center
 
 set.seed(32474)
 
@@ -117,7 +197,9 @@ plot(pd1, hatched = c("Female", "Male", as.character(1:10)))
 
 ```{r}
 #| echo: false
-#| fig-height: 3
+#| fig-height: 2.5
+#| fig-width: 6
+#| fig-align: center
 
 pd2 <- nuclearPed(nch = 10, father = "Male",
                  mother = "Female", 
@@ -130,7 +212,7 @@ plot(pd2, hatched = as.character(c(1, 3, 4, 8)))
 
 > What kind of inheritance pattern do you think could explain the observed distribution of phenotypes (dominant vs. recessive, sex-linked vs. autosomal)? Briefly explain your reasoning.
 
-<textarea rows="3" cols="75">
+<textarea rows="3" cols="80">
 
 </textarea>
 
@@ -139,13 +221,13 @@ plot(pd2, hatched = as.character(c(1, 3, 4, 8)))
 
 Garland and colleagues hypothesized that the small muscle phenotype was caused by an autosomal recessive allele. They set out to determine if their hypothesis was correct by designing a test cross.
 
-The original strain of mice that had been used to produce the 8 lines was outbred, meaning that it had extensive genetic variability.^[The specific strain *ICR* was chosen because it had a similar level of genetic variation as found in humans. If there were no genetic variation, then selective breeding would not have worked.] For the test cross, they chose to use a standard inbred strain of mouse: C57/Bl6 ("C57 Black 6"). This mouse did not show the small muscle phenotype.
+The original strain of mice that had been used to produce the 8 lines was genetically outbred, meaning that it had high genetic variability.^[The specific strain *ICR* was chosen because it had a similar level of genetic variation as found in humans. If there were no genetic variation, then selective breeding would not have worked.] For the test cross, they chose to use a standard inbred strain of mouse: C57/Bl6 ("C57 Black 6"). This mouse had never been known to show the small muscle phenotype, which the researchers confirmed through dissection.
 
 For the other parental line, they chose all mice that had the small muscle phenotype.
 
 > Using a piece of paper, set up a Punnett square with a homozygous dominant C57/Bl6 father (*MM* genotype) and a homozygous recessive small muscle phenotype mother (*mm* genotype). What genotypes and phenotypes do you predict if the hypothesis is correct? Describe your results below.
 
-<textarea rows="3" cols="75">
+<textarea rows="3" cols="80">
 
 </textarea>
 
@@ -155,7 +237,7 @@ Garland and colleagues found the expected phenotypic pattern (but still didn't k
 
 > Using a piece of paper, set up a Punnett square with a heterozygous father (*Mm* genotype) and a homozygous recessive small muscle phenotype mother (*mm* genotype). What genotypes and phenotypes do you predict if the hypothesis is correct? Describe your results below.
 
-<textarea rows="3" cols="75">
+<textarea rows="3" cols="80">
 
 </textarea>
 
@@ -166,15 +248,36 @@ In this cross, genotypes of half of the mice should be heterozygous (*Mm*) and h
 
 In total, there were 404 mice in the F~2~ backcross generation [@hannon_phenotypic_2008a]. The authors weighed the calf muscles of all the mice (called "triceps surae" here). The results are shown in @fig-f2.
 
-![Observed muscle masses  compared to body mass in a sample of 404 F~2~ backcross mice. From Hannon et al. [-@hannon_phenotypic_2008a].](../images/garland3.png){width=75% fig-align="center" fig-alt="" #fig-f2}
+```{r}
+#| echo: false
+#| label: fig-f2
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: Observed muscle masses  compared to body mass in a sample of 404 F~2~ backcross mice. Data from Hannon et al. [-@hannon_phenotypic_2008a].
 
-> What is your prediction for the phenotypic ratio from jsut looking at the plot above? Does it appear that there is a 1:1 ratio of normal to small muscle mice?
+DD <- readr::read_csv("../data/f2_muscle.csv",
+                      show_col_types = FALSE) |> 
+  rename(BodyMass = x,
+         MuscleMass = y)
 
-<textarea rows="3" cols="75">
+ggplot(DD, aes(x = BodyMass, y = MuscleMass)) +
+  geom_point(size = 3, color = "darkgreen",
+             position = position_jitter(width = 0.005, seed = 2231)) +
+  scale_x_continuous(breaks = seq(1.2, 1.6, by = 0.1)) +
+  labs(x = "**log<sub>10</sub> Body Mass (g)**",
+       y = "**log<sub>10</sub> Muscle Mass (mg)**") +
+  theme(axis.title.x = element_markdown(),
+        axis.title.y = element_markdown())
+```
+
+
+> What is your prediction for the phenotypic ratio from looking at the plot above? Does it appear that there is a 1:1 ratio of normal to small muscle mice?
+
+<textarea rows="3" cols="80">
 
 </textarea>
 
-Based on the observed muscle masses, 201 mice were classified as having the small muscle phenotype and 203 were classified and normal.
+Based on the measured muscle masses, 201 mice were classified as having the small muscle phenotype and 203 were classified and normal.
 
 ```{r}
 #| echo: false
@@ -193,20 +296,22 @@ tribble(
 
 ### Testing the results
 
-Now it's your turn. In the code block below, we set up the data just like we did for the date of birth example.
+Now it's your turn. We will set up the data just like we did for the date of birth example.
+
+In the block below, replace the `0`s below with the observed counts: 203 normal and 201 small muscle.
 
 ```{webr-r}
 MM <- tribble(
   ~ Phenotype, ~ Count,
-  "Normal", 203,
-  "Small Muscle", 201
+  "Normal", 0,
+  "Small Muscle", 0
 )
 MM
 ```
 
-> Based on the observed counts, what do you predict that the test will show? Will the counts differ from a 1:1 ratio or will they not differ (the null hypothesis)?
+> Based on the observed counts, what do you predict that the test will show? Will the counts differ from a 1:1 ratio (agreeing with the researchers' hypothesis) or will they not differ (the null hypothesis)?
 
-<textarea rows="3" cols="75">
+<textarea rows="3" cols="80">
 
 </textarea>
 
@@ -219,13 +324,13 @@ chisq.test()
 
 > What are the $\chi^2$ value, the degrees of freedom, and the associated *P*-value? What does this test tell you about the observed ratio of counts?
 
-<textarea rows="3" cols="75">
+<textarea rows="3" cols="80">
 
 </textarea>
 
 > How do you think the results might have been different if the authors had only measured 40 mice instead of ~400? Feel free to change the numbers above and re-run the test. Just be sure to run the code block where the MM object is created before you rerun the chi-squared test.
 
-<textarea rows="3" cols="75">
+<textarea rows="3" cols="80">
 
 </textarea>
 
