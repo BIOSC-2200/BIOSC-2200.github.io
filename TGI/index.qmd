@@ -10,7 +10,7 @@ format:
     css: ../custom.css
     link-external-newwindow: true
   docx:
-    reference-doc: word-styles-reference-01.docx
+    reference-doc: ../word-styles-reference-01.docx
 webr: 
   packages: ["ggplot2", "dplyr", "forcats", "tibble"]
 filters: 
