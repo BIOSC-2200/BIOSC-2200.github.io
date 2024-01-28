@@ -53,6 +53,11 @@ ggplot2::theme_set(ggplot2::theme_light())
 
 ## Introduction
 
+### Contact information
+
+If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 222.
+
+
 ### Motivation and Goals
 
 Many topics within the study of genetics have a strong link to numerical or quantitative analysis. Long before the identification of DNA as the primary carrier of genetic information, both scientists and non-scientists were conducting breeding experiments. Initially these "experiments" had the goal of domesticating animals for human benefits (e.g., cattle, pigs, goats, dogs). Although not true experiments as we know them today, the end result of those efforts played a large part in the rise of agriculture and civilizations.

@@ -52,6 +52,11 @@ ggplot2::theme_set(ggplot2::theme_light())
 If you have not already worked through the first part of this exercise: [Transmission of Genetic Information](https://biosc-2200.github.io/TGI/), begin with that first. That page has the background and information you need to fully understand this case study.
 
 
+### Contact information
+
+If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 222.
+
+
 ## Introduction
 
 In the early 1990's, Dr. Theodore Garland and colleagues began a [long-term breeding experiment](https://sites.google.com/ucr.edu/hrmice/home) using house mice (*Mus musculus*). The goal of this experiment was to explore the inter-relatedness of traits involved in physiology, anatomy, brain function, immunology, behavior, and many others. 
