@@ -132,7 +132,7 @@ Feel free to try different values and different operators (`+`, `-`, `*`, `/`, `
 You can edit the block to make the code execute successfully, or just leave it as is and move on.
 
 
-### Learning Objectives
+## Learning Objectives
 
 The learning objectives for this exercise are:
 
