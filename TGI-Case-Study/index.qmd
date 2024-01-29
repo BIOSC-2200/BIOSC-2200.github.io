@@ -9,8 +9,6 @@ format:
     self-contained: true
     css: ../custom.css
     link-external-newwindow: true
-  docx:
-    reference-doc: ../word-styles-reference-01.docx
 webr: 
   packages: ["tibble"]
 filters: 
@@ -51,6 +49,12 @@ ggplot2::theme_set(ggplot2::theme_light())
 
 If you have not already worked through the first part of this exercise: [Transmission of Genetic Information](https://biosc-2200.github.io/TGI/), begin with that first. That page has the background and information you need to fully understand this case study.
 
+::: {.callout-note}
+
+Reminder: Save your work regularly.
+
+:::
+
 
 ### Contact information
 
@@ -61,7 +65,15 @@ If you have questions about these exercises, please contact Dr. Kevin Middleton 
 
 In the early 1990's, Dr. Theodore Garland and colleagues began a [long-term breeding experiment](https://sites.google.com/ucr.edu/hrmice/home) using house mice (*Mus musculus*). The goal of this experiment was to explore the inter-relatedness of traits involved in physiology, anatomy, brain function, immunology, behavior, and many others. 
 
-From a random, genetically diverse initial population, the research team established eight separate groups of mice. Four of the groups would be artificially selected for high levels of voluntary activity (measured using a running wheel with a sensor attached to the mouse's cage) and the other four would be bred randomly (these would also have a running wheel, but breeders were randomly chosen). [Here is a link](https://biology.ucr.edu/people/faculty/Garland/Herron_and_Freeman_2014_pages_39-40_Garland.pdf) to a book section that describes the experiment. [Here is a movie of what the mice look like on the running wheels](https://www.youtube.com/watch?v=RuqhC7g_XP0).
+From a random, genetically diverse initial population, the research team established eight separate groups of mice. Four of the groups would be artificially selected for high levels of voluntary activity (measured using a running wheel with a sensor attached to the mouse's cage) and the other four would be bred randomly (these would also have a running wheel, but breeders were randomly chosen). [Here is a link](https://biology.ucr.edu/people/faculty/Garland/Herron_and_Freeman_2014_pages_39-40_Garland.pdf) to a book section that describes the experiment. A movie (@fig-running) shows the dramatic difference in activity between the control and selected mice.
+
+::: {#fig-running}
+
+{{< video https://www.youtube.com/watch?v=RuqhC7g_XP0 >}}
+
+A movie comparing the selected (left) and control (right) mice on the running wheels.
+
+:::
 
 Because wheel-activity, the trait being selected, is heritable, the two sets of lines rapidly diverged so that by generation 10, all four of the selected lines of mice were running more, on average, than the four control lines (@fig-run).
 

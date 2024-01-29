@@ -9,8 +9,6 @@ format:
     self-contained: true
     css: ../custom.css
     link-external-newwindow: true
-  docx:
-    reference-doc: ../word-styles-reference-01.docx
 webr: 
   packages: ["ggplot2", "dplyr", "forcats", "tibble"]
 filters: 
@@ -97,7 +95,11 @@ To save your work there are a few options:
     - If you are on a laptop, if you choose to print from the browser, there will be an option to save the page to PDF.
     - On tablets and phones, use the "share" button. For example, in iOS choosing "Options" in the share menu will allow you to send the page as a PDF.
 
-*Reminder: Save your work regularly.*
+::: {.callout-note}
+
+Reminder: Save your work regularly.
+
+:::
 
 
 #### The R Programming Language
@@ -597,6 +599,13 @@ chisq.test(DOB$Births * 10)
 ```{webr-r}
 chisq.test(DOB$Births / 10)
 ```
+
+::: {.callout-note}
+
+Note that if you scale down too far (e.g., `DOB$Births / 100`), you will receive a warning: `Chi-squared approximation may be incorrect`. This warning occurs because the chi-square test is not applicable for very low sample sizes. This warning is just telling you to be careful with the results in this case.
+
+:::
+
 
 > Do the results make sense to you based on what you know about how sample size impacts our certainty when making inferences about a sample?
 
