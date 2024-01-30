@@ -112,6 +112,12 @@ On this web page, R is running within your web browser^[We are using the [webR f
 
 at the top of the page. Once you see the green "Ready!" sign, everything is set.
 
+::: {.callout-important}
+
+If you are using a Mac, we recommend that you use either Chrome or Firefox to complete these exercises. Some of the default settings in Safari prevent these exercises from running.
+
+:::
+
 
 #### Code blocks
 

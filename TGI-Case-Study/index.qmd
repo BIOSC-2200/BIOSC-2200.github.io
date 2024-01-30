@@ -55,6 +55,12 @@ Reminder: Save your work regularly.
 
 :::
 
+::: {.callout-important}
+
+If you are using a Mac, we recommend that you use either Chrome or Firefox to complete these exercises. Some of the default settings in Safari prevent these exercises from running.
+
+:::
+
 
 ### Contact information
 
