@@ -608,7 +608,7 @@ chisq.test(DOB$Births / 10)
 
 ::: {.callout-note}
 
-Note that if you scale down too far (e.g., `DOB$Births / 100`), you will receive a warning: `Chi-squared approximation may be incorrect`. This warning occurs because the chi-square test is not applicable for very low sample sizes. This warning is just telling you to be careful with the results in this case.
+Note that if you scale down too far (e.g., `DOB$Births / 100`), you will receive a warning: `Chi-squared approximation may be incorrect`. This warning occurs because the chi-square test is not designed for very low sample sizes. This warning is just telling you to be careful with the results in this case. When sample sizes are small, there are alternative statistical tests that are used. 
 
 :::
 
