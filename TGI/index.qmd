@@ -620,6 +620,11 @@ Note that if you scale down too far (e.g., `DOB$Births / 100`), you will receive
 </textarea>
 
 
+## Feedback
+
+We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_5tGDmQAF2xhpaFo) to help us improve.
+
+
 ## References
 
 ::: {#refs}

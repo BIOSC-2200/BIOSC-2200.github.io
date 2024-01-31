@@ -365,6 +365,11 @@ The "mini-muscle" allele was confirmed as [autosomal recessive](https://www.geno
 After some work on the genetics of the small muscle phenotype, it was mapped to a 2.6 megabase region on chromosome 11 that contained about 100 genes [@Hartmann2008-ft]. After several more years of more research, the allele was finally identified as a single nucleotide polymorphism (SNP) located in the Myosin Heavy Chain 4 gene [@Kelly2013-td]. Homozygous mice with two copies of this allele (named *Myh4^minimsc^*) fail to produce one type of myosin, which results in small muscles that produce less contractile force but do not fatigue as quickly as unaffected muscles.
 
 
+## Feedback
+
+We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_eIKxwHqyUVkYFH8) to help us improve.
+
+
 ## References
 
 ::: {#refs}
