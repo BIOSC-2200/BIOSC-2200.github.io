@@ -96,7 +96,7 @@ library(ggplot2)
 library(dplyr)
 library(tibble)
 
-source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/CT/genotypes_plot.R")
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/genotypes_plot.R")
 ```
 
 
