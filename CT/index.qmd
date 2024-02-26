@@ -1,0 +1,214 @@
+---
+title: "Continuous Valued Traits"
+engine: knitr
+format: 
+  html: 
+    toc: true
+    toc-depth: 3
+    toc-title: Contents
+    self-contained: true
+    css: ../custom.css
+    link-external-newwindow: true
+webr: 
+  packages: ["ggplot2", "dplyr", "tibble"]
+filters: 
+  - webr
+bibliography: ../Genetics_Discussion.bib
+csl: ../evolution.csl
+code-annotations: hover
+---
+
+
+```{webr-r}
+#| context: setup
+
+library(ggplot2)
+library(dplyr)
+library(forcats)
+library(tibble)
+
+ggplot2::theme_set(ggplot2::theme_light())
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+
+ggplot2::theme_set(ggplot2::theme_light())
+
+mytheme <- theme(axis.title = element_text(size = 14, face = "bold"),
+                 plot.title = element_text(size = 18, face = "bold"),
+                 plot.subtitle = element_text(size = 16, face = "italic"),
+                 axis.text = element_text(size = 12),
+                 panel.border = element_blank(), 
+                 panel.grid.major = element_blank(),
+                 panel.grid.minor = element_blank(),
+                 axis.line = element_line(colour = "black"))
+
+```
+
+## Preliminaries
+
+If you are already familiar with the structure of these exercises, skip ahead to the Learning Objectives (@sec-objectives)
+
+
+{{< include ../_header.qmd >}}
+
+
+## Learning Objectives {#sec-objectives}
+
+The learning objectives for this exercise are:
+
+- Explain how polygenic traits differ from Mendelian traits
+- Explain how traits with continuous (also called quantitative) phenotypic measures result from the combined effects of many different genes
+- Describe how many genes can each contribute a small amount to a phenotype
+- Explain what quantitative trait loci (QTL) are and how QTL are discovered
+- Explain how the contributions of many genes of small effect can be associated with a disease or condition
+
+
+## Contrasting Mendelian traits and polygenic traits
+
+Dominant/recessive to just thinking about alternate alleles (major vs. minor)
+
+
+## What are quantitative traits?
+
+
+## Counting the ways: Binomial Coefficent
+
+
+
+## Building up continuous traits from combinations of many Mendelian traits
+
+```{r}
+#| echo: false
+
+genotypes_plot <- function(n_genes = 2) {
+  n_genes <- round(n_genes)
+  n_phenos <- 2 * n_genes
+
+  DD <- data.frame(ways = choose(n_phenos, 0:n_phenos))
+  DD$Pct <- DD$ways / sum(DD$ways) * 100
+  DD$ID <- seq_len(nrow(DD))
+  DD$ways_str <- format(DD$ways, big.mark=",")
+  
+  if (n_genes == 1) {
+    title_str = "1 Gene"
+  } else {
+    title_str = paste0(n_genes, " Genes")
+  }
+  
+  ways_str <- format(sum(DD$ways), big.mark=",")
+
+  P <- ggplot(DD) +
+    geom_bar(aes(x = ID, y = Pct), stat = "identity",
+             fill = "gray70") +
+    scale_y_continuous(limits = c(0, 1.1 * max(DD$Pct))) +
+    labs(x = "Number of A alleles",
+         y = "Percent",
+         title = title_str,
+         subtitle = paste0("Total combinations: ",
+                           ways_str)) +
+    mytheme
+  
+  if (n_genes < 15) {
+    P <- P +
+      scale_x_continuous(breaks = DD$ID,
+                         labels = DD$ID - 1)
+  } else {
+    P <- P +
+      scale_x_continuous(breaks = DD$ID,
+                         labels = c("0",
+                                    rep("", times = n_phenos / 2 - 1),
+                                    (max(DD$ID) - 1) / 2,
+                                    rep("", times = n_phenos / 2 - 1),
+                                    max(DD$ID) - 1))
+  }
+  
+  if (n_genes < 9) {
+    P <- P + 
+      geom_text(aes(x = ID, y = Pct,
+                    label = ways_str, vjust = -0.2),
+                color = "firebrick",
+                fontface = "bold",
+                size = 5)
+  }
+  
+  return(P)
+}
+```
+
+
+
+```{webr-r}
+genotypes_plot(n_genes = 5)
+genotypes_plot(n_genes = 7)
+genotypes_plot(n_genes = 10)
+genotypes_plot(n_genes = 15)
+genotypes_plot(n_genes = 16)
+```
+
+
+### Combinations of alleles are binomial
+
+
+### Large numbers of small additions and subtractions are normal
+
+Make some assumptions:
+
+- Additivity can mean adding negative numbers
+- All genes have roughly equal effect
+- Gene do not interact with one another
+
+
+## Case study: Human height
+
+- Best understood quantitative trait
+- Yet still 700 genes
+
+Observed variation is fixed. So adding more traits just means that each can explain a bit less of the variation while simultaneously explaining more of the variation.
+
+```{r}
+NH <- readRDS("NHANES/NHANES.Rds")
+
+```
+
+The National Health and Nutrition Examination Survey (["NHANES"](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx)) began in the early 1960's and continues to this day. The goal is to assess the health and nutrition status of a broad cross-section of the population. As part of this study, height (in cm) and body mass (in kg) are recorded for each participant.
+
+Data from the 2017-2020 NHANES survey has data for `r nrow(NH)`
+
+
+```{r}
+NH |> 
+  group_by(Sex) |> 
+  summarize(across(.cols = everything(), list(mean = mean, sd = sd)))
+
+ggplot(NH, aes(Height, fill = Sex)) +
+  geom_histogram(bins = 30, show.legend = FALSE) +
+  scale_fill_manual(values = c("goldenrod", "firebrick")) +
+  facet_grid(Sex ~ .) +
+  labs(x = "Height (cm)", y = "Count")
+
+```
+
+## Case study: QTL mapping
+
+### Shapiro pigeon example (dominant trait)
+
+
+## Threshold traits
+
+### Schizophrenia (~200 genes)
+
+Why family history is one of the most important diagnostic tools in medicine
+
+
+## References
+
+::: {#refs}
+:::
