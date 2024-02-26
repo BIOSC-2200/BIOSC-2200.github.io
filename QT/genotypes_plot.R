@@ -12,7 +12,11 @@ mytheme <- theme(axis.title = element_text(size = base_font + 2,
                  panel.border = element_blank(), 
                  panel.grid.major = element_blank(),
                  panel.grid.minor = element_blank(),
-                 axis.line = element_line(colour = "black"))
+                 axis.line = element_line(colour = "black"),
+                 strip.background = element_rect(fill = "white",
+                                                 color = "black"),
+                 strip.text = element_text(color = "black",
+                                           size = base_font + 2))
 
 genotypes_plot <- function(n_genes = 2) {
   n_genes <- round(n_genes)
