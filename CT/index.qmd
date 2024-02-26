@@ -1,5 +1,5 @@
 ---
-title: "Continuous Valued Traits"
+title: "Quantitative Traits"
 engine: knitr
 format: 
   html: 
@@ -38,18 +38,6 @@ ggplot2::theme_set(ggplot2::theme_light())
 library(ggplot2)
 library(dplyr)
 library(tibble)
-
-ggplot2::theme_set(ggplot2::theme_light())
-
-mytheme <- theme(axis.title = element_text(size = 14, face = "bold"),
-                 plot.title = element_text(size = 18, face = "bold"),
-                 plot.subtitle = element_text(size = 16, face = "italic"),
-                 axis.text = element_text(size = 12),
-                 panel.border = element_blank(), 
-                 panel.grid.major = element_blank(),
-                 panel.grid.minor = element_blank(),
-                 axis.line = element_line(colour = "black"))
-
 ```
 
 ## Preliminaries
@@ -85,8 +73,19 @@ Dominant/recessive to just thinking about alternate alleles (major vs. minor)
 
 ## Building up continuous traits from combinations of many Mendelian traits
 
-```{r}
-#| echo: false
+```{webr-r}
+#| context: setup
+
+ggplot2::theme_set(ggplot2::theme_light())
+
+mytheme <- theme(axis.title = element_text(size = 14, face = "bold"),
+                 plot.title = element_text(size = 18, face = "bold"),
+                 plot.subtitle = element_text(size = 16, face = "italic"),
+                 axis.text = element_text(size = 12),
+                 panel.border = element_blank(), 
+                 panel.grid.major = element_blank(),
+                 panel.grid.minor = element_blank(),
+                 axis.line = element_line(colour = "black"))
 
 genotypes_plot <- function(n_genes = 2) {
   n_genes <- round(n_genes)
@@ -146,11 +145,7 @@ genotypes_plot <- function(n_genes = 2) {
 
 
 ```{webr-r}
-genotypes_plot(n_genes = 5)
-genotypes_plot(n_genes = 7)
-genotypes_plot(n_genes = 10)
-genotypes_plot(n_genes = 15)
-genotypes_plot(n_genes = 16)
+genotypes_plot(n_genes = 2)
 ```
 
 
