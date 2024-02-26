@@ -119,12 +119,37 @@ Make some assumptions:
 - Gene do not interact with one another
 
 
+## Associating QTLs with genetic variants
+
+Intro SNP
+
+
+### Shapiro pigeon example (dominant trait)
+
+![FIXME Image from [@Shapiro2013-hx] ](../images/pigeon1.png){width=100% fig-align="left" fig-alt="" #fig-pigeon1}
+
+![FIXME Image from [@Shapiro2013-hx] ](../images/pigeon2.png){width=100% fig-align="left" fig-alt="" #fig-pigeon2}
+
+
 ## Case study: Human height
 
-- Best understood quantitative trait
+[@Visscher2012-ph]
+
+![](https://ars.els-cdn.com/content/image/1-s2.0-S0002929711005337-gr1.jpg)
+
+- Best understood quantitative trait in humans
 - Yet still 700 genes
 
-Observed variation is fixed. So adding more traits just means that each can explain a bit less of the variation while simultaneously explaining more of the variation.
+[@Visscher2017-il]
+
+![](https://ars.els-cdn.com/content/image/1-s2.0-S0002929717302409-gr2.jpg)
+
+Yengo et al. [-@Yengo2018-gk]:
+
+- ~700,000 individuals
+- 3290 ("near-independent") SNPs explain ~25% of the variation in human height among Europeans
+- Estimated to be ~700 explaining ~16% of variation in 2010 [@Lango_Allen2010-iu]
+
 
 ```{r}
 NH <- readRDS("NHANES/NHANES.Rds")
@@ -148,11 +173,6 @@ ggplot(NH, aes(Height, fill = Sex)) +
   labs(x = "Height (cm)", y = "Count")
 
 ```
-
-## Case study: QTL mapping
-
-### Shapiro pigeon example (dominant trait)
-
 
 ## Threshold traits
 
