@@ -1,0 +1,106 @@
+---
+title: "Introduction"
+engine: knitr
+format: 
+  html: 
+    toc: true
+    toc-depth: 3
+    toc-title: Contents
+    self-contained: true
+    css: ../custom.css
+    link-external-newwindow: true
+filters: 
+  - webr
+bibliography: ../Genetics_Discussion.bib
+csl: ../evolution.csl
+code-annotations: hover
+---
+
+
+## Contact information
+
+If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 224.
+
+
+## Motivation and Goals
+
+Many topics within the study of genetics have a strong link to numerical or quantitative analysis. Long before the identification of DNA as the primary carrier of genetic information, both scientists and non-scientists were conducting breeding experiments. Initially these "experiments" had the goal of domesticating animals for human benefits (e.g., cattle, pigs, goats, dogs). Although not true experiments as we know them today, the end result of those efforts played a large part in the rise of agriculture and civilizations.
+
+At least ten thousand years passed before the investigations of predictable breeding phenotypes in pea plants by Gregor Mendel (1822-1884), which ultimately led to modern genetics. The study of genetics during the first half of the 20th century was carried out without an understanding of the structure of DNA. Even without this specific knowledge, scientists were able to make great strides in understanding the patterns of evolution in populations. Much of this research was aided by simultaneous advances in statistics during the same time period, which in many cases were being developed to help make sense of the vast array of data that was being collected. 
+
+We have developed these exercises to give you an introduction to some of the statistical approaches that are used in the study of genetics. We hope that you will use these to further develop your understanding of topics in genetics that you are covering in lecture and that you will begin to gain some intuition about the methods used to test hypotheses. Some of you might even wish to go deeper into understanding the math and computer code behind these exercises.
+
+Because quantitative aspects of genetics necessarily involve numbers and equations, we will need to use them. By working through examples, we hope to demystify the numbers. Complex math is not usually necessary, and most can be accomplished with only addition, subtraction, multiplication, and division.
+
+Finally, we will use computer code to carry out analyses and generate plots. These exercises are not designed to be a course in coding, and you do not need to learn any additional material to use the exercises. You will be able to work through by just clicking the "Run Code" button, entering or changing a few values, and clicking "Run Code" again. As mentioned above, if you are interested in the computational side, we encourage you to edit, explore, and learn all you can.^[We are happy to provide additional resources. Just ask.] But that is not necessary to use these exercises for your benefit.
+
+
+## How to use these exercises
+
+This web page is refreshed each time you visit. It is available any time, both on and off campus. It should look the same on laptops, tablets, and phones, although the text will be necessarily small on your phone.
+
+The first and most important directive is to read carefully, because there is no need to rush through. The exercises are designed to be worked linearly. Each piece builds on the those that come before it. Work through deliberately, when you get to a code chunk (see below), pay attention to any edits or data that you need to input.
+
+There are prompts throughout in that ask you to think, make a prediction, evaluate your prediction, etc. These prompts look like the following: a box with green text followed by a box below it in which you can record your answer.
+
+> This is a question that you should think about.
+
+<textarea rows="4" cols="75">
+You would type your response here.
+</textarea>
+
+
+### Save your work
+
+Unfortunately, there is no way to save your work for later. And *definitely do not reload this web page*, because you will lose your work (a downside of the page being refreshed each time you visit it). 
+
+To save your work there are a few options:
+
+- Print this page to a file to save your answers.
+    - If you are on a laptop, if you choose to print from the browser, there will be an option to save the page to PDF.
+    - On tablets and phones, use the "share" button. For example, in iOS choosing "Options" in the share menu will allow you to send the page as a PDF.
+
+::: {.callout-note}
+
+Reminder: Save your work regularly.
+
+:::
+
+
+### The R Programming Language
+
+These exercises use the statistical programming language [R](https://r-project.org/) for analysis and making plots. You do not need to already know how to code in R or any other language to use these exercises. Everything you need to know will be provided.
+
+On this web page, R is running within your web browser^[We are using the [webR framework](https://docs.r-wasm.org/webr/latest/).], which means that you do not need to install any software (nor is any software permanently installed on your device). When you first load the web page, it will take a few seconds for the software to load. When the loading step is complete, you will see the icon
+
+![](../images/webr.png){fig-align="center"}
+
+at the top of the page. Once you see the green "Ready!" sign, everything is set.
+
+::: {.callout-important}
+
+If you are using a Mac, we recommend that you use either Chrome or Firefox to complete these exercises. Some of the default settings in Safari prevent these exercises from running.
+
+:::
+
+
+### Code blocks
+
+As you work through, you will encounter code blocks. Some code blocks will run when the page is first loaded (no interaction required on your part). Other code blocks won't execute until you ask.
+
+These code blocks will look like this, with a "Run Code" button:
+
+```{webr-r}
+2 + 2
+```
+
+Clicking the "Run Code" button will cause R to run the code and print the result (in this case `4` -- not very interesting, but we have to start somewhere). The simplest example is to just use R as a fancy calculator. If you haven't already, click "Run Code" above.
+
+Feel free to try different values and different operators (`+`, `-`, `*`, `/`, `^`). You can't break anything. The worst that will happen is that you will get a syntax error. Execute the code below to see what a syntax error looks like.
+
+```{webr-r}
+2 * a12
+```
+
+You can edit the block to make the code execute successfully, or just leave it as is and move on.
+

@@ -47,6 +47,8 @@ ggplot2::theme_set(cowplot::theme_cowplot())
 
 ## Preliminaries
 
+If you are already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
+
 If you have not already worked through the first part of this exercise: [Transmission of Genetic Information](https://biosc-2200.github.io/TGI/), begin with that first. That page has the background and information you need to fully understand this case study.
 
 ::: {.callout-note}
