@@ -19,17 +19,6 @@ code-annotations: hover
 ---
 
 
-```{webr-r}
-#| context: setup
-
-library(ggplot2)
-library(dplyr)
-library(forcats)
-library(tibble)
-
-ggplot2::theme_set(ggplot2::theme_light())
-```
-
 ```{r}
 #| echo: false
 #| message: false
@@ -40,12 +29,28 @@ library(dplyr)
 library(tibble)
 ```
 
+
 ## Preliminaries
 
-If you are already familiar with the structure of these exercises, skip ahead to the Learning Objectives (@sec-objectives)
+If you are already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
+
+::: {.callout-note}
+
+Reminder: Save your work regularly.
+
+:::
+
+::: {.callout-important}
+
+If you are using a Mac, we recommend that you use either Chrome or Firefox to complete these exercises. Some of the default settings in Safari prevent these exercises from running.
+
+:::
 
 
-{{< include ../_header.qmd >}}
+### Contact information
+
+If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 224.
+
 
 
 ## Learning Objectives {#sec-objectives}
@@ -71,81 +76,34 @@ Dominant/recessive to just thinking about alternate alleles (major vs. minor)
 
 
 
-## Building up continuous traits from combinations of many Mendelian traits
+## Continuous traits from combinations of many Mendelian traits
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-height: 4
+
+source("genotypes_plot.R")
+genotypes_plot(n_genes = 2)
+
+```
+
 
 ```{webr-r}
 #| context: setup
 
-ggplot2::theme_set(ggplot2::theme_light())
+library(ggplot2)
+library(dplyr)
+library(tibble)
 
-mytheme <- theme(axis.title = element_text(size = 14, face = "bold"),
-                 plot.title = element_text(size = 18, face = "bold"),
-                 plot.subtitle = element_text(size = 16, face = "italic"),
-                 axis.text = element_text(size = 12),
-                 panel.border = element_blank(), 
-                 panel.grid.major = element_blank(),
-                 panel.grid.minor = element_blank(),
-                 axis.line = element_line(colour = "black"))
-
-genotypes_plot <- function(n_genes = 2) {
-  n_genes <- round(n_genes)
-  n_phenos <- 2 * n_genes
-
-  DD <- data.frame(ways = choose(n_phenos, 0:n_phenos))
-  DD$Pct <- DD$ways / sum(DD$ways) * 100
-  DD$ID <- seq_len(nrow(DD))
-  DD$ways_str <- format(DD$ways, big.mark=",")
-  
-  if (n_genes == 1) {
-    title_str = "1 Gene"
-  } else {
-    title_str = paste0(n_genes, " Genes")
-  }
-  
-  ways_str <- format(sum(DD$ways), big.mark=",")
-
-  P <- ggplot(DD) +
-    geom_bar(aes(x = ID, y = Pct), stat = "identity",
-             fill = "gray70") +
-    scale_y_continuous(limits = c(0, 1.1 * max(DD$Pct))) +
-    labs(x = "Number of A alleles",
-         y = "Percent",
-         title = title_str,
-         subtitle = paste0("Total combinations: ",
-                           ways_str)) +
-    mytheme
-  
-  if (n_genes < 15) {
-    P <- P +
-      scale_x_continuous(breaks = DD$ID,
-                         labels = DD$ID - 1)
-  } else {
-    P <- P +
-      scale_x_continuous(breaks = DD$ID,
-                         labels = c("0",
-                                    rep("", times = n_phenos / 2 - 1),
-                                    (max(DD$ID) - 1) / 2,
-                                    rep("", times = n_phenos / 2 - 1),
-                                    max(DD$ID) - 1))
-  }
-  
-  if (n_genes < 9) {
-    P <- P + 
-      geom_text(aes(x = ID, y = Pct,
-                    label = ways_str, vjust = -0.2),
-                color = "firebrick",
-                fontface = "bold",
-                size = 5)
-  }
-  
-  return(P)
-}
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/CT/genotypes_plot.R")
 ```
 
 
 
 ```{webr-r}
-genotypes_plot(n_genes = 2)
+#| fig-height: 4
+genotypes_plot(n_genes = 3)
 ```
 
 
