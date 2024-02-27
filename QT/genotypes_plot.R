@@ -66,7 +66,7 @@ genotypes_plot <- function(n_genes = 2) {
                     label = ways_str, vjust = -0.2),
                 color = "firebrick",
                 fontface = "bold",
-                size = 5)
+                size = 4)
   }
   
   return(P)

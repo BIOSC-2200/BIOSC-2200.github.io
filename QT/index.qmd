@@ -119,6 +119,64 @@ Make some assumptions:
 - Gene do not interact with one another
 
 
+## Case study: Human height
+
+
+```{r}
+#| echo: false
+
+NH <- readRDS("NHANES/NHANES.Rds")
+
+NHa <- NH |> 
+  filter(Age > 20)
+```
+
+The National Health and Nutrition Examination Survey (["NHANES"](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx)) began in the early 1960's and continues to this day. The goal is to assess the health and nutrition status of a broad cross-section of the population. As part of this study, routine measurments of body form such as height (in cm) and body mass (in kg) are recorded for each participant.
+
+The 2017-2020 NHANES survey has data for `r nrow(NH)` individuals. @fig-htall shows...
+
+```{r}
+#| label: fig-htall
+#| echo: false
+#| fig-height: 4
+#| fig-cap: FIXME. Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx.
+#| cap-location: bottom
+
+ggplot(NH, aes(x = Age, y = Height, color = Genotype)) +
+  geom_point(size = 1, show.legend = FALSE, alpha = 0.25,
+             position = position_jitter(width = 0.5, seed = 3847293)) +
+  scale_color_manual(values = c("goldenrod", "firebrick")) +
+  scale_x_continuous(breaks = seq(0, 80, by = 5)) +
+  facet_grid(Genotype ~ .) +
+  labs(x = "Age (y)", y = "Height (cm)") +
+  mytheme
+```
+
+
+
+```{r}
+#| label: fig-ht
+#| echo: false
+#| fig-height: 4
+#| fig-cap: FIXME. Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx.
+#| cap-location: bottom
+
+NHa |> 
+  group_by(Genotype) |> 
+  summarize(across(.cols = everything(), list(mean = mean, sd = sd)))
+
+ggplot(NHa, aes(Height, fill = Genotype)) +
+  geom_histogram(bins = 30, show.legend = FALSE) +
+  scale_fill_manual(values = c("goldenrod", "firebrick")) +
+  facet_grid(Genotype ~ .) +
+  labs(x = "Height (cm)", y = "Count") +
+  mytheme
+
+```
+
+## Describing distributions
+
+
 ## Associating QTLs with genetic variants
 
 Intro SNP
@@ -126,23 +184,20 @@ Intro SNP
 
 ### Shapiro pigeon example (dominant trait)
 
-![FIXME Image from [@Shapiro2013-hx] ](../images/pigeon1.png){width=100% fig-align="left" fig-alt="" #fig-pigeon1}
+![FIXME Image from [@Shapiro2013-hx].](../images/pigeon1.png){width=100% fig-align="left" fig-alt="" #fig-pigeon1}
 
-![FIXME Image from [@Shapiro2013-hx] ](../images/pigeon2.png){width=100% fig-align="left" fig-alt="" #fig-pigeon2}
+![FIXME Image from [@Shapiro2013-hx].](../images/pigeon2.png){width=100% fig-align="left" fig-alt="" #fig-pigeon2}
 
 
-## Case study: Human height
+## QTL for Human Height
 
-[@Visscher2012-ph]
-
-![](https://ars.els-cdn.com/content/image/1-s2.0-S0002929711005337-gr1.jpg)
+![FIXME Image from [@Visscher2012-ph].](../images/gr1_lrg.jpg){width=75% fig-align="center" fig-alt="" #fig-gwas1}
 
 - Best understood quantitative trait in humans
 - Yet still 700 genes
 
-[@Visscher2017-il]
+![FIXME Image from [@Visscher2017-il].](../images/gr2_lrg.jpg){width=100% fig-align="center" fig-alt="" #fig-gwas1}
 
-![](https://ars.els-cdn.com/content/image/1-s2.0-S0002929717302409-gr2.jpg)
 
 Yengo et al. [-@Yengo2018-gk]:
 
@@ -151,30 +206,8 @@ Yengo et al. [-@Yengo2018-gk]:
 - Estimated to be ~700 explaining ~16% of variation in 2010 [@Lango_Allen2010-iu]
 
 
-```{r}
-NH <- readRDS("NHANES/NHANES.Rds")
 
-```
-
-The National Health and Nutrition Examination Survey (["NHANES"](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx)) began in the early 1960's and continues to this day. The goal is to assess the health and nutrition status of a broad cross-section of the population. As part of this study, height (in cm) and body mass (in kg) are recorded for each participant.
-
-Data from the 2017-2020 NHANES survey has data for `r nrow(NH)`
-
-
-```{r}
-NH |> 
-  group_by(Sex) |> 
-  summarize(across(.cols = everything(), list(mean = mean, sd = sd)))
-
-ggplot(NH, aes(Height, fill = Sex)) +
-  geom_histogram(bins = 30, show.legend = FALSE) +
-  scale_fill_manual(values = c("goldenrod", "firebrick")) +
-  facet_grid(Sex ~ .) +
-  labs(x = "Height (cm)", y = "Count")
-
-```
-
-## Threshold traits
+## Case Study: Threshold traits
 
 ### Schizophrenia (~200 genes)
 
