@@ -2,7 +2,7 @@ library(tidyverse)
 
 NH_demo <- foreign::read.xport("P_DEMO.XPT") |> 
   select(SEQN, RIAGENDR, RIDAGEYR) |> 
-  mutate(Sex = if_else(RIAGENDR == 1, "XY Male", "XX Female")) |> 
+  mutate(Genotype = if_else(RIAGENDR == 1, "XY", "XX")) |> 
   rename(Age = RIDAGEYR)
   
 NH_data <- foreign::read.xport("P_BMX.XPT") |> 
