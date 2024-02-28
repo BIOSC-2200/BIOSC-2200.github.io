@@ -161,9 +161,10 @@ ggplot(NH, aes(x = Age, y = Height, color = Genotype)) +
 #| fig-cap: FIXME. Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx.
 #| cap-location: bottom
 
-NHa |> 
+NHa_means <- NHa |> 
   group_by(Genotype) |> 
-  summarize(across(.cols = everything(), list(mean = mean, sd = sd)))
+  summarize(across(.cols = everything(),
+                   list(mean = mean, sd = sd)))
 
 ggplot(NHa, aes(Height, fill = Genotype)) +
   geom_histogram(bins = 30, show.legend = FALSE) +
@@ -174,7 +175,19 @@ ggplot(NHa, aes(Height, fill = Genotype)) +
 
 ```
 
+## Generating a normal distribution from combinations of alleles
+
+```{r}
+#| echo: false
+
+simulate_heights(n_genes = 25)
+
+```
+
+
 ## Describing distributions
+
+### Using distributions
 
 
 ## Associating QTLs with genetic variants
@@ -195,6 +208,7 @@ Intro SNP
 
 - Best understood quantitative trait in humans
 - Yet still 700 genes
+
 
 ![FIXME Image from [@Visscher2017-il].](../images/gr2_lrg.jpg){width=100% fig-align="center" fig-alt="" #fig-gwas1}
 
