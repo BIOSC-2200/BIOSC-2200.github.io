@@ -16,5 +16,5 @@ NH <- left_join(NH_demo, NH_data, by = join_by(SEQN)) |>
   select(-Weight) |> 
   as_tibble()
 
-write_rds(NH, file = "../NHANES.Rds")
+write_csv(NH, file = "../NHANES.csv")
 
