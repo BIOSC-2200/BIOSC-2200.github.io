@@ -81,7 +81,9 @@ genotypes_plot <- function(n_genes = 2) {
 simulate_heights <- function(n_genes = 25) {
   set.seed(3242343)
   
-  XX <- readRDS("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.Rds") |> 
+  download.file("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES.Rds",
+                "NHANES.Rds")
+  XX <- readRDS("NHANES.Rds") |> 
     filter(Genotype == "XX" & Age > 20)
   
   n_individuals <- nrow(XX)

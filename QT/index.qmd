@@ -177,11 +177,8 @@ ggplot(NHa, aes(Height, fill = Genotype)) +
 
 ## Generating a normal distribution from combinations of alleles
 
-```{r}
-#| echo: false
-
+```{webr-r}
 simulate_heights(n_genes = 25)
-
 ```
 
 

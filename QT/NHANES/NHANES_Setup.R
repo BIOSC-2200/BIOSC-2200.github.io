@@ -13,7 +13,8 @@ NH_data <- foreign::read.xport("P_BMX.XPT") |>
 NH <- left_join(NH_demo, NH_data, by = join_by(SEQN)) |> 
   drop_na() |> 
   select(-SEQN, -RIAGENDR) |> 
+  select(-Weight) |> 
   as_tibble()
 
-write_rds(NH, file = "NHANES.Rds")
+write_rds(NH, file = "../NHANES.Rds")
 
