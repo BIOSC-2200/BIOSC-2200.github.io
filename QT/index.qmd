@@ -47,8 +47,6 @@ download.file(
 ```
 
 
-
-
 ## Preliminaries
 
 If you are already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
@@ -148,7 +146,7 @@ The 2017-2020 NHANES survey has data for `r format(nrow(NH), big.mark = ",")` in
 #| label: fig-htall
 #| echo: false
 #| fig-height: 4
-#| fig-cap: FIXME. Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx.
+#| fig-cap: FIXME. Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx).
 #| cap-location: bottom
 
 ggplot(NH, aes(x = Age, y = Height, color = Genotype)) +
@@ -167,7 +165,7 @@ ggplot(NH, aes(x = Age, y = Height, color = Genotype)) +
 #| label: fig-ht
 #| echo: false
 #| fig-height: 4
-#| fig-cap: FIXME. Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx.
+#| fig-cap: FIXME. Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx).
 #| cap-location: bottom
 
 NHa_means <- NHa |> 
@@ -185,6 +183,16 @@ ggplot(NHa, aes(Height, fill = Genotype)) +
 ```
 
 ## Generating a normal distribution from combinations of alleles
+
+```{webr-r}
+list.files()
+```
+
+
+```{webr-r}
+ls()
+```
+
 
 ```{webr-r}
 simulate_heights(n_genes = 25)
