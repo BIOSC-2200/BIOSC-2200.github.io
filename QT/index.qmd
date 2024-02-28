@@ -27,6 +27,9 @@ code-annotations: hover
 library(ggplot2)
 library(dplyr)
 library(tibble)
+
+source("genotypes_plot.R")
+
 ```
 
 
@@ -95,14 +98,16 @@ Dominant/recessive to just thinking about alternate alleles (major vs. minor)
 
 ## Continuous traits from combinations of many Mendelian traits
 
+@fig-genesplot shows...FIXME
+
 ```{r}
+#| label: fig-genesplot
 #| echo: false
-#| fig-align: center
 #| fig-height: 4
+#| fig-cap: FIXME. 
+#| cap-location: bottom
 
-source("genotypes_plot.R")
 genotypes_plot(n_genes = 2)
-
 ```
 
 
