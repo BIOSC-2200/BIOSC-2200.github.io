@@ -125,7 +125,7 @@ Make some assumptions:
 ```{r}
 #| echo: false
 
-NH <- readRDS("NHANES/NHANES.Rds")
+NH <- read.csv("NHANES.csv")
 
 NHa <- NH |> 
   filter(Age > 20)
