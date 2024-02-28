@@ -19,7 +19,7 @@ mytheme <- theme(axis.title = element_text(size = base_font + 2,
                                            size = base_font + 2))
 
 
-# Plot genotypes
+# Plot genotypes #############################################################
 
 genotypes_plot <- function(n_genes = 2) {
   n_genes <- round(n_genes)
@@ -28,7 +28,7 @@ genotypes_plot <- function(n_genes = 2) {
   DD <- data.frame(ways = choose(n_alleles, 0:n_alleles))
   DD$Pct <- DD$ways / sum(DD$ways) * 100
   DD$ID <- seq_len(nrow(DD))
-  DD$ways_str <- format(DD$ways, big.mark=",")
+  DD$ways_str <- format(DD$ways, big.mark = ",")
   
   if (n_genes == 1) {
     title_str = "1 Gene"
@@ -36,7 +36,7 @@ genotypes_plot <- function(n_genes = 2) {
     title_str = paste0(n_genes, " Genes")
   }
   
-  ways_str <- format(sum(DD$ways), big.mark=",")
+  ways_str <- format(sum(DD$ways), big.mark = ",")
   
   P <- ggplot(DD) +
     geom_bar(aes(x = ID, y = Pct), stat = "identity",
@@ -76,7 +76,7 @@ genotypes_plot <- function(n_genes = 2) {
 }
 
 
-## Normal distribution by simulation
+## Normal distribution by simulation #########################################
 
 simulate_heights <- function(n_genes = 25) {
   set.seed(3242343)
@@ -86,7 +86,6 @@ simulate_heights <- function(n_genes = 25) {
   
   n_individuals <- nrow(XX)
   
-  n_genes <- 25
   n_alleles <- n_genes * 2
   
   h_bar <- mean(XX$Height)

@@ -30,6 +30,25 @@ library(tibble)
 ```
 
 
+```{webr-r}
+#| context: setup
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/genotypes_plot.R")
+
+download.file(
+  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
+  "NHANES.csv",
+  quiet = TRUE)
+
+```
+
+
+
+
 ## Preliminaries
 
 If you are already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
@@ -90,23 +109,6 @@ genotypes_plot(n_genes = 2)
 
 
 ```{webr-r}
-#| context: setup
-
-library(ggplot2)
-library(dplyr)
-library(tibble)
-
-source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/genotypes_plot.R")
-
-download.file(
-  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
-  "NHANES.csv")
-
-```
-
-
-
-```{webr-r}
 #| fig-height: 4
 genotypes_plot(n_genes = 3)
 ```
@@ -136,9 +138,11 @@ NHa <- NH |>
   filter(Age > 20)
 ```
 
-The National Health and Nutrition Examination Survey (["NHANES"](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx)) began in the early 1960's and continues to this day. The goal is to assess the health and nutrition status of a broad cross-section of the population. As part of this study, routine measurments of body form such as height (in cm) and body mass (in kg) are recorded for each participant.
+The National Health and Nutrition Examination Survey (["NHANES"](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx)) began in the early 1960's and continues to this day. The goal is to assess the health and nutrition status of a broad cross-section of the population. As part of this study, routine measurements of body size such as height (in cm) are recorded for each participant.
 
-The 2017-2020 NHANES survey has data for `r nrow(NH)` individuals. @fig-htall shows...
+The 2017-2020 NHANES survey has data for `r format(nrow(NH), big.mark = ",")` individuals.
+
+@fig-htall shows...
 
 ```{r}
 #| label: fig-htall
