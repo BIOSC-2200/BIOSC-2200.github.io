@@ -19,10 +19,6 @@ filters:
 download.file(
   "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
   "NHANES.csv")
-
-add2 <- function(x) {
-  return(x + 2)
-}
 ```
 
 ```{webr-r}
@@ -30,15 +26,3 @@ DD <- read.csv("NHANES.csv")
 as_tibble(DD)
 ```
 
-```{webr-r}
-list.files()
-```
-
-```{webr-r}
-ls()
-```
-
-
-```{webr-r}
-add2(5)
-```

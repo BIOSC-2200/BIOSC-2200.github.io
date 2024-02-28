@@ -42,7 +42,7 @@ genotypes_plot <- function(n_genes = 2) {
     geom_bar(aes(x = ID, y = Pct), stat = "identity",
              fill = "gray70") +
     scale_y_continuous(limits = c(0, 1.1 * max(DD$Pct))) +
-    labs(x = "Alleles",
+    labs(x = "Allele Combination",
          y = "Percent",
          title = title_str,
          subtitle = paste0("Total combinations: ",
