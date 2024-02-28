@@ -97,6 +97,11 @@ library(dplyr)
 library(tibble)
 
 source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/genotypes_plot.R")
+
+download.file(
+  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
+  "NHANES.csv")
+
 ```
 
 
@@ -125,7 +130,7 @@ Make some assumptions:
 ```{r}
 #| echo: false
 
-NH <- read.csv("NHANES.csv")
+NH <- read.csv("NHANES/NHANES.csv")
 
 NHa <- NH |> 
   filter(Age > 20)
