@@ -52,7 +52,7 @@ genotypes_plot <- function(n_genes = 2) {
   if (n_genes < 9) {
     P <- P + 
       geom_text(aes(x = ID, y = Pct,
-                    label = ways_str, vjust = -0.2),
+                    label = ways_str, vjust = -0.2, hjust = 0.5),
                 color = "firebrick",
                 fontface = "bold",
                 size = 4)
@@ -83,11 +83,13 @@ genotypes_plot <- function(n_genes = 2) {
 
 ## Normal distribution by simulation #########################################
 
-simulate_heights <- function(n_genes = 25) {
+simulate_heights <- function(n_genes = 25, XX = NULL) {
   set.seed(3242343)
   
-  XX <- read.csv("NHANES.csv") |> 
-    filter(Genotype == "XX" & Age > 20)
+  if (is.null(XX)) {
+    XX <- read.csv("NHANES.csv") |> 
+      filter(Genotype == "XX" & Age > 20)
+  }
   
   n_individuals <- nrow(XX)
   
@@ -119,7 +121,7 @@ simulate_heights <- function(n_genes = 25) {
     facet_grid(Set ~ ., scales = "free_y") +
     scale_fill_manual(values = c("goldenrod", "darkblue"), guide = "none") +
     labs(x = "Height (cm)", y = "Count",
-         title = paste0(n_alleles, " Alleles"),
+         title = paste0(n_genes, " Genes, ", n_alleles, " Alleles"),
          subtitle = paste0("Each allele = ±", round(correction, 2), " cm")) +
     mytheme
   
