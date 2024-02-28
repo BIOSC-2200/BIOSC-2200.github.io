@@ -42,26 +42,12 @@ genotypes_plot <- function(n_genes = 2) {
     geom_bar(aes(x = ID, y = Pct), stat = "identity",
              fill = "gray70") +
     scale_y_continuous(limits = c(0, 1.1 * max(DD$Pct))) +
-    labs(x = "Number of A alleles",
+    labs(x = "Alleles",
          y = "Percent",
          title = title_str,
          subtitle = paste0("Total combinations: ",
                            ways_str)) +
     mytheme
-  
-  if (n_genes < 15) {
-    P <- P +
-      scale_x_continuous(breaks = DD$ID,
-                         labels = DD$ID - 1)
-  } else {
-    P <- P +
-      scale_x_continuous(breaks = DD$ID,
-                         labels = c("0",
-                                    rep("", times = n_alleles / 2 - 1),
-                                    (max(DD$ID) - 1) / 2,
-                                    rep("", times = n_alleles / 2 - 1),
-                                    max(DD$ID) - 1))
-  }
   
   if (n_genes < 9) {
     P <- P + 
@@ -70,6 +56,25 @@ genotypes_plot <- function(n_genes = 2) {
                 color = "firebrick",
                 fontface = "bold",
                 size = 4)
+  }
+
+  if (n_genes < 12) {
+    AA <- DD$ID - 1
+    TT <- n_alleles - AA
+    x_labs <- paste0(AA, " A\n", TT, " T")
+    
+    P <- P +
+      scale_x_continuous(breaks = DD$ID,
+                         labels = x_labs)
+  } else {
+    P <- P +
+      scale_x_continuous(breaks = DD$ID,
+                         labels = c(paste0("0 A\n", n_alleles, " T"),
+                                    rep("", times = n_alleles / 2 - 1),
+                                    paste0(n_alleles / 2, " A\n",
+                                           n_alleles / 2, " T"),
+                                    rep("", times = n_alleles / 2 - 1),
+                                    paste0(n_alleles, " A\n0 T")))
   }
   
   return(P)
