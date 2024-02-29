@@ -72,31 +72,94 @@ If you are using a Mac, we recommend that you use either Chrome or Firefox to co
 If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 224.
 
 
-
-## Learning Objectives {#sec-objectives}
+## Learning objectives
 
 The learning objectives for this exercise are:
 
 - Explain how polygenic traits differ from Mendelian traits
-- Explain how traits with continuous (also called quantitative) phenotypic measures result from the combined effects of many different genes
-- Describe how many genes can each contribute a small amount to a phenotype
-- Explain what quantitative trait loci (QTL) are and how QTL are discovered
+- Explain how quantitative traits with continuous-valued phenotypic measures result from the combined effects of many different genes
+- Describe how many genes can each contribute a small amount to a measurable phenotype
+- Explain what quantitative trait loci (QTL) are and how QTL are identified
 - Explain how the contributions of many genes of small effect can be associated with a disease or condition
 
 
 ## Contrasting Mendelian traits and polygenic traits
 
+The first phenotypes that you learned about as well as those described in the first in this series of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
+
+This set of exercises focuses on phenotypes that are determined by multiple genes: **polygenic traits**. Polygenic traits often (but not always) can be measured on a numeric scale: *quantitative traits*. The two main types of quantitative traits are:
+
+- *Meristic traits*: Traits that take on integer values such as the number of peas in a pod. 3, 4, and 5 are all possible values, but a pod can't have 3.5 peas.
+- *Continuous-valued traits*: Traits that can take on any number on the number line. For example lengths and weights can have any value depending on the scale (e.g., grams, pounds, etc.)
+
+FIXME
+
 Dominant/recessive to just thinking about alternate alleles (major vs. minor)
 
 
-## What are quantitative traits?
+### Alleles associated with quantitative traits
 
 
-## Counting the ways: Binomial Coefficent
+## Counting the ways that alleles can combine
+
+![The process of gamete formation leads to predictable genotypic and phenotypic proportions in the F~2~ generation. Image modified from Klug et al. [-@Klug2019-cs]](../images/punnett.png){fig-alt="" #fig-punnett}
+
+The 1:2:1 genotypic ratio and 3:1 phenotypic ratio in the heterozygote cross example for a dominant Mendelian trait (@fig-punnett) represent theoretical probabilities for the distributions of genotypes and phenotypes. Higher level crosses, with two and three genes can be done manually, but very quickly you will find that keeping track of all the combinations becomes very challenging (@fig-trihybrid).
+
+![Punnett square for a trihybrid cross in peas.](https://pbs.twimg.com/media/CvuLNpHXgAQpSwh.jpg){fig-alt="" #fig-trihybrid}
+
+Punnett squares with more than 3 genes get very difficult (4 genes requires 256 combinations, and 5 needs 1,024 combinations). Fortunately, rather than keeping track of all these combinations manually, we can just calculate them directly using a little bit of math.
+
+Before we think about combining alleles, let's just consider something simpler: flipping coins. Imagine that you flip a coin twice. Each flip can result in either heads or tails. With two coin flips there are four possibilities:
+
+1. Heads, Heads
+2. Heads, Tails
+3. Tails, Heads
+4. Tails, Tails
+
+To get two heads or two tails, both coin flips have to be the same. But to get one head and one tail, there are two possibilities:
+
+- Heads, Tails
+- Tails, Heads
+
+Because the sequence doesn't matter, both result in one of each (head and tail). If we then think about adding up the possible sets of results, we have three possibilities:
+
+1. 2 Heads (1 way)
+2. 1 Head, 1 Tail (2 ways)
+3. 2 Tails (1 way)
+
+If you look back up at the monohybrid cross above, you will find that there is 1 DD, 2 Dd, and 1 dd. This 1:2:1 genotypic ratio is the same as for our coin flipping example.
+
+All the different ways that you can arrive at a count of heads from a set of coin tosses is represented by a number called the *Binomial Coefficient*. The equation for the binomial coefficient for the number of heads from a set of coin flips is:
+
+$$\frac{Flips!}{Heads!(Flips - Heads)!}$$
+
+Those exclamation points (!) are the factorial function (3! = 3 x 2 x 1 = 6). If we plug in the numbers for 1 Head from 2 Flips:
+
+$$\frac{2!}{1!(2 - 1)!}$$
+
+which reduces to:
+
+$$\frac{2 \times 1}{1(1)}$$
+
+which is just $\frac{2}{1}$ or 2. So there are 2 ways to get 1 head from 2 coin flips, just like we figured out manually.
+
+Fortunately, we don't have to do all these factorials by hand when there are more genotypes. We can calculate the binomial coefficient directly using the `choose()` function. Run the code below to confirm that there are 1, 2 and 1 ways to get different genotypes:
+
+```{webr-r}
+choose(n = 2, k = 0) # dd
+choose(n = 2, k = 1) # Dd or dD
+choose(n = 2, k = 2) # DD
+```
+
+Feel free to change the values for `n` (the number of "trials") and `k` (the number of "successes") and try out some additional combinations.^[The binomial coefficient calculation is also used to calculate probabilities for lotteries (the Powerball odds of winning is 1 in `choose(69, 5) * choose(26, 1)`) and poker hands (the odds of a royal flush in 5-card draw is 4 in `choose(52, 5)` or equivalently one in `choose(52, 5) / 4`). In fact, much of the basics of probability were originally developed in the 17th and 18th centuries to try to understand various forms of gambling.]
+
+
+### Replace coin flips with independent alleles
 
 
 
-## Continuous traits from combinations of many Mendelian traits
+A and T FIXME
 
 @fig-genesplot shows...FIXME
 
@@ -107,17 +170,22 @@ Dominant/recessive to just thinking about alternate alleles (major vs. minor)
 #| fig-cap: FIXME. 
 #| cap-location: bottom
 
+genotypes_plot(n_genes = 1)
+```
+
+The figure below calculates all the combinations for a trihybrid cross, like the example of corn above. Notice how the grid above is 8 by 8, giving 64 possible combinations. The total combinations below is also 64 (but with a lot less ) 
+
+```{webr-r}
+#| fig-height: 4
 genotypes_plot(n_genes = 2)
 ```
 
 
-```{webr-r}
-#| fig-height: 4
-genotypes_plot(n_genes = 3)
-```
+
+Combinations of alleles are binomial
 
 
-### Combinations of alleles are binomial
+## Continuous phenotypes result from combinations of many alleles
 
 
 ### Large numbers of small additions and subtractions are normal
@@ -189,19 +257,31 @@ ggplot(NHa, aes(Height, fill = Genotype)) +
 
 ## Generating a normal distribution from combinations of alleles
 
-```{webr-r}
-list.files()
+@fig-gen_normal FIXME
+
+```{r}
+#| label: fig-gen_normal
+#| echo: false
+#| fig-height: 4
+#| fig-cap: FIXME.
+#| cap-location: bottom
+
+NH_XX <- read.csv("NHANES/NHANES.csv") |> 
+  filter(Genotype == "XX" & Age > 20)
+simulate_heights(n_genes = 5, XX = NH_XX)
 ```
 
+Try increasing numbers of genes (e.g., 10, 20, 50, 100, 300). 
 
 ```{webr-r}
-ls()
+simulate_heights(n_genes = 10)
 ```
 
+> As the number of genes increases, how do the distributions of actual heights and simulated heights compare to one another? How the amount of phenotypic variation attributable to each allele change as the number of genes controbuting to height increases?
 
-```{webr-r}
-simulate_heights(n_genes = 25)
-```
+<textarea rows="3" cols="75">
+
+</textarea>
 
 
 ## Describing distributions

@@ -22,22 +22,35 @@ mytheme <- theme(axis.title = element_text(size = base_font + 2,
 # Plot genotypes #############################################################
 
 genotypes_plot <- function(n_genes = 2) {
-  n_genes <- round(n_genes)
+  
+  # Use only integers
+  n_genes <- round(n_genes) |> as.integer()
+  
+  # Two alleles for each gene
   n_alleles <- 2 * n_genes
   
+  # Calculate the ways to get different numbers of major allele
   DD <- data.frame(ways = choose(n_alleles, 0:n_alleles))
   DD$Pct <- DD$ways / sum(DD$ways) * 100
+  
+  # Add a column with just 1:n_alleles
   DD$ID <- seq_len(nrow(DD))
+  
+  # Format a string to use for labeling the bars
   DD$ways_str <- format(DD$ways, big.mark = ",")
   
+  # Format title string
   if (n_genes == 1) {
     title_str = "1 Gene"
   } else {
     title_str = paste0(n_genes, " Genes")
   }
   
+  # Format the "ways" string
   ways_str <- format(sum(DD$ways), big.mark = ",")
   
+  # Create the base plot. Add a little vertical space to accommodate
+  # the number of ways at the top of the bar.
   P <- ggplot(DD) +
     geom_bar(aes(x = ID, y = Pct), stat = "identity",
              fill = "gray70") +
@@ -86,6 +99,9 @@ genotypes_plot <- function(n_genes = 2) {
 simulate_heights <- function(n_genes = 25, XX = NULL) {
   set.seed(3242343)
   
+  # If XX is not supplied, then we are working in webr.
+  # Load locally from the downloaded file from the setup chunk.
+  # Otherwise, XX will be loaded locally in an {r} chunk.
   if (is.null(XX)) {
     XX <- read.csv("NHANES.csv") |> 
       filter(Genotype == "XX" & Age > 20)
@@ -96,17 +112,19 @@ simulate_heights <- function(n_genes = 25, XX = NULL) {
   n_alleles <- n_genes * 2
   
   h_bar <- mean(XX$Height)
-  h_sd <- sd(XX$Height)
   h_q <- quantile(XX$Height, c(0.025, 0.975))
-  h_range <- range(XX$Height)
-  
+
   q_range <- as.numeric(h_q[2] - h_q[1])
   
   n_A <- rbinom(n = n_individuals, size = n_alleles, prob = 0.5)
   n_a <- n_alleles - n_A
   
+  # This is the correction factor to rescale the allele effect size to
+  # properly generate a distribution with the same phenotypic variance
+  # as the observed data
   correction <- (q_range / max(n_A - n_a))
   
+  # Combine the NHANES data with the simulated data
   HTcomp <- bind_rows(
     tibble(Height = XX$Height,
            Set = "NHANES"),
