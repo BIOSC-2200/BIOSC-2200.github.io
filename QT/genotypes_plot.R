@@ -23,6 +23,9 @@ mytheme <- theme(axis.title = element_text(size = base_font + 2,
 
 genotypes_plot <- function(n_genes = 2) {
   
+  # Max out at 500 genes
+  if (n_genes > 500) n_genes <- 500
+  
   # Use only integers
   n_genes <- round(n_genes) |> as.integer()
   
