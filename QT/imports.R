@@ -150,3 +150,18 @@ simulate_heights <- function(n_genes = 25, HD = NULL) {
     mytheme
   
 }
+
+## Biomass plot ##############################################################
+biomass_plot <- function() {
+  tibble(ways = choose(10, 0:10),
+       pct = ways / sum(ways),
+       mass = seq(5000 - (10 * 50), 5000 + (10 * 50), by = 100),
+       n = 0:10) |> 
+  ggplot(aes(x = n, y = pct)) +
+  geom_bar(stat = "identity", fill = "gray") +
+  scale_x_continuous(breaks = 0:10,
+                     labels = seq(5000 - (10 * 50), 5000 + (10 * 50),
+                                  by = 100)) +
+  labs(x = "Above Ground Biomass (mg)", y = "Percentage of Plants") +
+  mytheme
+}
