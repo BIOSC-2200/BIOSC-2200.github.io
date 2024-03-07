@@ -1,0 +1,134 @@
+---
+title: "Mapping Quantitative Traits"
+engine: knitr
+format: 
+  html: 
+    toc: true
+    toc-depth: 3
+    toc-title: Contents
+    self-contained: true
+    css: ../custom.css
+    link-external-newwindow: true
+webr: 
+  packages: ["ggplot2", "dplyr", "tibble"]
+filters: 
+  - webr
+bibliography: ../Genetics_Discussion.bib
+csl: ../evolution.csl
+code-annotations: hover
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+
+source("genotypes_plot.R")
+
+```
+
+
+```{webr-r}
+#| context: setup
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/genotypes_plot.R")
+
+download.file(
+  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
+  "NHANES.csv",
+  quiet = TRUE)
+
+```
+
+
+## Preliminaries
+
+If you are not already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
+
+::: {.callout-note}
+
+Reminder: Save your work regularly.
+
+:::
+
+::: {.callout-important}
+
+If you are using a Mac, we recommend that you use either Chrome or Firefox to complete these exercises. Some of the default settings in Safari prevent these exercises from running.
+
+:::
+
+
+### Contact information
+
+If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 224.
+
+
+## Learning objectives
+
+The learning objectives for this exercise are:
+
+- Explain what quantitative trait loci (QTL) are and how QTL are identified
+- Explain how the contributions of many genes of small effect can be associated with a disease or condition
+
+
+## Introduction
+
+
+## Associating QTLs with genetic variants
+
+Intro SNP
+
+
+### Shapiro pigeon example (dominant trait)
+
+![FIXME Image from [@Shapiro2013-hx].](../images/pigeon1.png){width=100% fig-align="center" fig-alt="" #fig-pigeon1}
+
+![FIXME Image from [@Shapiro2013-hx].](../images/pigeon2.png){width=100% fig-align="center" fig-alt="" #fig-pigeon2}
+
+![R = Arginine; C = Cysteine FIXME Image from [@Shapiro2013-hx].](../images/pigeon3.png){width=50% fig-align="center" fig-alt="" #fig-pigeon3}
+
+
+Human Mendelian diseases are "easy" to identify. 
+
+
+## QTL for Human Height
+
+Estimated to be ~700 explaining ~16% of variation in 2010 [@Lango_Allen2010-iu]
+
+![FIXME Image from [@Visscher2012-ph].](../images/gr1_lrg.jpg){width=75% fig-align="center" fig-alt="" #fig-gwas1}
+
+- Best understood quantitative trait in humans
+- Yet still 700 genes
+
+
+![FIXME Image from [@Visscher2017-il].](../images/gr2_lrg.jpg){width=100% fig-align="center" fig-alt="" #fig-gwas1}
+
+
+- Largest GWAS to date involves ~700,000 individuals described by Yengo et al. [-@Yengo2018-gk]
+- 3290 ("near-independent") SNPs explain ~25% of the phenotypic variation in human height among a sample of Europeans
+
+
+## Case Study: Threshold traits
+
+### Schizophrenia (~200 genes)
+
+Why family history is one of the most important diagnostic tools in medicine
+
+## Feedback
+
+FIXME
+
+
+## References
+
+::: {#refs}
+:::
