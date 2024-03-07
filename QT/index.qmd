@@ -28,7 +28,7 @@ library(ggplot2)
 library(dplyr)
 library(tibble)
 
-source("genotypes_plot.R")
+source("imports.R")
 
 ```
 
@@ -40,7 +40,7 @@ library(ggplot2)
 library(dplyr)
 library(tibble)
 
-source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/genotypes_plot.R")
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/imports.R")
 
 download.file(
   "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
@@ -316,31 +316,14 @@ If we randomly sampled *Aradopsis*, we would expect to find plants with genotype
 </textarea>
 
 
-If we were to weight a large number of *Arabidopsis* plants, we would find a distribution that looks like @fig-biomass.
+If we were to weight a large number of *Arabidopsis* plants, we would find a distribution that looks like the one produced in the chunk below. Run the code to make the plot.
 
-```{r}
-#| label: fig-biomass
-#| echo: false
-#| fig-height: 4
-#| fig-cap: Above ground biomass in *Arabidopsis*. 
-#| cap-location: bottom
-
-tibble(ways = choose(10, 0:10),
-       pct = ways / sum(ways),
-       mass = seq(5000 - (10 * 50), 5000 + (10 * 50), by = 100),
-       n = 0:10) |> 
-  ggplot(aes(x = n, y = pct)) +
-    geom_bar(stat = "identity", fill = "gray") +
-  scale_x_continuous(breaks = 0:10,
-                     labels = seq(5000 - (10 * 50), 5000 + (10 * 50),
-                                  by = 100)) +
-  labs(x = "Above Ground Biomass (mg)", y = "Percentage of Plants") +
-  mytheme
+```{webr-r}
+biomass_plot()
 ```
 
-There would be plants with exactly 4500 mg, 4600 mg, 4700 mg, etc. of above ground biomass.
 
-> If each allele only changes biomass by 50 mg, why do we not find plants that weigh 4550 mg or 4650 mg?
+> There would be plants with exactly 4500 mg, 4600 mg, 4700 mg, etc. of above ground biomass. If each allele only changes biomass by 50 mg, why do we not find plants that weigh 4550 mg or 4650 mg?
 
 <textarea rows="2" cols="75">
 
