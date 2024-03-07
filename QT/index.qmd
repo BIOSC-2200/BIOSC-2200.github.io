@@ -319,6 +319,7 @@ If we randomly sampled *Aradopsis*, we would expect to find plants with genotype
 If we were to weight a large number of *Arabidopsis* plants, we would find a distribution that looks like the one produced in the chunk below. Run the code to make the plot.
 
 ```{webr-r}
+#| fig-height: 4
 biomass_plot()
 ```
 

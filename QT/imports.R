@@ -159,6 +159,8 @@ biomass_plot <- function() {
                  n = 0:10) |> 
     ggplot2::ggplot(aes(x = n, y = pct)) +
     geom_bar(stat = "identity", fill = "gray") +
+    scale_y_continuous(breaks = seq(0, 0.25, by = 0.05),
+                       label=scales::label_percent()) +
     scale_x_continuous(breaks = 0:10,
                        labels = seq(5000 - (10 * 50), 5000 + (10 * 50),
                                     by = 100)) +
