@@ -99,23 +99,26 @@ genotypes_plot <- function(n_genes = 2) {
 
 ## Normal distribution by simulation #########################################
 
-simulate_heights <- function(n_genes = 25, XX = NULL) {
+simulate_heights <- function(n_genes = 25, HD = NULL) {
   set.seed(3242343)
   
-  # If XX is not supplied, then we are working in webr.
+  # If n_genes is too large, it will run slowly.
+  if (n_genes > 10000) n_genes <- 10000
+  
+  # If HD is not supplied, then we are working in webr.
   # Load locally from the downloaded file from the setup chunk.
-  # Otherwise, XX will be loaded locally in an {r} chunk.
-  if (is.null(XX)) {
-    XX <- read.csv("NHANES.csv") |> 
-      filter(Genotype == "XX" & Age > 20)
+  # Otherwise, HD will be loaded locally in an {r} chunk.
+  if (is.null(HD)) {
+    HD <- read.csv("NHANES.csv") |> 
+      filter(Sex == "Female" & Age > 20)
   }
   
-  n_individuals <- nrow(XX)
+  n_individuals <- nrow(HD)
   
   n_alleles <- n_genes * 2
   
-  h_bar <- mean(XX$Height)
-  h_q <- quantile(XX$Height, c(0.025, 0.975))
+  h_bar <- mean(HD$Height)
+  h_q <- quantile(HD$Height, c(0.025, 0.975))
 
   q_range <- as.numeric(h_q[2] - h_q[1])
   
@@ -129,7 +132,7 @@ simulate_heights <- function(n_genes = 25, XX = NULL) {
   
   # Combine the NHANES data with the simulated data
   HTcomp <- bind_rows(
-    tibble(Height = XX$Height,
+    tibble(Height = HD$Height,
            Set = "NHANES"),
     tibble(Height = h_bar + 
              (n_A - n_a) * correction + 
