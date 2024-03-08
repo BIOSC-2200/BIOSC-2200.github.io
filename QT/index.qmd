@@ -441,11 +441,11 @@ The standard deviation ($s$) is a little more complicated:
 
 $$s = \sqrt{\frac{\sum (y - \bar{y})^2}{n - 1}}$$
 
-The standard deviation involves the squared deviations of each observed value ($y$) from the mean ($\bar{y}$) divided by the number of observations minus 1 ($n-1$), with the square root taken of those values. Think of the standard deviation as a measure of how far, on average, each point falls from the mean.
+The standard deviation involves the squared deviations of each observed value ($y$) from the mean ($\bar{y}$) divided by the number of observations minus 1 ($n-1$), with the square root taken of those values. 
 
-There are built-in functions to do these calculations for us, so we don't have to keep track of all those deviations.
+Think of the standard deviation as a measure of how far, on average, each point falls from the mean. 
 
-Run the code chunks below to find the mean and standard deviation of the heights data.
+There are built-in functions to do these calculations for us, so we don't have to keep track of all those deviations. Run the code chunks below to find the mean and standard deviation of the heights data.
 
 ```{webr-r}
 # Mean
