@@ -373,7 +373,7 @@ ggplot(NH, aes(x = Age, y = Height, color = Sex)) +
   mytheme
 ```
 
-If we ignore the growth phase by selecting individuals over age 20, we can get reasonable sample of adult heights. @fig-ht shows the distributions of heights for both groups. We can see that the range is between about 140 and 200 cm (approximately 4 feet 7 inches to 6 feet 6 inches) but that the majority of individuals fall near the middle of that range.
+If we ignore the growth phase by selecting individuals over age 20, we can get reasonable sample of adult heights. @fig-ht shows the distributions of heights for both groups. We can see that the range is between about 140 and 200 cm, but the majority of individuals fall near the middle of that range.
 
 ```{r}
 #| label: fig-ht
@@ -523,7 +523,7 @@ sum(NHANES$Height >= upper) / n_observations * 100
 </textarea>
 
 
-Finally, we can look at the individuals with the most extreme heights. These are 131.1 cm (about 4 feet, 4 inches) and 189.3 cm (almost 6 feet, 3 inches).
+Finally, we can look at the individuals with the most extreme heights. These are 131.1 cm and 189.3 cm.
 
 ```{webr-r}
 # Lowest
