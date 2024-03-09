@@ -270,7 +270,7 @@ To do this, we have to make some assumptions:
 
 - All genes have roughly equal effects (no genes have more impact on the phenotype than any others)
 - All genes act additively, so that we can count alleles to arrive at a phenotype. Additivity can mean adding negative numbers though.
-- Genes do not interact with one another (*pleiotropy*) or with the environment (*genotype by environment* interactions)
+- Genes do not interact with one another (*epistasis*) or with the environment (*genotype by environment* interactions)
 - Our simulation accounts for all of the phenotypic variation in a trait
 
 In real world biological systems, none of these assumptions are completely met to one degree or another. Nonetheless, we can use this framework to begin to understand quantitative traits.
