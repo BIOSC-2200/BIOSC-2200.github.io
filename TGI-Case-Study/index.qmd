@@ -136,14 +136,14 @@ MM <- readr::read_rds("../data/MouseMuscle.rds") |>
   mutate(Line = factor(Line)) |> 
   drop_na()
 
-ggplot(MM, aes(x = log10(Body_Mass),
-               y = log10(Muscle_Mass),
+ggplot(MM, aes(x = Body_Mass,
+               y = Muscle_Mass,
                color = Line)) +
   facet_grid(. ~ Sex) +
   geom_point(size = 3) +
   scale_color_manual(values = c("navy", "firebrick", "lightblue")) +
-  labs(x = "**log<sub>10</sub> Body Mass (g)**",
-       y = "**log<sub>10</sub> Muscle Mass (g)**") +
+  labs(x = "**Body Mass (g)**",
+       y = "**Muscle Mass (g)**") +
   theme(strip.background = NULL,
         strip.text = element_text(color = "black", face = "bold",
                                   size = 12),
@@ -282,15 +282,16 @@ In total, there were 404 mice in the F~2~ backcross generation [@hannon_phenotyp
 
 DD <- readr::read_csv("../data/f2_muscle.csv",
                       show_col_types = FALSE) |> 
-  rename(BodyMass = x,
-         MuscleMass = y)
+  rename(Body_Mass = x,
+         Muscle_Mass = y) |> 
+  mutate(Body_Mass = 10^Body_Mass,
+         Muscle_Mass = 10^Muscle_Mass / 1000)
 
-ggplot(DD, aes(x = BodyMass, y = MuscleMass)) +
+ggplot(DD, aes(x = Body_Mass, y = Muscle_Mass)) +
   geom_point(size = 3, color = "darkgreen",
-             position = position_jitter(width = 0.005, seed = 2231)) +
-  scale_x_continuous(breaks = seq(1.2, 1.6, by = 0.1)) +
-  labs(x = "**log<sub>10</sub> Body Mass (g)**",
-       y = "**log<sub>10</sub> Muscle Mass (mg)**") +
+             position = position_jitter(width = 0.3, seed = 2231)) +
+  labs(x = "**Body Mass (g)**",
+       y = "**Muscle Mass (g)**") +
   theme(axis.title.x = element_markdown(),
         axis.title.y = element_markdown())
 ```
