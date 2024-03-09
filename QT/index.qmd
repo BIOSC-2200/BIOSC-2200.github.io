@@ -81,9 +81,9 @@ If you have questions about these exercises, please contact Dr. Kevin Middleton 
 
 The learning objectives for this exercise are:
 
-- Explain how polygenic traits differ from Mendelian traits
-- Explain how quantitative traits with continuous-valued phenotypic measures result from the combined effects of many different genes
-- Describe how many genes can each contribute a small amount to a measurable phenotype
+- Contrast polygenic traits with Mendelian traits
+- Demonstrate how quantitative traits with continuous-valued phenotypic measures result from the combined effects of many different genes
+- Describe the process by which many genes can each contribute a small amount to a measurable phenotype
 
 
 ## Contrasting Mendelian traits and polygenic traits
