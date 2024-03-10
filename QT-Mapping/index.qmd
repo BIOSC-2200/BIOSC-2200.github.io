@@ -28,7 +28,12 @@ library(ggplot2)
 library(dplyr)
 library(tibble)
 
-source("genotypes_plot.R")
+library(tidyverse)
+library(ggtext)
+
+source("../QT/imports.R")
+
+ggplot2::theme_set(ggplot2::theme_light())
 
 ```
 
@@ -40,12 +45,12 @@ library(ggplot2)
 library(dplyr)
 library(tibble)
 
-source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/genotypes_plot.R")
-
-download.file(
-  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
-  "NHANES.csv",
-  quiet = TRUE)
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/imports.R")
+# 
+# download.file(
+#   "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
+#   "NHANES.csv",
+#   quiet = TRUE)
 
 ```
 
@@ -53,6 +58,8 @@ download.file(
 ## Preliminaries
 
 If you are not already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
+
+If you have not already worked through the first part of this exercise: [Quantitative Traits](https://biosc-2200.github.io/QT/), begin with that first. That page has the background and information you need to fully understand this case study.
 
 ::: {.callout-note}
 
@@ -76,19 +83,41 @@ If you have questions about these exercises, please contact Dr. Kevin Middleton 
 
 The learning objectives for this exercise are:
 
-- Explain what quantitative trait loci (QTL) are and how QTL are identified
+- Describe what quantitative trait loci (QTL) are and outline QTL are identified
 - Explain how the contributions of many genes of small effect can be associated with a disease or condition
+- Differentiate Mendelian traits from threshold traits
+- Compare Mendelian human diseases and diseases that result from threshold traits
 
 
 ## Introduction
 
+In the previous exercise ([Quantitative Traits](https://biosc-2200.github.io/QT/)), we saw how we could build up a picture of quantitative, polygenic traits from your existing understanding of Mendelian traits. Furthermore, we saw how many many genes of small effect, each of which added or subtracted a small amount to a phenotype, can produce a continuous (normal) distribution of trait values.
 
-## Associating QTLs with genetic variants
+To this point, we have only considered how genes contribute to a quantitative trait and how many genes might contribute to a traits. What we haven't considered yet is how scientists estimate where in the genome the associated genes are located.
 
-Intro SNP
+
+## Genetic Variation
+
+Ultimately, different phenotypes -- both discrete qualitative phenotypes like blood types and quantitative like heights -- result from genetic variation. Many different processes lead to variation, including mutation, drift, and selection among others. 
+
+
+### Single Nucleotide Polymorphisms
+
+Although many methods can be used to determine the locations of traits on the genome -- "mapping" -- one of the most common methods in the genomic era is via single nucleotide polymorphisms (SNPs). As their name suggests, SNPs are alternate nucleotides (e.g., an A or a T) at a single location in the genome. SNPs can occur in both coding and non-coding regions of the genome (@fig-snp_hap).
+
+Because most of the genome is identical within a species, SNPs represent a relatively small percentage of the whole genome. For example, in humans, the entire genome consists of over 6 billion base pairs, but a recent study only used 2.3 million SNPs [@Yengo2018-gk]. While 2.3 million may seem like a very large number, that represents only 0.04% of the genome.
+
+![Single nucleotide polymorphisms are locations in the genome where two alternate nucleotides are observed. In the upper panel, two SNPs are shows, one where three individuals have a A and one with G. In the second SNP, a different combination of three individuals have G and one T. Groups of SNPs that are physically located near one another are grouped into haplotypes (lower panel). Image from [Wellcome Sanger Institute](https://sangerinstitute.blog/).](../images/SNP-haplotypes.jpg){width=100% fig-align="center" fig-alt="" #fig-snp_hap}
+
+## Associating SNPs with traits
+
 
 
 ### Shapiro pigeon example (dominant trait)
+
+![In *The Variation of Animals and Plants Under Domestication*, Charles Darwin described the array of feather phenotype in domesticated pigeons [@Darwin1868-yr; @Darwin1868-vc]. Image from [Memorial University](https://www.mun.ca/biology/scarr/Darwin's_Pigeons.html).](https://www.mun.ca/biology/scarr/Darwin_VAPuDI_Figs_17-23b.jpg){width=80% fig-align="center" fig-alt="" #fig-darwin}
+
+
 
 ![FIXME Image from [@Shapiro2013-hx].](../images/pigeon1.png){width=100% fig-align="center" fig-alt="" #fig-pigeon1}
 
@@ -97,31 +126,152 @@ Intro SNP
 ![R = Arginine; C = Cysteine FIXME Image from [@Shapiro2013-hx].](../images/pigeon3.png){width=50% fig-align="center" fig-alt="" #fig-pigeon3}
 
 
-Human Mendelian diseases are "easy" to identify. 
+## Human Mendelian diseases are "easy" to identify
+
+![FIXME Image from [@Visscher2012-ph].](../images/gr1_lrg.jpg){width=75% fig-align="center" fig-alt="" #fig-gwas1}
+
+![FIXME Image from [@Visscher2017-il].](../images/gr2_lrg.jpg){width=100% fig-align="center" fig-alt="" #fig-gwas1}
+
+
+## Associating QTLs with genetic variants
+
+<a href="./TGI-Case-Study" target="_blank">Case study: Investigating a newly discovered muscle mutation in mice</a>
+
+@fig-musclemass
+
+```{r}
+#| echo: false
+#| label: fig-musclemass
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: The mass of the calf muscles plotted against body mass compared between Unaffected (red) and Mini-muscle phenotype mice (blue). But you do not expect that some mice would have such disproportionately small muscles compared to the others.
+
+MM <- readr::read_rds("../data/MouseMuscle.rds") |> 
+  mutate(Line = factor(Line),
+         Muscle_Pheno = case_when(
+           Line == 2 ~ "Unaffected",
+           Line == 8 ~ "Unaffected",
+           Line == 3 ~ "Mini-Muscle"
+         )) |> 
+  drop_na() |> 
+  filter(Sex == "Female")
+
+ggplot(MM, aes(x = Body_Mass,
+               y = Muscle_Mass,
+               color = Muscle_Pheno)) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("firebrick", "navy"),
+                     name = "Muscle Phenotype") +
+  labs(x = "**Body Mass (g)**",
+       y = "**Muscle Mass (g)**") +
+  theme(strip.background = NULL,
+        strip.text = element_text(color = "black", face = "bold",
+                                  size = 12),
+        axis.title.x = element_markdown(),
+        axis.title.y = element_markdown())
+```
+
+
+```{r}
+#| echo: false
+#| label: fig-masshisto
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: Distributions of the the masses of the calf muscles compared between Unaffected (red) and Mini-muscle phenotype mice (blue).
+
+
+ggplot(MM, aes(Muscle_Mass, fill = Muscle_Pheno)) +
+  geom_histogram(bins = 30) +
+  facet_grid(Muscle_Pheno ~ .) +
+  scale_fill_manual(values = c("firebrick", "navy"),
+                    name = "Muscle Phenotype",
+                    guide = "none") +
+  labs(x = "**Muscle Mass (g)**",
+       y = "**Count**") +
+  theme(strip.background = NULL,
+        strip.text = element_text(color = "black", face = "bold",
+                                  size = 12),
+        axis.title.x = element_markdown(),
+        axis.title.y = element_markdown())
+```
+
+
+```{r}
+#| echo: false
+#| label: fig-dots
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: Comparison of the the masses of the calf muscles compared between Unaffected (red) and Mini-muscle phenotype mice (blue). The large points are the means for each group.
+
+ggplot(MM, aes(x = Muscle_Pheno, y = Muscle_Mass, color = Muscle_Pheno)) +
+  geom_point(position = position_jitter(width = 0.05, seed = 346),
+             alpha = 0.35, size = 3) +
+  scale_color_manual(values = c("firebrick", "navy"),
+                     name = "Muscle Phenotype",
+                     guide = "none") +
+  stat_summary(fun = mean, geom = "point", size = 5) +
+  labs(y = "**Muscle Mass (g)**",
+       x = "**Muscle Phenotype**") +
+  theme(axis.title.x = element_markdown(),
+        axis.title.y = element_markdown())
+
+```
+
+
+## GWAS
+
+[GWAS Catalog](https://www.ebi.ac.uk/gwas/)
+
+Primer [@Uffelmann2021-at]
+
 
 
 ## QTL for Human Height
 
 Estimated to be ~700 explaining ~16% of variation in 2010 [@Lango_Allen2010-iu]
 
-![FIXME Image from [@Visscher2012-ph].](../images/gr1_lrg.jpg){width=75% fig-align="center" fig-alt="" #fig-gwas1}
 
 - Best understood quantitative trait in humans
 - Yet still 700 genes
 
-
-![FIXME Image from [@Visscher2017-il].](../images/gr2_lrg.jpg){width=100% fig-align="center" fig-alt="" #fig-gwas1}
-
-
 - Largest GWAS to date involves ~700,000 individuals described by Yengo et al. [-@Yengo2018-gk]
-- 3290 ("near-independent") SNPs explain ~25% of the phenotypic variation in human height among a sample of Europeans
+- 3,290 ("near-independent") SNPs explain ~25% of the phenotypic variation in human height among a sample of Europeans
 
 
 ## Case Study: Threshold traits
 
+Alzheimer [@Pedersen2001-nu]
+
+Cardiac conditions [@Walsh2020-ja]
+
+ASD [@Grove2019-dl]
+
+Summary, Complex disease traits [@Pal2015-go; @Huang2015-yi]
+
+
 ### Schizophrenia (~200 genes)
 
-Why family history is one of the most important diagnostic tools in medicine
+```{r}
+#| echo: false
+
+DD <- tibble(n_alleles = 160:240,
+             ways = choose(n = 400, k = n_alleles),
+             aff = if_else(n_alleles > 212, "unaff", "aff"))
+
+ggplot(DD, aes(x = n_alleles, y = ways, fill = aff)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("navy", "firebrick3"), guide = "none") +
+  theme(axis.title = element_blank(),
+        axis.text = element_blank()) +
+  ggpubr::theme_transparent()
+
+```
+
+[@Guttmacher2004-io; @Gillis2006-wi; @Muhrer2014-wr]
+
+### Why family history is one of the most important diagnostic tools in medicine
+
+[@Guttmacher2004-io; @Gillis2006-wi; @Muhrer2014-wr]
 
 ## Feedback
 
