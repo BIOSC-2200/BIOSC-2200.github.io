@@ -195,13 +195,22 @@ genotypes_plot(n_genes = 3)
 
 Because there are three genes, there are 6 possible alleles to be either A or T. Something to keep in mind is that when there is more than one gene, the A's and T's are in different genes, so each is independent of the others. In reality, the A's and T's could be any of A, T, G, and C. The math works out the same, but the accounting is easier if we just think of them as all either A or T. Very often geneticists don't even worry about what the nucleotide is when thinking about quantitative traits. They will instead only think about which allele is more common at a given position in the genome (the "major allele") and which is less common (the "minor allele").
 
-The `choose()` function below will calculate the number of way to get 3 A and 3T.
+The `choose()` function below will calculate the number of way to get 3 A and 3 T.
 
 ```{webr-r}
 choose(n = 6, k = 3)
 ```
 
 Change the value of `k` to get the number of ways to get 0, 1, 2, 4, 5, and 6 A. Check them against the plot above.
+
+For example, at these three loci, the 6 ways to get 1 A and 5 T are:
+
+1. locus 1: AT, locus 2: TT, locus 3: TT
+2. locus 1: TA, locus 2: TT, locus 3: TT
+3. locus 1: TT, locus 2: AT, locus 3: TT
+4. locus 1: TT, locus 2: TA, locus 3: TT
+5. locus 1: TT, locus 2: TT, locus 3: AT
+6. locus 1: TT, locus 2: TT, locus 3: TA
 
 We can calculate all the ways for 0 through 6 A alleles (`0:6`) and then add them up with `sum()`:
 
