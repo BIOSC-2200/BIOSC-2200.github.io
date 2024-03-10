@@ -218,26 +218,6 @@ ggplot(MM, aes(x = Muscle_Pheno, y = Muscle_Mass, color = Muscle_Pheno)) +
 ```
 
 
-## GWAS
-
-[GWAS Catalog](https://www.ebi.ac.uk/gwas/)
-
-Primer [@Uffelmann2021-at]
-
-
-
-## QTL for Human Height
-
-Estimated to be ~700 explaining ~16% of variation in 2010 [@Lango_Allen2010-iu]
-
-
-- Best understood quantitative trait in humans
-- Yet still 700 genes
-
-- Largest GWAS to date involves ~700,000 individuals described by Yengo et al. [-@Yengo2018-gk]
-- 3,290 ("near-independent") SNPs explain ~25% of the phenotypic variation in human height among a sample of Europeans
-
-
 ## Case Study: Threshold traits
 
 Alzheimer [@Pedersen2001-nu]

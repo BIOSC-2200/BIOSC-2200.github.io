@@ -201,7 +201,7 @@ The `choose()` function below will calculate the number of way to get 3 A and 3T
 choose(n = 6, k = 3)
 ```
 
-Try to change the value of `k` to get the number of ways to get 0, 1, 2, 4, 5, and 6 A. Check them against the plot above.
+Change the value of `k` to get the number of ways to get 0, 1, 2, 4, 5, and 6 A. Check them against the plot above.
 
 We can calculate all the ways for 0 through 6 A alleles (`0:6`) and then add them up with `sum()`:
 
@@ -260,11 +260,22 @@ Combinations of alleles for a set of genes, where the data take the form of "one
 The characteristic shape that a binomial distribution for many genes is called a "bell curve" and is also the shape of one of the most common distributions in biology: the **normal distribution**. A normal distribution has a single peak at the center and decreases down gradually moving away from the peak, to very small probabilities far away from the center.
 
 
+### Additive nature of many alleles
+
+In the crosses shown in the Punnett squares above (@fig-punnett, @fig-trihybrid), alleles genes acted independently. In peas, for example, all combinations of the three traits were possible. In contrast, many genes act additively, wherein their effects combine to produce a phenotype. Genes involved in quantitative traits work additively, but Mendelian traits can as well. For example, crosses between plants with white flowers and those with red flowers can produce hybrids with pink flowers.
+
+An extreme example of variation in flower color is the purple morning glory (*Ipomoea purpurea*), which is native to Central America and Mexico. Clegg and Durbin [-@Clegg2000-xr] studied the genetic basis of flower color in *Ipomoea* and found that combinations of four genes were able to produce a wide range of phenotypes (@fig-flower).
+
+In this way, alternate alleles (e.g., an A vs. a T) at a single gene can combine ("additively") with other to produce a vast array of phenotype.
+
+![Variation in flower color in purple morning glory (*Ipomoea purpurea*) resulting from the additive effects of four genes. Image from Clegg and Durbin [-@Clegg2000-xr].](../images/morning_glory.jpg){width=50% fig-align="center" fig-alt="Image of a purple morning glory." #fig-flower}
+
+
 ## Quantitative traits result from combinations of many alleles
 
 So far we have built up from simple Mendelian traits to distributions of many alleles taking on the shape of a normal distribution. How can we make the leap from combinations of alleles to quantitative traits?
 
-The solution is to assign a small positive or negative value to each allele, and the size of that value depends on many factor. In essence, we can imagine that any quantitative trait has a baseline value which is modified up or down by the presence an allele. By counting the numbers of "positive" and "negative" alleles, we can arrive at a phenotypic measurement.
+The solution is to assign a small positive or negative value to each allele, and the size of that value depends on many factors. In essence, we can imagine that any quantitative trait has a baseline value which is modified up or down by the presence an allele. By counting the numbers of "positive" and "negative" alleles, we can arrive at a phenotypic measurement.
 
 To do this, we have to make some assumptions:
 
@@ -296,7 +307,7 @@ For this simulation "experiment", we will use a common plant mode organism: *Ara
 
 A common measure of the amount of growth in plants is above ground biomass. Plants, such as *Arabidopsis* are allowed to grow in controlled conditions. After a certain period of time, the plants are harvested, dried, and weighed.
 
-Imagine that under certain conditions, the mean above ground biomass of *Arabdopsis* is 5000 mg (i.e., 5 g) and that 5 genes control the range of biomass. Each T that a plant receives results in 20 mg lower biomass, and each A that it receives results in 50 mg higher biomass.
+Imagine that under certain conditions, the mean above ground biomass of *Arabidopsis* is 5000 mg (i.e., 5 g) and that 5 genes control the range of biomass. Each T that a plant receives results in 20 mg lower biomass, and each A that it receives results in 50 mg higher biomass.
 
 A plant with 10 T and no A would weigh 5000 - (10 * 50) = 4500 mg. Each of the 10 T's subtracts 50 mg from 5000. Similarly, a plant with 10 A's would weight 5500 mg.
 
@@ -307,7 +318,7 @@ A plant with 10 T and no A would weigh 5000 - (10 * 50) = 4500 mg. Each of the 1
 </textarea>
 
 
-If we randomly sampled *Aradopsis*, we would expect to find plants with genotypes matching the expected distribution in @fig-genesplot_5.
+If we randomly sampled *Arabidopsis*, we would expect to find plants with genotypes matching the expected distribution in @fig-genesplot_5.
 
 > What do you predict the range of above ground biomass in *Arabidopsis* would be?
 
@@ -379,7 +390,7 @@ If we ignore the growth phase by selecting individuals over age 20, we can get r
 #| label: fig-ht
 #| echo: false
 #| fig-height: 4
-#| fig-cap: Distrbutions of height for all individuals in the NHANES study over age 20.  Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx).
+#| fig-cap: Distributions of height for all individuals in the NHANES study over age 20.  Data from [NHANES 2017-2020](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx).
 #| cap-location: bottom
 
 NHa_means <- NHa |> 
@@ -429,7 +440,7 @@ simulate_heights(n_genes = 10)
 
 ## Summarizing distributions
 
-Because many biological traits, including those related to size (lenght, height, mass, etc.), result from the actions of large numbers of genes, each adding or subtracting a small amount of a phenotype, these traits often follow a normal distribution.
+Because many biological traits, including those related to size (length, height, mass, etc.), result from the actions of large numbers of genes, each adding or subtracting a small amount of a phenotype, these traits often follow a normal distribution.
 
 Biologists are very often interested in summarizing a set of observations (*sample*). Two numbers are all that are needed to fully describe a normal distribution: the *mean* and the *standard deviation*. You are probably already familiar with the mean (often called the average).
 
@@ -463,7 +474,7 @@ The mean is about 160 cm, and the standard deviation is about 7.1 cm. We can use
 #| label: fig-nhanes_normal
 #| echo: false
 #| fig-height: 4
-#| fig-cap: Histogram of observed heights (cm) for 4,267 individuals (yellow bars). The blue line represents a normal distribution with the same mean and standard deviation as the observed data. The two overlap almost perfectly. y-axis labels are omitted, because the hitogram and distribution have different scales.
+#| fig-cap: Histogram of observed heights (cm) for 4,267 individuals (yellow bars). The blue line represents a normal distribution with the same mean and standard deviation as the observed data. The two overlap almost perfectly. y-axis labels are omitted, because the histogram and distribution have different scales.
 #| cap-location: bottom
 
 Ht_mean <- mean(NH_F$Height)
@@ -534,6 +545,24 @@ head(NHANES)
 # Highest
 tail(NHANES)
 ```
+
+
+## Epilogue: Mapping the genes for height in humans
+
+To this point, we have only considered how genes contribute to a quantitative trait and how many genes might contribute to a traits. What we haven't considered yet is how scientists estimate where in the genome the associated genes are located ("mapping"). Many different methods are used for mapping. Since the beginning of the genomic era, where full genomes can be sequenced and compared, one of the most common methods for mapping is via [Genome-Wide Association Studies](https://www.genome.gov/genetics-glossary/Genome-Wide-Association-Studies) (GWAS; Uffelmann and colleagues [-@Uffelmann2021-at] present a introduction).
+
+GWAS compares large numbers (hundreds of thousands or millions) of single-nucleotide polymorphisms ([SNPs](https://medlineplus.gov/genetics/understanding/genomicresearch/snp/)) to their associated phenotypes though large-scale statistical testing. These tests reveal locations on the genome that correspond to measurable phenotypic variation. 
+
+
+### Genes contributing to human height
+
+Because it is easily measured during routine visits to a physician, human height is one of the best studied quantitative traits. It was the focus of many of the largest early genomic studies. One such study was by Lango Allen and colleagues [- @Lango_Allen2010-iu]. These authors identified approximately 700 genes that together were able to explain about 16% of the variation in height (@fig-height_gwas). Remember that our simulation above was designed to account for 100% of the phenotypic variation.
+
+![Partial results of a GWAS investigating the genes involved in human height. A small section of human chromosome 3 shows a region of high association between height and single nucleotide polymorphisms. The points with high values on the -Log~10~P axis indicate a significant association between that SNP and height. This region of the genome contains the gene *GHSR*, which codes for the [Growth Hormone Secretagogue Receptor](https://www.genecards.org/cgi-bin/carddisp.pl?gene=GHSR). *GHSR* is thought to be involved in the body's energy regulation system. Image from Lango Allen et al. [-@Lango_Allen2010-iu].](../images/height_gwas.png){width=75% fig-align="center" fig-alt="Partial results of a GWAS for human height" #fig-height_gwas}
+
+More recently, Yengo et al. [-@Yengo2018-gk] described the largest GWAS to date for human height. This study included genetic data for ~700,000 individuals of primarily European descent. These authors identified 3,290 SNPs that collectively explain about 25% of the phenotypic variation in human height.
+
+Even the largest GWAS study leaves 75% of the variation currently unexplained.
 
 
 ## Feedback
