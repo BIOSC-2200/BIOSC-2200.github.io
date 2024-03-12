@@ -88,14 +88,14 @@ The learning objectives for this exercise are:
 
 ## Contrasting Mendelian traits and polygenic traits
 
-The first phenotypes that you learned about as well as those described in the first in this series of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
+The first phenotypes that you learned about as well as those described in the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
 
 This set of exercises focuses on phenotypes that are determined by multiple genes: **polygenic traits**. Polygenic traits often (but not always) can be measured on a numeric scale and are thus referred to as **quantitative traits**. The two main types of quantitative traits are:
 
 - *Meristic traits*: Traits that take on integer values such as the number of peas in a pod. 3, 4, and 5 are all possible values, but a pod can't have 3.5 peas.
 - *Continuous-valued traits*: Traits that can take on any number on the number line. For example lengths and weights can have any value depending on the scale (e.g., grams, millimeters, etc.)
 
-One major difference between Mendelian and polygenic traits is that we have to alter our thinking from a dominant vs. recessive framework for Mendelian traits to one of just considering alternative alleles at a single locus in the genome for polygenic traits. We'll come back to this idea later.
+One major difference between Mendelian and polygenic traits is that we have to alter our thinking about alleles. We will replace the dominant vs. recessive dichotomy that was useful for Mendelian traits. For polygenic traits, we will start to simply consider alternative alleles at a single locus in the genome. We'll come back to this idea later.
 
 For now, let's think about all the different ways that alleles from different genes can be combined with one another when gametes are formed.
 
@@ -106,11 +106,11 @@ The 1:2:1 genotypic ratio and 3:1 phenotypic ratio in the heterozygote cross exa
 
 ![The process of gamete formation leads to predictable genotypic and phenotypic proportions in the F~2~ generation. Image modified from Klug et al. [-@Klug2019-cs]](../images/punnett.png){fig-alt="Image of a Punnett square for a monohybrid cross." #fig-punnett}
 
- Higher level crosses, with two and three genes can be done manually, but very quickly you will find that keeping track of all the combinations becomes very challenging (@fig-trihybrid).
+Higher level crosses, with two and three genes, can be done manually, but very quickly you will find that keeping track of all the combinations becomes very challenging (@fig-trihybrid).
 
 ![Punnett square for a trihybrid cross in peas. 64 combinations of alleles result in 6 possible phenotypes in a 1:6:15:20:15:6:1 ratio for three Mendelian traits.](https://pbs.twimg.com/media/CvuLNpHXgAQpSwh.jpg){fig-alt="Image of a Punnett square for a trihybrid cross." #fig-trihybrid}
 
-Punnett squares with more than 3 genes are extremely difficult. For example, a cross with 4 genes requires 256 combinations and 1,024 combinations are required for 5 genes (a 32 x 32 grid).
+Punnett squares with more than 3 genes are extremely difficult. For example, a cross with 4 genes requires 256 combinations, and 1,024 combinations are required for 5 genes (a 32 x 32 grid).
 
 Fortunately, rather than keeping track of all these combinations manually, we can just calculate them directly using a little bit of math.
 
@@ -139,7 +139,7 @@ Because the sequence doesn't matter, both result in one of each (head and tail).
 
 If you look back up at the monohybrid cross above, you will find that there is 1 DD, 2 Dd, and 1 dd. This 1:2:1 genotypic ratio is the same as for our coin flipping example.
 
-All the different ways that you can arrive at a count of heads from a set of coin tosses is represented by a number called the *Binomial Coefficient*. The equation for the binomial coefficient for the number of heads from a set of coin flips is:
+All the different ways that you can arrive at a count of heads from a set of coin tosses are represented by a number called the *Binomial Coefficient*. The equation for the binomial coefficient for the number of heads from a set of coin flips is:
 
 $$\frac{Flips!}{Heads! \times (Flips - Heads)!}$$
 
@@ -153,11 +153,11 @@ which reduces to:
 
 $$\frac{2 \times 1}{1 \times (1)!}$$
 
-which is just $\frac{2}{1}$ or 2. Thus there are 2 ways to get 1 head from 2 coin flips according to the binomial coefficient, just like we figured out manually.
+which is just $\frac{2}{1}$ or 2. Thus, there are 2 ways to get 1 head from 2 coin flips according to the binomial coefficient, just like we figured out manually.
 
-At this point, hopefully you are convinced that we can use the binomial coefficient and some math to determine the number of ways that genes can combine and that they will match up with the counts of ways that we would get by hand.
+At this point, hopefully you are convinced that we can use the binomial coefficient and some math to determine the number of ways that genes can combine and that they will match up with the counts that we would get by hand.
 
-We can calculate the binomial coefficient directly using the `choose()` function. Run the code below to confirm that there are 1, 2 and 1 ways to get different genotypes. `n` represents the number of alleles (2 times the number of genes, because each individual receives 2 copies of each gene) and `k` represents the number of *D* alleles that any one individual receives.
+We can calculate the binomial coefficient directly using the `choose()` function. Run the code below to confirm that there are 1, 2, and 1 ways to get different genotypes. `n` represents the number of alleles (2 times the number of genes, because each individual receives 2 copies of each gene). `k` represents the number of *D* alleles that any one individual receives.
 
 ```{webr-r}
 choose(n = 2, k = 0) # dd
@@ -165,14 +165,14 @@ choose(n = 2, k = 1) # Dd or dD
 choose(n = 2, k = 2) # DD
 ```
 
-Feel free to change the values for `n` (the number of alleles) and `k` (the number of D alleles) and try out some additional combinations. In general, `n` should greater than or equal to `k`, or you will have zero ways to get a particular combination^[As a side note, the binomial coefficient calculation is also used to calculate probabilities for lotteries (the Powerball odds of winning is 1 in `choose(69, 5) * choose(26, 1)`) and for poker hands (the odds of a royal flush in 5-card draw is 4 in `choose(52, 5)` or equivalently one in `choose(52, 5) / 4`), among other games of chance. In fact, much of the basics of probability were originally developed in the 17th and 18th centuries to try to understand (and cheat at) various forms of gambling.]
+Feel free to change the values for `n` (the number of alleles) and `k` (the number of D alleles) and try out some additional combinations. In general, `n` should greater than or equal to `k`, or you will have zero ways to get a particular combination^[As a side note, the binomial coefficient calculation is also used to calculate probabilities for lotteries (the Powerball odds of winning is 1 in `choose(69, 5) * choose(26, 1)`) and for poker hands (the odds of a royal flush in 5-card draw is 4 in `choose(52, 5)` or equivalently one in `choose(52, 5) / 4`), among other games of chance. In fact, much of the basics of probability were originally developed in the 17^th^ and 18^th^ centuries to try to understand (and cheat at) various forms of gambling.]
 
 
 ### From coin flips to independent alleles
 
-Recall that we stipulated that coin flip are independent of one another. The same process happens when gametes are formed: alleles are distributed independently of one another.
+Recall that we stipulated that coin flips are independent of one another. The same process happens when gametes are formed: alleles are distributed independently of one another.
 
-We can replaces heads and tails, with different alleles like D and d above. One difference is that, for quantitative traits, instead of thinking about dominant vs. recessive alleles, we usually just consider alternate alleles at a certain position in the genome.
+We can replace heads and tails, with different alleles like D and d above. One difference is that, for quantitative traits, we usually just consider alternate alleles at a certain position in the genome.
 
 For this example, we will call these alternate alleles A and T. For a single gene, any individual could have AA, AT, or TT. @fig-genesplot shows these combinations. 
 
@@ -201,7 +201,7 @@ The `choose()` function below will calculate the number of way to get 3 A and 3 
 choose(n = 6, k = 3)
 ```
 
-Change the value of `k` to get the number of ways to get 0, 1, 2, 4, 5, and 6 A. Check them against the plot above.
+Change the value of `k` to find the number of ways to have 0, 1, 2, 4, 5, and 6 A. Check them against the plot above.
 
 For example, at these three loci, the 6 ways to get 1 A and 5 T are:
 
@@ -219,7 +219,7 @@ We can calculate all the ways for 0 through 6 A alleles (`0:6`) and then add the
 sum(sum(ways))
 ```
 
-This is where the 64 total combinations in the figure comes from. Now let's move to more genes.
+This is where the 64 total combinations in the figure come from. Now let's move to more genes.
 
 > Predict what the distribution of possible genotype combinations would be when four genes are involved. In general, what will the shape of the distribution look like? Will there be more or less total possible ways than for 3 genes? How many more or less?
 
@@ -242,7 +242,7 @@ genotypes_plot(n_genes = 4)
 </textarea>
 
 
-Return to the code block above and continue increasing the number of genes: 5, 6, 7, 8, 10, 15, 20, 50, 100, 200, 300^[With more than 500 there are more combinations than the computer can keep track of (about 10^308^), so the plot has a maximum of 500]. Run the code each time to regenerate the plot.
+Return to the code block above and continue increasing the number of genes: 5, 6, 7, 8, 10, 15, 20, 50, 100, 200, 300^[With more than 500 there are more combinations than the computer can keep track of (about 10^308^), so the plot has a maximum of 500.]. Run the code each time to regenerate the plot.
 
 > What happens to the number of combination as the number of genes increases?
 
@@ -264,14 +264,14 @@ Return to the code block above and continue increasing the number of genes: 5, 6
 
 </textarea>
 
-Combinations of alleles for a set of genes, where the data take the form of "one or the other" (heads or tails, major allele or minor allele) follows what is called a *binomial distribution*. Thinking back to the case of a single gene with 4 possible combinations and three different possible genotypes (TT, AT, and TT). One interesting feature of binomial distributions is that as the number of "chances" (i.e., the number of genes or alleles) increases, the distribution starts to take on a characteristic shape. When there are less than about 10 genes the distribution appears stepped. But as the number approaches 20, it starts getting smoother and smoother.
+Combinations of alleles for a set of genes, where the data take the form of "one or the other" (heads or tails, major allele or minor allele) follow what is called a *binomial distribution*. Thinking back to the case of a single gene with 4 possible combinations and 3 different possible genotypes (TT, AT, and TT). One interesting feature of binomial distributions is that as the number of "chances" (i.e., the number of genes or alleles) increases, the distribution starts to take on a characteristic shape. When there are less than about 10 genes, the distribution appears stepped. But as the number approaches 20, it starts getting smoother and smoother.
 
-The characteristic shape that a binomial distribution for many genes is called a "bell curve" and is also the shape of one of the most common distributions in biology: the **normal distribution**. A normal distribution has a single peak at the center and decreases down gradually moving away from the peak, to very small probabilities far away from the center.
+The characteristic shape that a binomial distribution for many genes (a "bell curve") is also the shape of one of the most common distributions in biology: the **normal distribution**. A normal distribution has a single peak at the center and decreases down, gradually moving away from the peak, to very small probabilities far away from the center.
 
 
 ### Additive nature of many alleles
 
-In the crosses shown in the Punnett squares above (@fig-punnett, @fig-trihybrid), alleles genes acted independently. In peas, for example, all combinations of the three traits were possible. In contrast, many genes act additively, wherein their effects combine to produce a phenotype. Genes involved in quantitative traits work additively, but Mendelian traits can as well. For example, crosses between plants with white flowers and those with red flowers can produce hybrids with pink flowers.
+In the crosses shown in the Punnett squares above (@fig-punnett, @fig-trihybrid),  genes acted independently. In peas, for example, all combinations of the three traits were possible. In contrast, many genes act additively, wherein their effects combine to produce a phenotype. Genes involved in quantitative traits work additively, but Mendelian traits can as well. For example, crosses between plants with white flowers and those with red flowers can produce hybrids with pink flowers.
 
 An extreme example of variation in flower color is the purple morning glory (*Ipomoea purpurea*), which is native to Central America and Mexico. Clegg and Durbin [-@Clegg2000-xr] studied the genetic basis of flower color in *Ipomoea* and found that combinations of four genes were able to produce a wide range of phenotypes (@fig-flower).
 
@@ -284,21 +284,21 @@ In this way, alternate alleles (e.g., an A vs. a T) at a single gene can combine
 
 So far we have built up from simple Mendelian traits to distributions of many alleles taking on the shape of a normal distribution. How can we make the leap from combinations of alleles to quantitative traits?
 
-The solution is to assign a small positive or negative value to each allele, and the size of that value depends on many factors. In essence, we can imagine that any quantitative trait has a baseline value which is modified up or down by the presence an allele. By counting the numbers of "positive" and "negative" alleles, we can arrive at a phenotypic measurement.
+The solution is to assign a small positive or negative value to each allele, and the size of that value depends on many factors. In essence, we can imagine that any quantitative trait has a baseline value which is modified up or down by the presence of an allele. By counting the numbers of "positive" and "negative" alleles, we can arrive at a phenotypic measurement.
 
 To do this, we have to make some assumptions:
 
-- All genes have roughly equal effects (no genes have more impact on the phenotype than any others)
+- All genes have roughly equal effects (no gene has more impact on the phenotype than any others).
 - All genes act additively, so that we can count alleles to arrive at a phenotype. Additivity can mean adding negative numbers though.
-- Genes do not interact with one another (*epistasis*) or with the environment (*genotype by environment* interactions)
-- Our simulation accounts for all of the phenotypic variation in a trait
+- Genes do not interact with one another (*epistasis*) or with the environment (*genotype by environment* interactions).
+- Our simulation accounts for all of the phenotypic variation in a trait.
 
-In real world biological systems, none of these assumptions are completely met to one degree or another. Nonetheless, we can use this framework to begin to understand quantitative traits.
+In real world biological systems, none of these assumptions is completely met to one degree or another. Nonetheless, we can use this framework to begin to understand quantitative traits.
 
 
 ### Alleles to quantitative traits
 
-Let's return to the allelic combination plot for 5 genes (@fig-genesplot_5). There are over 1,000 possible combinations of alleles, but only 10 possible resulting genotypes, from 0A/10T to 10A/0T. The most likely combination is 5 A and 5 T.
+Let's return to the allelic combination plot for 5 genes (@fig-genesplot_5). There are more than 1,000 possible combinations of alleles, but only 10 possible resulting genotypes, from 0A/10T to 10A/0T. The most likely combination is 5 A and 5 T.
 
 ```{r}
 #| label: fig-genesplot_5
@@ -310,7 +310,7 @@ Let's return to the allelic combination plot for 5 genes (@fig-genesplot_5). The
 genotypes_plot(n_genes = 5)
 ```
 
-For this simulation "experiment", we will use a common plant mode organism: *Arabidopsis thaliana* (a relative of mustard; @fig-arabidopsis). *Arabidopsis* is commonly used to study the genetics of quantitative traits in plants, because it grows quickly and easily in a greenhouse, where the environment can be easily controlled for experiments.
+For this simulation "experiment," we will use a common plant mode organism: *Arabidopsis thaliana* (a relative of mustard; @fig-arabidopsis). *Arabidopsis* is commonly used to study the genetics of quantitative traits in plants, because it grows quickly and easily in a greenhouse, where the environment can be easily controlled for experiments.
 
 ![*Arabidopsis thaliana*, a common model organism for plant quantitative genetics.](http://www.plantsystematics.org/users/jdelaet/9_1_12_1/je00159/nDSC_1450.JPG){width=50% fig-alt="Image of a flowering Arabidopsis plant." #fig-arabidopsis}
 
@@ -336,7 +336,7 @@ If we randomly sampled *Arabidopsis*, we would expect to find plants with genoty
 </textarea>
 
 
-If we were to weight a large number of *Arabidopsis* plants, we would find a distribution that looks like the one produced in the chunk below. Run the code to make the plot.
+If we were to weigh a large number of *Arabidopsis* plants, we would find a distribution that looks like the one produced in the chunk below. Run the code to make the plot.
 
 ```{webr-r}
 #| fig-height: 4
@@ -352,7 +352,7 @@ biomass_plot()
 
 Our simulated set of plant biomasses reveals a major limitation of our approach:
 
-- Why would plants weight exactly 4500 mg or 4600 mg or 4700 mg with no plants at intermediate weights?
+- Why would plants weigh exactly 4500 mg or 4600 mg or 4700 mg with no plants at intermediate weights?
 
 The answers lie in the assumptions that we made at the start. In a simple simulation experiment like this, we have to make simplifying assumptions that are often not realistic in real biological systems. We could, however, make our model complex to better approximate the natural world.^[Such simulation models with increasing levels of complexity are quite common in the field of genetics.] 
 
@@ -372,7 +372,7 @@ NHa <- NH |>
   filter(Age > 20)
 ```
 
-The National Health and Nutrition Examination Survey (["NHANES"](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx)) began in the early 1960's and continues to the present time. The goal of this study is to assess the health and nutrition status of a broad cross-section of the United States population. As part of this study, routine measurements of body size such as height (in cm) are recorded for each participant.
+The National Health and Nutrition Examination Survey (["NHANES"](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx)) began in the early 1960s and continues to the present time. The goal of this study is to assess the health and nutrition status of a broad cross-section of the United States population. As part of this study, routine measurements of body size such as height (in cm) are recorded for each participant.
 
 The 2017-2020 NHANES survey has data for `r format(nrow(NH), big.mark = ",")` individuals. @fig-htall shows the observed heights for all the individuals in the study. Both groups show a similar pattern of roughly linear increase in height from childhood until age 15-18. What follows is a slight decline in height as the spaces between the intervertebral discs decrease slightly.
 
@@ -393,7 +393,7 @@ ggplot(NH, aes(x = Age, y = Height, color = Sex)) +
   mytheme
 ```
 
-If we ignore the growth phase by selecting individuals over age 20, we can get reasonable sample of adult heights. @fig-ht shows the distributions of heights for both groups. We can see that the range is between about 140 and 200 cm, but the majority of individuals fall near the middle of that range.
+If we ignore the growth phase by selecting individuals over age 20, we can get a reasonable sample of adult heights. @fig-ht shows the distributions of heights for both groups. We can see that the range is between about 140 and 200 cm, but the majority of individuals fall near the middle of that range.
 
 ```{r}
 #| label: fig-ht
@@ -418,9 +418,9 @@ ggplot(NHa, aes(Height, fill = Sex)) +
 
 ## Generating a normal distribution from combinations of alleles
 
-For the remainder of this exercise, we will use the data in yellow. We want to use what we have learned about distributions of alleles to explore how many genes might be responsible for the variation in height that we observe.
+For the remainder of this exercise, we will use the data in yellow. Using what we have learned about distributions of alleles, we want to explore how many genes might be responsible for the variation in height that we observe.
 
-@fig-gen_normal shows the distribution of observed heights (4,267 individuals over the age of 20) in the upper panel. The lower panel has a the results of a simulation where the observed variation in height is distributed among 5 genes (10 alleles). Each allele has to account for about 2.8 cm of height to account for >40 cm of range in height. 
+@fig-gen_normal shows the distribution of observed heights (4,267 individuals over the age of 20) in the upper panel. The lower panel shows the results of a simulation where the observed variation in height is distributed among 5 genes (10 alleles). Each allele has to account for about 2.8 cm of height to account for >40 cm of range in height. 
 
 ```{r}
 #| label: fig-gen_normal
@@ -434,13 +434,13 @@ NH_F <- read.csv("NHANES/NHANES.csv") |>
 simulate_heights(n_genes = 5, HD = NH_F)
 ```
 
-Using the code block below, try increasing numbers of genes (e.g., 10, 20, 50, 100, 300, etc). 
+Using the code block below, try increasing numbers of genes (e.g., 10, 20, 50, 100, 300, etc.). 
 
 ```{webr-r}
 simulate_heights(n_genes = 10)
 ```
 
-> As the number of genes increases, how do the distributions of actual heights and simulated heights compare to one another? How the amount of phenotypic variation attributable to each allele change as the number of genes controbuting to height increases?
+> As the number of genes increases, how do the distributions of actual heights and simulated heights compare to one another? How does the amount of phenotypic variation attributable to each allele change as the number of genes contributing to height increases?
 
 <textarea rows="3" cols="75">
 
@@ -449,7 +449,7 @@ simulate_heights(n_genes = 10)
 
 ## Summarizing distributions
 
-Because many biological traits, including those related to size (length, height, mass, etc.), result from the actions of large numbers of genes, each adding or subtracting a small amount of a phenotype, these traits often follow a normal distribution.
+Many biological traits, including those related to size (length, height, mass, etc.), result from the actions of large numbers of genes, each adding or subtracting a small amount of a phenotype. Because of the actions of a large number of genes, these traits often follow a normal distribution.
 
 Biologists are very often interested in summarizing a set of observations (*sample*). Two numbers are all that are needed to fully describe a normal distribution: the *mean* and the *standard deviation*. You are probably already familiar with the mean (often called the average).
 
@@ -508,7 +508,7 @@ One of the features of a normal distribution is that we can use the mean and sta
 
 As one example, in a large sample that is normally distributed, we expect that 95% of the observations will fall within about 2 standard deviations (more accurately 1.96 standard deviations) of the mean.
 
-The code chunks below does this calculation for you and saves the lower and upper bounds of this interval into two new variables.
+The code chunks below do this calculation for you and save the lower and upper bounds of this interval into two new variables.
 
 ```{webr-r}
 # Lower bound
@@ -522,7 +522,7 @@ The code chunks below does this calculation for you and saves the lower and uppe
 
 We can use these numbers to determine whether our observed sample is normally distributed in reality.
 
-In the code chunks below, first we record the number of observations and save that to a variable (`n_observations`). We then count the observations that are below the lower bound. This count is then divided by the number of observations and multiplied by 100 to determine the percentage of observations below the predicted lower bound. This process is repeated for the upper bound
+In the code chunks below, first first we record the number of observations and save it to a variable (`n_observations`). We then count the observations that are below the lower bound. This count is then divided by the number of observations and multiplied by 100 to determine the percentage of observations below the predicted lower bound. This process is repeated for the upper bound
 
 ```{webr-r}
 n_observations <- length(NHANES$Height)
@@ -558,9 +558,9 @@ tail(NHANES)
 
 ## Epilogue: Mapping the genes for height in humans
 
-To this point, we have only considered how genes contribute to a quantitative trait and how many genes might contribute to a traits. What we haven't considered yet is how scientists estimate where in the genome the associated genes are located ("mapping"). Many different methods are used for mapping. Since the beginning of the genomic era, where full genomes can be sequenced and compared, one of the most common methods for mapping is via [Genome-Wide Association Studies](https://www.genome.gov/genetics-glossary/Genome-Wide-Association-Studies) (GWAS; Uffelmann and colleagues [-@Uffelmann2021-at] present a introduction).
+To this point, we have only considered how genes contribute to a quantitative trait and how many genes might contribute to a trait. What we haven't considered yet is how scientists estimate where in the genome the associated genes are located ("mapping"). Many different methods are used for mapping. Since the beginning of the genomic era, where full genomes can be sequenced and compared, one of the most common methods for mapping is via [Genome-Wide Association Studies](https://www.genome.gov/genetics-glossary/Genome-Wide-Association-Studies) (GWAS).^[Uffelmann and colleagues [-@Uffelmann2021-at] present an introduction.]
 
-GWAS compares large numbers (hundreds of thousands or millions) of single-nucleotide polymorphisms ([SNPs](https://medlineplus.gov/genetics/understanding/genomicresearch/snp/)) to their associated phenotypes though large-scale statistical testing. These tests reveal locations on the genome that correspond to measurable phenotypic variation. 
+GWAS compares large numbers (hundreds of thousands or millions) of single-nucleotide polymorphisms ([SNPs](https://medlineplus.gov/genetics/understanding/genomicresearch/snp/)) to their associated phenotypes through large-scale statistical testing. These tests reveal locations on the genome that correspond to measurable phenotypic variation. 
 
 
 ### Genes contributing to human height
