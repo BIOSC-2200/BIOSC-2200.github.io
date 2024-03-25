@@ -1,5 +1,5 @@
 ---
-title: "Quantitative Traits"
+title: "Case study: The distribution of human height"
 engine: knitr
 format: 
   html: 
@@ -28,7 +28,7 @@ library(ggplot2)
 library(dplyr)
 library(tibble)
 
-source("imports.R")
+source("../QT/imports.R")
 
 ```
 
@@ -43,7 +43,7 @@ library(tibble)
 source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/imports.R")
 
 download.file(
-  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
+  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT-Case-Study/NHANES/NHANES.csv",
   "NHANES.csv",
   quiet = TRUE)
 
