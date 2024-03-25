@@ -42,16 +42,6 @@ library(tibble)
 
 source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/imports.R")
 
-download.file(
-  "https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/NHANES/NHANES.csv",
-  "NHANES.csv",
-  quiet = TRUE)
-
-NHANES <- read.csv("NHANES.csv")
-NHANES <- NHANES[NHANES$Sex == "Female" & NHANES$Age > 20, ]
-NHANES$Sex <- NULL
-NHANES <- NHANES[order(NHANES$Height), ]
-
 ```
 
 
