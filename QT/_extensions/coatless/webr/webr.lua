@@ -72,7 +72,9 @@ local qwebRDefaultCellOptions = {
   ["fig-width"] = 7,
   ["fig-height"] = 5,
   ["out-width"] = "700px",
-  ["out-height"] = ""
+  ["out-height"] = "",
+  ["editor-max-height"] = "",
+  ["editor-quick-suggestions"] = "false"
 }
 
 ----
@@ -169,6 +171,14 @@ function setWebRInitializationOptions(meta)
   if isVariableEmpty(webr) then
     return meta
   end
+
+  -- Allow modification of code cells global defaults 
+  if isVariablePopulated(webr["cell-options"]) then
+    for index, value in pairs(webr["cell-options"]) do
+      qwebRDefaultCellOptions[index] = pandoc.utils.stringify(value)
+    end
+  end
+
 
   -- The base URL used for downloading R WebAssembly binaries 
   -- https://webr.r-wasm.org/[version]/webr.mjs
@@ -428,6 +438,8 @@ local function ensureWebRSetup()
 
   -- Insert the monaco editor initialization
   quarto.doc.include_file("before-body", "qwebr-monaco-editor-init.html")
+
+  includeFileInHTMLTag("before-body", "qwebr-theme-switch.js", "js")
 
   -- Insert the extension styling for defined elements
   includeFileInHTMLTag("before-body", "qwebr-monaco-editor-element.js", "js")
