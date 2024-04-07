@@ -78,7 +78,7 @@ The learning objectives for this exercise are:
 
 ## Contrasting Mendelian traits and polygenic traits
 
-The first phenotypes that you learned about as well as those described in the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
+The first phenotypes that you learned about as well as those described in the first set of exercises (<a href="../TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
 
 This set of exercises focuses on phenotypes that are determined by multiple genes: **polygenic traits**. Polygenic traits often (but not always) can be measured on a numeric scale and are thus referred to as **quantitative traits**. The two main types of quantitative traits are:
 
