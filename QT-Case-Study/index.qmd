@@ -122,7 +122,7 @@ For this simulation "experiment," we will use a common plant mode organism: *Ara
 
 A common measure of the amount of growth in plants is above ground biomass. Plants, such as *Arabidopsis* are allowed to grow in controlled conditions. After a certain period of time, the plants are harvested, dried, and weighed.
 
-Imagine that under certain conditions, the mean above ground biomass of *Arabidopsis* is 5000 mg (i.e., 5 g) and that 5 genes control the range of biomass. Each T that a plant receives results in 20 mg lower biomass, and each A that it receives results in 50 mg higher biomass.
+Imagine that under certain conditions, the mean above ground biomass of *Arabidopsis* is 5000 mg (i.e., 5 g) and that 5 genes control the range of biomass. Each T that a plant receives results in 50 mg lower biomass, and each A that it receives results in 50 mg higher biomass.
 
 A plant with 10 T and no A would weigh 5000 - (10 * 50) = 4500 mg. Each of the 10 T's subtracts 50 mg from 5000. Similarly, a plant with 10 A's would weight 5500 mg.
 
