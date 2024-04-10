@@ -1,0 +1,284 @@
+---
+title: "Genetics of Evolution"
+engine: knitr
+format: 
+  html: 
+    toc: true
+    toc-depth: 3
+    toc-title: Contents
+    self-contained: true
+    css: ../custom.css
+    link-external-newwindow: true
+webr: 
+  packages: ["ggplot2", "dplyr", "tibble"]
+filters: 
+  - webr
+bibliography: ../Genetics_Discussion.bib
+csl: ../evolution.csl
+code-annotations: hover
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+
+source("../QT/imports.R")
+
+```
+
+
+```{webr-r}
+#| context: setup
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/imports.R")
+
+```
+
+
+## Preliminaries
+
+If you are not already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
+
+::: {.callout-note}
+
+Reminder: Save your work regularly.
+
+:::
+
+::: {.callout-important}
+
+If you are using a Mac, we recommend that you use either Chrome or Firefox to complete these exercises. Some of the default settings in Safari prevent these exercises from running.
+
+:::
+
+
+### Contact information
+
+If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 224.
+
+
+## Learning objectives
+
+The learning objectives for this exercise are:
+
+- Describe and identify the mechanisms by which variation arises and is fixed (or lost) in a population over time.
+- Model how random mating yields predicted genotype frequencies in Hardy-Weinberg Equilibrium (HWE), and how non-random mating affects allele and genotype frequencies.
+- Test whether HWE is present in a population.
+- Explain how natural selection and genetic drift can affect the elimination, maintenance or increase in frequency of alleles in a population.
+
+
+## Mechanisms of biological evolution
+
+Evolution is defined by the *change in allele frequencies over time*. In this context *time* refers to subsequent generations in a reproducing population. Two main scales of evolution are:
+
+1. **Microevolution**: both adaptive and non-adaptive (neutral) changes *within* populations across generations
+2. **Macroevolution**: higher level changes involving origination and diversification of species.
+
+Separating microevolution from macroevolution like this might make it appear that they are completely distinct processes. In reality,
+
+- There is a continuum between the two: microevolutionary change can lead to observable macroevolutionary patterns. 
+- The fundamental process of change in allele frequencies over time operates the same in both.
+
+One final point to remember is that populations don't evolve in isolation. Species that live in communities with one another interact with both native and introduced species at many different tropic levels (@fig-galapagos).
+
+![In the Galápagos islands, the medium ground finch (*Geospiza fortis*, upper right) and Galápagos mockingbird (*Mimus parvulus*, lower left) are both under threat from an introduced nest fly (*Philornis downsi*, upper left). Simultaneously, these species have unique parasites, a feather mite and feather louse (lower right) that both respond to and impact the evoltionary history of these species. Image from [University of Utah](https://darwin.biology.utah.edu/GalapagosX.html)](https://darwin.biology.utah.edu/images/Galapagos%20images/galapagos%20pique.png){fig-alt="Image of a fly, two birds, and a louse." width=50% #fig-galapagos}
+
+
+## Hardy-Weinberg Equilibrium
+
+If evolution is the change in allele frequencies over time, what defines the *lack of change* in allele frequencies? In population genetics, no change in allele frequencies is called *Hardy-Weinberg Equilibrium* (often abbreviated HWE for simplicity). The equations for HWE were developed during the first decade of the 1900's, shortly after the re-discovery of Mendelian genetics.
+
+HWE allows us to predict genotype (and thus phenotype) frequencies under a specific set of conditions in which there are no additional forces, either internal or external, acting on a population:
+
+1. Infinite population size
+2. All mating is random
+3. No migration
+4. No selection
+5. No mutation
+
+There are many processes that can lead to deviations from Hardy-Weinberg Equilibrium.
+
+> For each of the conditions above, (1) give an example of a process that would lead to a deviation from HWE and (2) predict whether that process would lead to *increased* or *decreased* genetic variation in the subsequent generation.
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+
+Evolutionary biologists are often interested in determining if a population is in Hardy-Weinberg Equilibrium. If a population is found to be violating HWE, then it suggests that one of the processes listed above is happening in that population.
+
+
+## Evolution of single alleles
+
+The first phenotypes that you learned about as well as those described in the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
+
+The simplest case to use for exploring Hardy-Weinberg Equilibrium is a single allele in a diploid organism. In this case, there are only three possible genotypes for two alleles (*p* and *q*)^[p and q are most commonly used as the allele names, but you could substitute any pair: A and B, A~1~ and A~2~, etc.]:
+
+- *pp*
+- *pq*
+- *qq*
+
+The HWE equation results from the basic rules of probability that you learned about in the first set of exercises. To explore HWE in a population, we will use the example of the Peppered moth (*Biston betularia*; @fig-peppered)^[Thanks to Dr. Elizabeth King for this example.].
+
+::: {#fig-peppered layout-ncol=2}
+
+![Dark morph](../images/peppered_dark.jpg){#fig-pepp_dark}
+
+![Light morph](../images/peppered_light.jpg){#fig-pepp_light}
+
+The Peppered moth (*Biston betularia*) exhibits two different color morphs, dark and light. These phenotypes are controlled by a single dominant allele *p*. (a) Individuals with either *pp* or *pq* genotypes have the dark morph. (b) Light morphs have the *qq* genotype.
+:::
+
+Imagine a *population* of Peppered moths with the following allele frequencies:
+
+- *p* = 0.1
+- *q* = 0.9
+
+There are a few things to note here:
+
+- The frequencies summarize information about an entire population, not about any particular individuals.
+- The frequencies sum to 1: either *p* or *q* (just like a flipped coin can be either heads or tails).
+- The frequencies don't tell us about whether one allele is dominant. 
+
+### Probabilities of allele combinations
+
+We can use the rules of probability that you have learned about to determine the probability of an individual having each of the possible genotypes: *pp*, *qq*, or *pq*. Because allele assort independently, the probabilities are just the products of the probabilities.
+
+$$pp = 0.1 \times 0.1 = 0.01$$
+
+$$qq = 0.9 \times 0.9 = 0.81$$
+
+$$pq = (0.1 \times 0.9) + (0.1 \times 0.9) = 0.18$$
+
+Because *pq* is not distinguishable from *qp*, we add the probabilities of each combination (0.1 x 0.9 = 0.09 and 0.9 x 0.1 = 0.09).
+
+Either way we add up these probabilities, the sum is 1:
+
+```{webr-r}
+(0.1)^2 + (0.9)^2 + 2 * (0.1 * 0.9)
+```
+
+```{webr-r}
+0.01 + 0.81 + 0.18
+```
+
+Thus, basic probability leads to the expectation for a population in HWE:
+
+$$p^2 + 2pq + q^2 = 1$$
+
+A population in Hardy-Weinberg Equilibrium will satisfy this equation.
+
+
+### Counts of genotypes
+
+We start with a population of 1,000 Peppered moth individuals that is in HWE. As above, the probability of *p* is 0.1 and of *q* is 1 - 0.1 = 0.9. 
+
+We expect the following genotypes in the population:
+
+```{webr-r}
+pop_size <- 1000  # Population size
+
+p <- 0.1          # Frequency of p
+q <- 1 - p        # Frequency of q
+
+pp <- p^2         # Probability of pp
+pq <- 2 * p * q   # Probability of pq or qp
+qq <- q^2         # Probability of qq
+
+# Number of pp individuals
+(pp <- pop_size * pp)
+
+# Number of pq individuals
+(pq <- pop_size * pq)
+
+# Number of qq individuals
+(qq <- pop_size * qq)
+```
+
+Notice that we calculate the probability of *q* as 1 - *p*, so we only have to change the value of *p*. With these starting parameters, there are 10 *pp*, 180 *pq*, and 810 *qq* individuals.
+
+If each of the individuals makes 10 gametes, then *pp* individuals will contribute 2 *p* alleles, *pq* will contribute 1 *p* allele and 1 *q* allele, and *qq* individuals will contribute 2 *q* alleles to the gene pool.
+
+We will have the following numbers of alleles represented and use those to calculate the resulting frequencies of *p* and *q* in the next generation.
+
+```{webr-r}
+# Number of p alleles
+num_p <- 2 * pp * pop_size + pq * pop_size
+
+# Number of q alleles
+num_q <- 2 * qq * pop_size + pq * pop_size
+
+# Frequency of p
+num_p / (num_p + num_q)
+
+# Frequency of q
+num_q / (num_p + num_q)
+```
+
+> In the first code block above, iteratively change the values of `pop_size` and `p`. Start by leaving `p` at 0.1 and change `pop_size` to larger or smaller values. Run the first code block and then the second. See how the frequencies of *p* and *q* change. Then set `pop_size` to 1000 and change the value for `p` to some number between 0 and 1. Again run the first code block and then the second. 
+
+<textarea rows="10" cols="75">
+How do the final frequencies for p and q change as you change population size?
+
+
+
+
+How do the final values for p and q change as you change the starting probability of p?
+</textarea>
+
+
+## Testing HWE chisq
+
+
+Example of MM mice
+
+
+
+## Evolution of polygenic traits
+
+Counting the ways that alleles can combine (coins)
+
+```{r}
+#| label: fig-genesplot
+#| echo: false
+#| fig-height: 4
+#| fig-cap: Allelic combination plot for 1 gene. There is a 1:2:1 (TT:AT:AA) ratio of two alternate alleles at a single position in the genome. There are 4 possible combinations (just like for two coin flips).  The counts of each set of combinations are shown with the red number at the top of the bars. The y-axis shows the relative percentage of each. 
+#| cap-location: bottom
+
+genotypes_plot(n_genes = 20)
+```
+
+Mechanism of selection
+
+	- Moving population average
+	- Drift vs. selection
+- Effect of sample size on selection and drift in phenotypic evolution
+	- Drift as sampling error
+	- Drift has a larger effect in small populations
+
+Populations have significant underlying variation
+
+Intuition of moving mean
+
+
+
+
+## Feedback FIXME
+
+We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_25nuDUfHEl1cQku) to help us improve.
+
+
+## References
+
+::: {#refs}
+:::
