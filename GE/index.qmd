@@ -84,12 +84,12 @@ Evolution is defined by the *change in allele frequencies over time*. In this co
 1. **Microevolution**: both adaptive and non-adaptive (neutral) changes *within* populations across generations
 2. **Macroevolution**: higher level changes involving origination and diversification of species.
 
-Separating microevolution from macroevolution like this might make it appear that they are completely distinct processes. In reality,
+Separating microevolution from macroevolution like this might make it appear that they are completely distinct processes. In reality:
 
-- There is a continuum between the two: microevolutionary change can lead to observable macroevolutionary patterns. 
+- A continuum exists between the two: microevolutionary change can lead to observable macroevolutionary patterns. 
 - The fundamental process of change in allele frequencies over time operates the same in both.
 
-One final point to remember is that populations don't evolve in isolation. Species that live in communities with one another interact with both native and introduced species at many different tropic levels (@fig-galapagos).
+One final point to remember is that populations don't evolve in isolation. Species that live in communities with one another interact with both native and introduced species at many different trophic levels (@fig-galapagos).
 
 ![In the Galápagos islands, the medium ground finch (*Geospiza fortis*, upper right) and Galápagos mockingbird (*Mimus parvulus*, lower left) are both under threat from an introduced nest fly (*Philornis downsi*, upper left). Simultaneously, these species have unique parasites, a feather mite and feather louse (lower right) that both respond to and impact the evoltionary history of these species. Image from [University of Utah](https://darwin.biology.utah.edu/GalapagosX.html)](https://darwin.biology.utah.edu/images/Galapagos%20images/galapagos%20pique.png){fig-alt="Image of a fly, two birds, and a louse." width=50% #fig-galapagos}
 
