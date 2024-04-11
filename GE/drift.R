@@ -10,6 +10,9 @@ runPopSim <- function(
   # n=100,
   # Migration=0
 ){
+  n <- Population_Size
+  p <- Initital_Frequency
+  
   stats <- "p"
   infinitePop <- FALSE
   
@@ -21,8 +24,8 @@ runPopSim <- function(
   }
   
   for(i in 1:n_Generations){ 
-    if(length(n)>1){ #weight mean allele freq (used for migration) by relative population size if different
-      ps <- allele.freq[i,(1:n_Populations)] %>% unlist()
+    if(length(n) > 1){ #weight mean allele freq (used for migration) by relative population size if different
+      ps <- allele.freq[i,(1:n_Populations)] |> unlist()
       mean.p <- weighted.mean(ps,n)
     } else {
       mean.p <- as.numeric(rowMeans(data.frame(allele.freq[i,(1:n_Populations)])))
@@ -35,13 +38,14 @@ runPopSim <- function(
         n2 <- n
       }
       p <- (1 - Mutation_AB) * p + Mutation_BA * (1 - p) # mutation
-      p <- p*(1-Migration) + Migration*mean.p # migration
-      q <- 1-p
-      if(p>0 && p<1){ #if alleles are not fixed
+      p <- p * (1 - Migration) + Migration * mean.p # migration
+      q <- 1 - p
+      
+      if(p > 0 && p < 1){ #if alleles are not fixed
         w <- p*p*Fitness_AA+2*p*q*Fitness_AB+q*q*Fitness_BB #population average fitness
         freq.aa <- (p*p*Fitness_AA)/w #post-selection genotype frequencies (weighted by relative fitness)
         freq.ab <- (2*p*q*Fitness_AB)/w
-        if(infinitePop==F){ 
+        if(infinitePop == FALSE){ 
           Naa <- rbinom(1,n2,freq.aa)
           if(freq.aa<1){ 
             Nab <- rbinom(1,(n2-Naa),(freq.ab/(1-freq.aa)))
@@ -49,8 +53,8 @@ runPopSim <- function(
           else {
             Nab <- 0
           }
-          p <- ((2*Naa)+Nab)/(2*n2)
-          q <- 1-p
+          p <- ((2 * Naa)+Nab) / (2*n2)
+          q <- 1 - p
           allele.freq[(i+1),j] <- p #new p after drift in columns 1:n_Populations
           allele.freq[(i+1),(j+n_Populations)] <- Nab/n2 #Ho in columns (n_Populations+1):(n_Populations*2)
           allele.freq[(i+1),(j+2*n_Populations)] <- 2*p*q #He in columns (n_Populations*2+1):n_Populations*3
@@ -67,26 +71,27 @@ runPopSim <- function(
       } else { #if alleles are fixed
         if(p<=0){
           p <- 0
-          w <- p*p*Fitness_AA+2*p*q*Fitness_AB+q*q*Fitness_BB
+          w <- p * p * Fitness_AA + 2 * p * q * Fitness_AB + q * q * Fitness_BB
         } else {
           p <- 1
-          w <- p*p*Fitness_AA+2*p*q*Fitness_AB+q*q*Fitness_BB
+          w <- p*p*Fitness_AA + 2 * p * q * Fitness_AB + q * q * Fitness_BB
         }
-        allele.freq[(i+1),j] <- p
-        allele.freq[(i+1),(j+n_Populations)] <- 0
-        allele.freq[(i+1),(j+2*n_Populations)] <- 0
-        allele.freq[(i+1),(j+3*n_Populations)] <- w
+        allele.freq[(i + 1),j] <- p
+        allele.freq[(i + 1),(j + n_Populations)] <- 0
+        allele.freq[(i + 1),(j + 2 * n_Populations)] <- 0
+        allele.freq[(i + 1),(j + 3 * n_Populations)] <- w
       }
     } #end populations loop
   } #end generations loop
   
-  #summary stats
+  # summary stats
   names <- c()
-  for(i in 1:n_Populations){names[i]<-paste0("p",i)}
-  for(i in (n_Populations+1):(2*n_Populations)){names[i]<-paste0("Ho",i-n_Populations)}
-  for(i in (n_Populations*2+1):(3*n_Populations)){names[i]<-paste0("He",i-2*n_Populations)}
-  for(i in (n_Populations*3+1):(4*n_Populations)){names[i]<-paste0("W",i-3*n_Populations)}
+  for(i in 1:n_Populations){names[i] <- paste0("p", i)}
+  for(i in (n_Populations+1):(2*n_Populations)){names[i]<-paste0("Ho", i - n_Populations)}
+  for(i in (n_Populations*2+1):(3*n_Populations)){names[i]<-paste0("He",i - 2 * n_Populations)}
+  for(i in (n_Populations*3+1):(4*n_Populations)){names[i]<-paste0("W",i - 3 * n_Populations)}
   colnames(allele.freq) <- names
+  
   allele.freq$meanHo <- rowMeans(allele.freq[(n_Populations+1):(n_Populations*2)])
   allele.freq$meanHe <- rowMeans(allele.freq[(n_Populations*2+1):(n_Populations*3)])
   allele.freq$Fis <- 1-(allele.freq$meanHo/allele.freq$meanHe)
