@@ -70,7 +70,7 @@ The learning objectives for this exercise are:
 
 - Describe and identify the mechanisms by which variation arises and is fixed (or lost) in a population over time.
 - Model how random mating yields predicted genotype frequencies in Hardy-Weinberg Equilibrium (HWE), and how non-random mating affects allele and genotype frequencies.
-- Test whether HWE is present in a population.
+- Statistically test whether HWE is present in a population.
 
 
 ## Mechanisms of biological evolution
@@ -344,7 +344,7 @@ In three of the lines, it appeared that the frequency of the small muscle phenot
 #| label: fig-mmgen
 #| fig-height: 4
 #| fig-align: center
-#| fig-cap: Frequency of mice exhibiting the small muscle phenotype in three lines aross the first 22 generations of selection. Data from Garland et al. [-@Garland2002-it]
+#| fig-cap: Frequency of mice exhibiting the small muscle phenotype in three lines during the first 22 generations of selection. Data from Garland et al. [-@Garland2002-it]
 
 L3 <- readr::read_csv("../data/Line_3.csv", show_col_types = FALSE) |> 
   mutate(Generation = round(x),
@@ -388,7 +388,7 @@ To fill in the equation for the chi-squared test, we need to know the observed a
 
 In this experiment, each generation has 200 individuals (the population size). Because the "mini-muscle" allele is a autosomal recessive, we know that all individuals that show the phenotype must be homozygous for the allele (*pp*). 
 
-There appears to be a big change in the allele frequency in Line 6, so let's begin with that line. Line 6 is one of the ones that is selected for increased wheel activity. Although the mini-muscle allele was not directly selected for, it appears that the frequency increases across generations.
+There appears to be a big change in the allele frequency in Line 6, so let's begin with that line. Line 6 is one that is selected for increased wheel activity. Although the mini-muscle allele was not directly selected for, it appears that the frequency increases across generations.
 
 > Try to develop a hypothesis for why a line which is being selected for increased wheel activity would also show an increase in an allele that alters muscle physiology?
 
@@ -564,12 +564,7 @@ Enter your hypothesis here.
 </textarea>
 
 
-## Feedback FIXME
+## Feedback
 
-We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_25nuDUfHEl1cQku) to help us improve.
+We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_0V9X4BwsO5Vf3P8) to help us improve.
 
-
-## References
-
-::: {#refs}
-:::
