@@ -1,0 +1,153 @@
+---
+title: "Genetics of Evolution - Mechanisms"
+engine: knitr
+format: 
+  html: 
+    toc: true
+    toc-depth: 3
+    toc-title: Contents
+    self-contained: true
+    css: ../custom.css
+    link-external-newwindow: true
+webr: 
+  packages: ["ggplot2", "reshape", "tibble", "viridis", "dplyr"]
+filters: 
+  - webr
+bibliography: ../Genetics_Discussion.bib
+csl: ../evolution.csl
+code-annotations: hover
+---
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(tibble)
+library(tidyr)
+library(reshape)
+library(viridis)
+library(dplyr)
+
+ggplot2::theme_set(ggplot2::theme_light())
+
+source("drift.R")
+```
+
+
+```{webr-r}
+#| context: setup
+
+library(ggplot2)
+library(tibble)
+library(tidyr)
+library(reshape)
+library(viridis)
+library(dplyr)
+
+ggplot2::theme_set(ggplot2::theme_light())
+
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/GE/drift.R")
+
+```
+
+
+## Preliminaries
+
+If you are not already familiar with the structure of these exercises, read the [Introduction](https://biosc-2200.github.io/Introduction/) first.
+
+::: {.callout-note}
+
+Reminder: Save your work regularly.
+
+:::
+
+::: {.callout-important}
+
+If you are using a Mac, we recommend that you use either Chrome or Firefox to complete these exercises. Some of the default settings in Safari prevent these exercises from running.
+
+:::
+
+
+### Contact information
+
+If you have questions about these exercises, please contact Dr. Kevin Middleton (middletonk@missouri.edu) or drop by Tucker 224.
+
+
+## Learning objectives
+
+The learning objectives for this exercise are:
+
+- Describe and identify the mechanisms by which variation arises and is fixed (or lost) in a population over time.
+- Explain how the processes of drift, natural selection, migration, and mutation can affect the elimination, maintenance or increase in frequency of alleles in a population.
+
+
+
+
+## Exploring the assumptions of HWE
+
+
+Mechanism of selection
+
+	- Moving population average
+	- Drift vs. selection
+- Effect of sample size on selection and drift in phenotypic evolution
+	- Drift as sampling error
+	- Drift has a larger effect in small populations
+
+Populations have significant underlying variation
+
+Intuition of moving mean
+
+
+```{r}
+#| echo: false
+n_Populations <- 10
+n_Generations <- 100
+
+Population_Size <- 100
+Initital_Frequency <- 0.5
+
+Fitness_AA <- 1
+Fitness_AB <- 1
+Fitness_BB <- 1
+
+Migration <- 0
+
+Mutation_AB <- 0
+Mutation_BA <- 0
+
+Simulate_Population()
+```
+
+
+```{webr-r}
+n_Populations <- 10
+n_Generations <- 100
+n <- 100
+p <- 0.5
+
+Fitness_AA <- 1
+Fitness_AB <- 1
+Fitness_BB <- 1
+
+Migration <- 0
+
+Mutation_AB <- 0
+Mutation_BA <- 0
+
+Simulate_Population()
+```
+
+
+## Feedback FIXME
+
+We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_25nuDUfHEl1cQku) to help us improve.
+
+
+## References
+
+::: {#refs}
+:::
