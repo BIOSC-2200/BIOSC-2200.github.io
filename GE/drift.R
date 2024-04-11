@@ -109,6 +109,7 @@ meltPlotData <- function(allele.freq.df){
   stats <- "p"
   df <- reshape::melt(allele.freq.df, 
                       id.vars = "n_Generations")
+
   df$dataType <- c(rep("p",(n_Populations*(n_Generations+1))),
                    rep("Ho",n_Populations*(n_Generations+1)),
                    rep("He",n_Populations*(n_Generations+1)),
