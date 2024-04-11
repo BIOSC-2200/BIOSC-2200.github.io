@@ -10,7 +10,7 @@ format:
     css: ../custom.css
     link-external-newwindow: true
 webr: 
-  packages: ["ggplot2", "dplyr", "tibble"]
+  packages: ["ggplot2", "reshape", "tibble", "viridis", "dplyr"]
 filters: 
   - webr
 bibliography: ../Genetics_Discussion.bib
@@ -25,11 +25,15 @@ code-annotations: hover
 #| warning: false
 
 library(ggplot2)
-library(dplyr)
 library(tibble)
+library(tidyr)
+library(reshape)
+library(viridis)
+library(dplyr)
 
-source("../QT/imports.R")
+ggplot2::theme_set(ggplot2::theme_light())
 
+source("drift.R")
 ```
 
 
@@ -37,10 +41,15 @@ source("../QT/imports.R")
 #| context: setup
 
 library(ggplot2)
-library(dplyr)
 library(tibble)
+library(tidyr)
+library(reshape)
+library(viridis)
+library(dplyr)
 
-source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/QT/imports.R")
+ggplot2::theme_set(ggplot2::theme_light())
+
+source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/GE/drift.R")
 
 ```
 
@@ -74,7 +83,7 @@ The learning objectives for this exercise are:
 - Describe and identify the mechanisms by which variation arises and is fixed (or lost) in a population over time.
 - Model how random mating yields predicted genotype frequencies in Hardy-Weinberg Equilibrium (HWE), and how non-random mating affects allele and genotype frequencies.
 - Test whether HWE is present in a population.
-- Explain how natural selection and genetic drift can affect the elimination, maintenance or increase in frequency of alleles in a population.
+- Explain how the processes of drift, natural selection, migration, and mutation can affect the elimination, maintenance or increase in frequency of alleles in a population.
 
 
 ## Mechanisms of biological evolution
@@ -118,7 +127,7 @@ There are many processes that can lead to deviations from Hardy-Weinberg Equilib
 Evolutionary biologists are often interested in determining if a population is in Hardy-Weinberg Equilibrium. If a population is found to be violating HWE, then it suggests that one of the processes listed above is happening in that population.
 
 
-## Evolution of single alleles
+## Evolution of single genes
 
 The first phenotypes that you learned about as well as those described in the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
 
@@ -149,6 +158,7 @@ There are a few things to note here:
 - The frequencies summarize information about an entire population, not about any particular individuals.
 - The frequencies sum to 1: either *p* or *q* (just like a flipped coin can be either heads or tails).
 - The frequencies don't tell us about whether one allele is dominant. 
+
 
 ### Probabilities of allele combinations
 
@@ -237,26 +247,219 @@ How do the final values for p and q change as you change the starting probabilit
 </textarea>
 
 
-## Testing HWE chisq
+## Testing for HWE in a population
+
+A population in Hardy-Weinberg Equilibrium will satisfy the equation:
+
+$$p^2 + 2pq + q^2 = 1$$
+
+How can we use this information to statistically test whether a population satisfies the assumptions of HWE? 
+
+In the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a> and <a href="./TGI-Case-Study" target="_blank">Case study: Investigating a newly discovered muscle mutation in mice</a>), you learned about using the chi-squared test to determine if predicted counts of births per day and counts of mice from a test-cross showing the small muscle phenotype matched the theoretical predictions.
+
+Because Hardy-Weinberg Equilibrium allows us to make predictions about the frequencies of alleles in a population, we can compare observed counts of alleles to the predicted counts of alleles. 
+
+If the population is in HWE, then the test will *not* be significant. Remember that the chi-squared test is really testing for deviations from the predictions. So the test will be significant (*P* < 0.05) if the counts *do not* match what we expect.
+
+Imagine a population with 500 diploid individuals. These 500 individuals will have 1000 total alleles. You observe the following genotypes among the 500 individuals:
+
+- *pp*: 5
+- *pq*: 95
+- *qq*: 400
+
+We first calculate the counts for the *p* and *q* alleles from the counts of individuals. Each *pp* individual contributes 2 *p* and each *pq* individual contributes 1. 
+
+```{webr-r}
+(p_count <- (2 * 5) + (1 * 95))
+(q_count <- (2 * 400) + (1 * 95))
+```
+
+From the counts we can calculate the frequencies:
+
+```{webr-r}
+(p_frequency <- p_count / 1000)
+(q_frequency <- q_count / 1000)
+```
+
+*p* = 0.105 and *q* = 0.895 are the *observed* frequencies in the population.
+
+We use these two values to calculated the *expected* frequencies for *pp*, *pq*, and *qq*, *assuming the population is in HWE*.
+
+```{webr-r}
+pp_expec_f <- p_frequency^2
+pq_expec_f <- 2 * p_frequency * q_frequency
+qq_expec_f <- q_frequency^2
+
+# Print the frequencies
+c(pp_expec_f, pq_expec_f, qq_expec_f)
+```
+
+The expected frequencies for *pp*, *pq*, and *qq* are converted into *expected counts* for 500 individuals:
+
+```{webr-r}
+pp_expec_ct <- pp_expec_f * 500
+pq_expec_ct <- pq_expec_f * 500
+qq_expec_ct <- qq_expec_f * 500
+
+# Print the counts
+c(pp_expec_ct, pq_expec_ct, qq_expec_ct)
+```
+
+You will notice that we have fractional individuals: we expect 5.5125 *pp* individuals. While this would not happen in real life, for our calculations, it is not a problem.
+
+Recall that the equation for a chi-squared test is:
+
+$$\chi^2 = \sum_{i=1}^n \frac{(Observed_i - Expected_i)^2}{Expected_i}$$
+
+We have all the information we need to carry out the chi-squared test. All we have to do is organize the data into a format that we can use for the test.
+
+We will make a data structure that holds the observed and expected counts:
+
+```{webr-r}
+Counts <- tibble(
+  Genotype = c("pp", "pq", "qq"),
+  Observed = c(5, 95, 400),
+  Expected = c(pp_expec_ct, pq_expec_ct, qq_expec_ct))
+Counts
+```
+
+And then performing the chi-squared test is just a matter of calling the function `chisq.test()`:
+
+```{webr-r}
+chisq.test(Counts$Observed, p = Counts$Expected, rescale.p = TRUE)
+```
+
+The `Observed` column is the observed counts of each genotype. The `Expected` column is the expected counts of each genotype if the population is in HWE. `rescale.p = TRUE` tells the function that the supplied `Expected` values are in counts and not in probabilities.
 
 
-Example of MM mice
+### Case Study: Testing for HWE in Small Muscle Phenotype mice
 
+Let's apply what we have learned to the data for mice that have the small muscle phenotype from earlier exercise: <a href="./TGI-Case-Study" target="_blank">Case study: Investigating a newly discovered muscle mutation in mice</a>. 
 
-
-## Evolution of polygenic traits
-
-Counting the ways that alleles can combine (coins)
+In three of the lines, it appeared that the frequency of the small muscle phenotype was increasing in two of the lines (3 and 6; @fig-mmgen). Although they all started at the same low level, the red lines appear to be increasing rapidly starting about generation 7.
 
 ```{r}
-#| label: fig-genesplot
 #| echo: false
+#| label: fig-mmgen
 #| fig-height: 4
-#| fig-cap: Allelic combination plot for 1 gene. There is a 1:2:1 (TT:AT:AA) ratio of two alternate alleles at a single position in the genome. There are 4 possible combinations (just like for two coin flips).  The counts of each set of combinations are shown with the red number at the top of the bars. The y-axis shows the relative percentage of each. 
-#| cap-location: bottom
+#| fig-align: center
+#| fig-cap: Frequency of mice exhibiting the small muscle phenotype in three lines aross the first 22 generations of selection. Data from Garland et al. [-@Garland2002-it]
 
-genotypes_plot(n_genes = 20)
+L3 <- readr::read_csv("../data/Line_3.csv", show_col_types = FALSE) |> 
+  mutate(Generation = round(x),
+         Frequency = round(y, 2),
+         Line = "Selected Line 3")
+L5 <- readr::read_csv("../data/Line_5.csv", show_col_types = FALSE) |> 
+  mutate(Generation = round(x),
+         Frequency = round(y, 2),
+         Line = "Control Line 5")
+L6 <- readr::read_csv("../data/Line_6.csv", show_col_types = FALSE) |> 
+  mutate(Generation = round(x),
+         Frequency = round(y, 2),
+         Line = "Selected Line 6")
+
+DD <- bind_rows(L3, L5, L6) |> 
+  mutate(Line = forcats::fct_inorder(Line))
+
+ggplot(DD, aes(x = Generation, y = Frequency,
+               color = Line,
+               shape = Line)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  scale_shape_manual(values = c(15, 1, 16), guide = "none") +
+  scale_color_manual(values = c("firebrick", "skyblue", "firebrick2"),
+                     name = NULL) +
+  scale_x_continuous(breaks = 1:22) +
+  scale_y_continuous(breaks = seq(0, 0.8, by = 0.1)) +
+  guides(color = guide_legend(position = "inside")) +
+  theme(legend.position.inside = c(0.15, 0.85),
+        axis.title = element_text(face = "bold"),
+        panel.grid.minor = element_blank()) +
+  labs(y = "Frequency of\nSmall Muscle Phenotype")
+
 ```
+
+We can use what we have learned to test whether it is likely that these breeding lines deviate from HWE. If so, it would suggest that the allele for the small-muscle phenotype was being selected for in the Selected lines (red lines in @fig-mmgen).
+
+To fill in the equation for the chi-squared test, we need to know the observed and expected counts for genotypes. We can use the frequencies in the table to determine the counts for each. We will only consider two generations: 14 and 22 for this test. 
+
+**If these lines are in HWE, then the frequencies of the mini-muscle allele will not change between these generations.**
+
+In this experiment, each generation has about 200 individuals (the population size). Because the "mini-muscle" allele is a autosomal recessive, we know that any individuals with the phenotype are homozygous (*pp*). 
+
+Here are the counts of animals with the small-muscle phenotype at generations 14 and 22.
+
+- Generation 14: 10
+- Generation 22: 19
+
+We can use this information to calculate the frequency of *pp* at generation 14. With 10 affected (*pp*) animals out of a population size of 200, there are 20 *p* alleles out of 400 total. We count up all the *p* alleles ($p^2$) and then take the square-root to get $p$. 
+
+```{webr-r}
+p <- sqrt((2 * 10) / (2 * 200))
+q <- 1 - p
+
+# Print p and q
+c(p, q)
+```
+
+The allele frequencies are *p* = 0.224 ("mini-muscle" allele) and *q* = 0.776 ("wild type").
+
+Using these frequencies we can determine the *expected* counts of animals (out of 200) with each of the genotype combinations.
+
+```{webr-r}
+pp_Expected <- p^2 * 200
+pq_Expected <- 2 * p * q * 200
+qq_Expected <- q^2 * 200
+
+# Print
+c(pp_Expected, pq_Expected, qq_Expected)
+```
+
+We can then repeat these calculations for Generation 22, using the observed count of 19 mice at that later generation. We will do this all in one code block.
+
+```{webr-r}
+p <- sqrt((2 * 19) / (2 * 200))
+q <- 1 - p
+
+# Print p and q
+c(p, q)
+
+pp_Obs <- p^2 * 200
+pq_Obs <- 2 * p * q * 200
+qq_Obs <- q^2 * 200
+
+# Print
+c(pp_Obs, pq_Obs, qq_Obs)
+```
+
+We now have the expected counts from generation 14 that we would expect to find at generation 22 if the population followed HWE.
+
+```{webr-r}
+Counts <- tibble(
+  Genotype = c("pp", "pq", "qq"),
+  Observed = c(pp_Obs, pq_Obs, qq_Obs),
+  Expected = c(pp_Expected, pq_Expected, qq_Expected))
+Counts
+```
+
+Note here that the generation 14 counts are the "Expected" counts at generation 22. The "Observed" counts are what we find in reality.
+
+> At this point, we have what we need What is your prediction
+
+```{webr-r}
+chisq.test(Counts$Observed, p = Counts$Expected, rescale.p = TRUE)
+```
+
+
+Line 6:
+
+- Generation 14: 10
+- Generation 22: 136
+
+
+
+## Exploring the assumptions of HWE
+
 
 Mechanism of selection
 
@@ -271,6 +474,44 @@ Populations have significant underlying variation
 Intuition of moving mean
 
 
+```{r}
+#| echo: false
+n_Populations <- 10
+n_Generations <- 100
+
+Population_Size <- 100
+Initital_Frequency <- 0.5
+
+Fitness_AA <- 1
+Fitness_AB <- 1
+Fitness_BB <- 1
+
+Migration <- 0
+
+Mutation_AB <- 0
+Mutation_BA <- 0
+
+Simulate_Population()
+```
+
+
+```{webr-r}
+n_Populations <- 10
+n_Generations <- 100
+n <- 100
+p <- 0.5
+
+Fitness_AA <- 1
+Fitness_AB <- 1
+Fitness_BB <- 1
+
+Migration <- 0
+
+Mutation_AB <- 0
+Mutation_BA <- 0
+
+Simulate_Population()
+```
 
 
 ## Feedback FIXME
