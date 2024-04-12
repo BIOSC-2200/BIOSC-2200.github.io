@@ -122,14 +122,18 @@ Simulate_Population <- function(
   allele.freq$n_Generations <- 0:n_Generations
   allele.freq$Fst[allele.freq$n_Generations == 0] <- NA
   
-  allele.freq_melt <- meltPlotData(allele.freq)
+  allele.freq_melt <- meltPlotData(allele.freq,
+                                   n_Populations,
+                                   n_Generations)
   P <- plotSingleRun(allele.freq_melt,
                      n_Populations = n_Populations,
                      n_Generations = n_Generations)
   print(P)
 }
 
-meltPlotData <- function(allele.freq.df){
+meltPlotData <- function(allele.freq.df,
+                         n_Populations = n_Populations,
+                         n_Generations = n_Generations){
   stats <- "p"
   df <- reshape::melt(allele.freq.df, 
                       id.vars = "n_Generations")
