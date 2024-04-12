@@ -218,7 +218,15 @@ Simulate_Population(
 
 ## Effect of Migration (gene flow)
 
-Migration is the rate of emigration: percentage of individuals that move to a new population each generation. To begin, we will use 100 generations and a population size of 100.
+Migration is the rate of emigration: percentage of individuals that move to a new population each generation. 
+
+> What are your predictions for the effect(s) of migration on allele frequencies? As migration increases, will you observe more or less allele frequency divergence from the ininital frequency? Briefly explain your predictions.
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+To begin, we will use 100 generations and a population size of 100.
 
 - Gradually increase the `Migration` parameter from 0 by units of 0.01 until you get to 0.1.
 - Also feel free to change the `Initital_Frequency` if you want to see what effect that has.
@@ -228,51 +236,47 @@ Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
   Initital_Frequency = 0.5,
-  Migration = 0.0
+  Migration = 0
 )
 ```
+
+> What conclusions can you draw about the role of migration changing allele frequencies across generations?
+
+<textarea rows="7" cols="75">
+
+</textarea>
 
 
 ## Effect of Selection (differential fitness)
 
 
+
 ```{webr-r}
-n_Generations <- 100
-
-Population_Size <- 100
-Initital_Frequency <- 0.5
-
-Fitness_AA <- 1
-Fitness_AB <- 1
-Fitness_BB <- 1
-
-Migration <- 0
-
-Mutation_AB <- 0
-Mutation_BA <- 0
-
-Simulate_Population()
+Simulate_Population(
+  Population_Size = 100,
+  n_Generations = 100,
+  Initital_Frequency = 0.5,
+  Fitness_AA = 1,
+  Fitness_AB = 1,
+  Fitness_BB = 1
+)
 ```
+
+> Start by changing the fitness of *BB* to 0.9 and of *AB* to 0.95 (imagine the additive effects of A and B, such that *AB* has an intermediate fitness).
+
+
 
 ## Effect of Mutation
 
 
 ```{webr-r}
-n_Generations <- 100
-
-Population_Size <- 100
-Initital_Frequency <- 0.5
-
-Fitness_AA <- 1
-Fitness_AB <- 1
-Fitness_BB <- 1
-
-Migration <- 0
-
-Mutation_AB <- 0
-Mutation_BA <- 0
-
-Simulate_Population()
+Simulate_Population(
+  Population_Size = 100,
+  n_Generations = 100,
+  Initital_Frequency = 0.5,
+  Mutation_AB = 0,
+  Mutation_BA = 0
+)
 ```
 
 
