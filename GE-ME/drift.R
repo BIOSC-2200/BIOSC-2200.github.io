@@ -1,7 +1,21 @@
 # Adapted from https://github.com/cjbattey/driftR
 
-runPopSim <- function(
-){
+Simulate_Population <- function(
+    n_Populations = 20,
+    n_Generations = 100,
+    
+    Population_Size = 100,
+    Initital_Frequency = 0.5,
+    
+    Fitness_AA = 1,
+    Fitness_AB = 1,
+    Fitness_BB = 1,
+    
+    Migration = 0,
+    
+    Mutation_AB = 0,
+    Mutation_BA = 0) {
+  
   # Limits
   if (n_Populations > 1000) {
     n_Populations <- 1000
@@ -107,14 +121,19 @@ runPopSim <- function(
   allele.freq$Fst[allele.freq$Fst<0] <- 0
   allele.freq$n_Generations <- 0:n_Generations
   allele.freq$Fst[allele.freq$n_Generations == 0] <- NA
-  return(allele.freq)
+  
+  allele.freq_melt <- meltPlotData(allele.freq)
+  P <- plotSingleRun(allele.freq_melt,
+                     n_Populations = n_Populations,
+                     n_Generations = n_Generations)
+  print(P)
 }
 
 meltPlotData <- function(allele.freq.df){
   stats <- "p"
   df <- reshape::melt(allele.freq.df, 
                       id.vars = "n_Generations")
-
+  
   df$dataType <- c(rep("p",(n_Populations*(n_Generations+1))),
                    rep("Ho",n_Populations*(n_Generations+1)),
                    rep("He",n_Populations*(n_Generations+1)),
@@ -130,9 +149,12 @@ meltPlotData <- function(allele.freq.df){
   return(df)
 }
 
-plotSingleRun <- function(sim, n_Populations, n_Generations, legend = FALSE, scales = "fixed"){
-  df_melt <- meltPlotData(sim)
-  print(ggplot(df_melt,
+plotSingleRun <- function(sim,
+                          n_Populations,
+                          n_Generations,
+                          legend = FALSE,
+                          scales = "fixed"){
+  print(ggplot(sim,
                aes(x = n_Generations,
                    y = value,
                    color = variable)) + 
@@ -146,9 +168,4 @@ plotSingleRun <- function(sim, n_Populations, n_Generations, legend = FALSE, sca
           scale_color_viridis(discrete = TRUE)+
           labs(x = "Generation", y = "Allele frequency") +
           geom_line())
-}
-
-Simulate_Population <- function() {
-  sim <- runPopSim()
-  plotSingleRun(sim)
 }
