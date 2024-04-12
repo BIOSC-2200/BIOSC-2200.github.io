@@ -9,8 +9,12 @@ format:
     self-contained: true
     css: ../custom.css
     link-external-newwindow: true
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
 webr: 
-  packages: ["ggplot2", "reshape", "tibble", "viridis", "dplyr"]
+  packages: ["ggplot2", "reshape", "viridis", "dplyr"]
 filters: 
   - webr
 bibliography: ../Genetics_Discussion.bib
@@ -25,7 +29,6 @@ code-annotations: hover
 #| warning: false
 
 library(ggplot2)
-library(tibble)
 library(tidyr)
 library(reshape)
 library(viridis)
@@ -34,6 +37,8 @@ library(dplyr)
 ggplot2::theme_set(ggplot2::theme_light())
 
 source("drift.R")
+
+set.seed(45734967)
 ```
 
 
@@ -41,7 +46,6 @@ source("drift.R")
 #| context: setup
 
 library(ggplot2)
-library(tibble)
 library(tidyr)
 library(reshape)
 library(viridis)
@@ -50,8 +54,6 @@ library(dplyr)
 ggplot2::theme_set(ggplot2::theme_light())
 
 source("https://raw.githubusercontent.com/BIOSC-2200/BIOSC-2200.github.io/main/GE-ME/drift.R")
-
-n_Populations <- 20
 ```
 
 
@@ -85,9 +87,9 @@ The learning objectives for this exercise are:
 - Explain how the processes of drift, natural selection, migration, and mutation can affect the elimination, maintenance or increase in frequency of alleles in a population.
 
 
+## Exploring the assumptions of Hardy-Weinberg Equilibrium
 
-
-## Exploring the assumptions of HWE
+Recall that the requirements for a population to be in Hardy-Weinberg Equilibrium are:
 
 1. Infinite population size
 2. All mating is random
@@ -95,53 +97,167 @@ The learning objectives for this exercise are:
 4. No selection
 5. No mutation
 
+In reality, these condition are never strictly met. For example, it isn't possible to have an truly infinite population size. For each of the assumptions above, there is a mechanism which can cause the deviation from the predictions of Hardy-Weinberg Equilibrium: **evolution**:
 
-- Small population sizes, which lead to genetic drift.
-- Non-random mating (e.g., inbreeding)
-- Addition of new alleles via migration (gene flow)
-- Differential survival of individuals with certain combination of alleles (selection)
-- Addition of new alleles via mutation
+1. Small population sizes
+2. Non-random mating (e.g., inbreeding, sexual selection)
+3. Addition of new alleles via migration (gene flow)
+4. Differential survival of individuals with certain combination of alleles (selection)
+5. Addition of new alleles via mutation
+
+Because evolution is the *change in allele frequencies over time*, we will be tracking allele frequencies in simulated populations across many generations. Simulations like the ones in this exercise are one of the primary ways that evolutionary biologists make predictions about the course of evolution. These predictions are often then testing experimentally in the laboratory or in natural populations in nature.
 
 
-Mechanism of selection
+## Simulating evolution
 
-	- Moving population average
-	- Drift vs. selection
-- Effect of sample size on selection and drift in phenotypic evolution
-	- Drift as sampling error
-	- Drift has a larger effect in small populations
+The figure below shows a very simple but very powerful model of the process of evolution. We provide the simulation a set of parameters, and these parameters are fed into the equations that govern population biology. This is called a *stochastic simulation* because the randomness that in and inherent part of nature is modeled as part of the process. 
 
-Populations have significant underlying variation
+Given an initial allele frequency (in this case 0.5), 20 independent populations are allowed to evolve for 100 generations. Among the possible parameters we can set for these populations are:
 
-Intuition of moving mean
+- Number of generations (`n_Generations`): 100
+- Number of individuals in the population (`Population_Size`): 100
+- Initial allele frequency (`Initital_Frequency`): 0.5
+- Fitness of the *AA* genotype (`Fitness_AA`): 1
+- Fitness of the *AB* genotype (`Fitness_AB`): 1
+- Fitness of the *BB* genotype (`Fitness_BB`): 1
+- Rate of (`Migration`): 0
+- Rate of mutation from *A* to *B* (`Mutation_AB`): 0
+- Rate of mutation from *B* to *A* (`Mutation_BA`): 0
 
+In this first simulation, fitness is equal among the genotypes, and there is no migration or mutation.
 
 ```{r}
 #| echo: false
 #| fig-height: 4
-
-set.seed(45734967)
-n_Populations <- 20
-n_Generations <- 100
-
-Population_Size <- 100
-Initital_Frequency <- 0.5
-
-Fitness_AA <- 1
-Fitness_AB <- 1
-Fitness_BB <- 1
-
-Migration <- 0
-
-Mutation_AB <- 0
-Mutation_BA <- 0
-
-Simulate_Population()
+Simulate_Population(
+  n_Populations = 20,
+  n_Generations = 100,
+  
+  Population_Size = 100,
+  Initital_Frequency = 0.5,
+  
+  Fitness_AA = 1,
+  Fitness_AB = 1,
+  Fitness_BB = 1,
+  
+  Migration = 0,
+  
+  Mutation_AB = 0,
+  Mutation_BA = 0)
 ```
 
+There are a few things that we can note from just this one set of populations:
+
+- We only need to plot the frequency of one allele (*A*), because the frequency of the *B* allele is just 1 - *A*.
+- Evolution is occurring in the populations. We know this because the allele frequencies are changing across generations.
+- In this case, evolution is occurring without migration or mutation, and with equal fitness across all genotypes.
+- In some populations, the frequency goes up and in some it goes down.
+- In one population, the allele is lost completely at about generation 80.
+
+We will use this simulation framework to explore the effects of different factors on the process of evolution. There are many different combinations of each of these parameters, so we will only change one or two at a time, holding everything else constant.
+
+
+## Effect of Population Size
+
+For this set of simulations, we will explore the role of population size in allele frequency change. Below the population size is set to 10. Run the simulation a few times and observe the patterns.
+
+Now gradually increase the population size, rerunning the simulation a few times for each population size. Try to keep the population size under 100000 or the simulations will run very slowly.
 
 ```{webr-r}
 #| fig-height: 4
+Simulate_Population(
+  Population_Size = 10
+)
+```
+
+> What do you observe about allele frequencies the populations as you increase population size from 10 to 100, 500, 1000, ..., etc.? How is a population size of 10 different from 100000?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+> What do you predict would happen to the allele frequencies if you kept increasing population size to infinity?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+
+> What do you predict would happen to the allele frequencies if you kept allowed the simulation to run for more generations at very small (~10-20), intermediate (~1000), and large (50000-100000) population sizes?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+Run simulations using the code block below.
+
+- Use one small, one intermediate, and one large population size.
+- For each gradually increase the number of generations from 100 to 1000. Don't go over 1000 generations or the simulation will run slowly.
+
+```{webr-r}
+#| fig-height: 4
+Simulate_Population(
+  Population_Size = 20,
+  n_Generations = 100
+)
+```
+
+> Were your predictions accurate? If not, how did your predictions differ from what you found in the simulations?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+
+> What conclusions can you draw about the role of population size and time (number of generations) on the process of evolution?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+
+## Effect of Migration (gene flow)
+
+Migration is the rate of emigration: percentage of individuals that move to a new population each generation. To begin, we will use 100 generations and a population size of 100.
+
+- Gradually increase the `Migration` parameter from 0 by units of 0.01 until you get to 0.1.
+- Also feel free to change the `Initital_Frequency` if you want to see what effect that has.
+
+```{webr-r}
+Simulate_Population(
+  Population_Size = 100,
+  n_Generations = 100,
+  Initital_Frequency = 0.5,
+  Migration = 0.0
+)
+```
+
+
+## Effect of Selection (differential fitness)
+
+
+```{webr-r}
+n_Generations <- 100
+
+Population_Size <- 100
+Initital_Frequency <- 0.5
+
+Fitness_AA <- 1
+Fitness_AB <- 1
+Fitness_BB <- 1
+
+Migration <- 0
+
+Mutation_AB <- 0
+Mutation_BA <- 0
+
+Simulate_Population()
+```
+
+## Effect of Mutation
+
+
+```{webr-r}
 n_Generations <- 100
 
 Population_Size <- 100
@@ -160,9 +276,9 @@ Simulate_Population()
 ```
 
 
-## Feedback FIXME
+## Feedback
 
-We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_25nuDUfHEl1cQku) to help us improve.
+We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_cuPVg9y3KwEeW1M) to help us improve.
 
 
 ## References
