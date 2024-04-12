@@ -88,37 +88,49 @@ Simulate_Population <- function(
           allele.freq[(i+1),(j+3*n_Populations)] <- w
         }
       } else { #if alleles are fixed
-        if(p<=0){
+        if (p <= 0){
           p <- 0
           w <- p * p * Fitness_AA + 2 * p * q * Fitness_AB + q * q * Fitness_BB
         } else {
           p <- 1
           w <- p*p*Fitness_AA + 2 * p * q * Fitness_AB + q * q * Fitness_BB
         }
-        allele.freq[(i + 1),j] <- p
-        allele.freq[(i + 1),(j + n_Populations)] <- 0
-        allele.freq[(i + 1),(j + 2 * n_Populations)] <- 0
-        allele.freq[(i + 1),(j + 3 * n_Populations)] <- w
+        allele.freq[(i + 1), j] <- p
+        allele.freq[(i + 1), (j + n_Populations)] <- 0
+        allele.freq[(i + 1), (j + 2 * n_Populations)] <- 0
+        allele.freq[(i + 1), (j + 3 * n_Populations)] <- w
       }
     } #end populations loop
   } #end generations loop
   
   # summary stats
   names <- c()
-  for(i in 1:n_Populations){names[i] <- paste0("p", i)}
-  for(i in (n_Populations+1):(2*n_Populations)){names[i]<-paste0("Ho", i - n_Populations)}
-  for(i in (n_Populations*2+1):(3*n_Populations)){names[i]<-paste0("He",i - 2 * n_Populations)}
-  for(i in (n_Populations*3+1):(4*n_Populations)){names[i]<-paste0("W",i - 3 * n_Populations)}
+  for(i in 1:n_Populations) {
+    names[i] <- paste0("p", i)
+  }
+  for(i in (n_Populations + 1):(2 * n_Populations)) {
+    names[i] <- paste0("Ho", i - n_Populations)
+  }
+  for(i in (n_Populations * 2 + 1):(3 * n_Populations)) {
+    names[i] <- paste0("He",i - 2 * n_Populations)
+  }
+  for(i in (n_Populations * 3 + 1):(4 * n_Populations)) {
+    names[i] <- paste0("W", i - 3 * n_Populations)
+  }
   colnames(allele.freq) <- names
   
-  allele.freq$meanHo <- rowMeans(allele.freq[(n_Populations+1):(n_Populations*2)])
-  allele.freq$meanHe <- rowMeans(allele.freq[(n_Populations*2+1):(n_Populations*3)])
-  allele.freq$Fis <- 1-(allele.freq$meanHo/allele.freq$meanHe)
+  allele.freq$meanHo <- 
+    rowMeans(allele.freq[(n_Populations+1):(n_Populations*2)])
+  allele.freq$meanHe <- 
+    rowMeans(allele.freq[(n_Populations*2+1):(n_Populations*3)])
+  allele.freq$Fis <- 
+    1 - (allele.freq$meanHo/allele.freq$meanHe)
   allele.freq$mean.p <- rowMeans(allele.freq[1:n_Populations]) 
-  allele.freq$Hs <- rowMeans(allele.freq[(n_Populations*2+1):(n_Populations*3)])
-  allele.freq$Ht <- 2*allele.freq$mean.p*(1 - allele.freq$mean.p)
-  allele.freq$Fst <- (allele.freq$Ht-allele.freq$Hs)/allele.freq$Ht
-  allele.freq$Fst[allele.freq$Fst<0] <- 0
+  allele.freq$Hs <- 
+    rowMeans(allele.freq[(n_Populations * 2 + 1):(n_Populations * 3)])
+  allele.freq$Ht <- 2 * allele.freq$mean.p * (1 - allele.freq$mean.p)
+  allele.freq$Fst <- (allele.freq$Ht - allele.freq$Hs) / allele.freq$Ht
+  allele.freq$Fst[allele.freq$Fst < 0] <- 0
   allele.freq$n_Generations <- 0:n_Generations
   allele.freq$Fst[allele.freq$n_Generations == 0] <- NA
   
@@ -137,17 +149,17 @@ meltPlotData <- function(allele.freq.df,
   df <- reshape::melt(allele.freq.df, 
                       id.vars = "n_Generations")
   
-  df$dataType <- c(rep("p",(n_Populations*(n_Generations+1))),
-                   rep("Ho",n_Populations*(n_Generations+1)),
-                   rep("He",n_Populations*(n_Generations+1)),
-                   rep("W",n_Populations*(n_Generations+1)),
-                   rep("meanHo",(n_Generations+1)),
-                   rep("meanHe",(n_Generations+1)),
-                   rep("Fis",(n_Generations+1)),
-                   rep("mean.p",(n_Generations+1)),
-                   rep("Hs",(n_Generations+1)),
-                   rep("Ht",(n_Generations+1)),
-                   rep("Fst",(n_Generations+1)))
+  df$dataType <- c(rep("p", (n_Populations*(n_Generations + 1))),
+                   rep("Ho", n_Populations*(n_Generations + 1)),
+                   rep("He", n_Populations*(n_Generations + 1)),
+                   rep("W", n_Populations*(n_Generations + 1)),
+                   rep("meanHo", (n_Generations + 1)),
+                   rep("meanHe", (n_Generations + 1)),
+                   rep("Fis", (n_Generations + 1)),
+                   rep("mean.p", (n_Generations + 1)),
+                   rep("Hs", (n_Generations + 1)),
+                   rep("Ht", (n_Generations + 1)),
+                   rep("Fst", (n_Generations + 1)))
   df <- subset(df, dataType %in% stats)
   return(df)
 }
