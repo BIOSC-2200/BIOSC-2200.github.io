@@ -183,15 +183,15 @@ Simulate_Population(
 </textarea>
 
 
-> What do you predict would happen to the allele frequencies if you kept allowed the simulation to run for more generations at very small (~10-20), intermediate (~1000), and large (50000-100000) population sizes?
+> What do you predict would happen to the allele frequencies if you allowed the simulation to run for more generations at very small (~10-20), intermediate (~1000-2000), and large (50000-100000) population sizes?
 
 <textarea rows="7" cols="75">
 
 </textarea>
 
-Run simulations using the code block below.
+Run those simulations using the code block below:
 
-- Use one small, one intermediate, and one large population size.
+- Use one small, one intermediate, and one large population size that you choose.
 - For each gradually increase the number of generations from 100 to 1000. Don't go over 1000 generations or the simulation will run slowly.
 
 ```{webr-r}
@@ -202,7 +202,7 @@ Simulate_Population(
 )
 ```
 
-> Were your predictions accurate? If not, how did your predictions differ from what you found in the simulations?
+> Were your predictions correct? If not, how did your predictions differ from what you found in the simulations?
 
 <textarea rows="7" cols="75">
 
@@ -218,7 +218,7 @@ Simulate_Population(
 
 ## Effect of Migration (gene flow)
 
-Migration is the rate of emigration: percentage of individuals that move to a new population each generation. 
+Migration is the rate of emigration: percentage of individuals that move to a new population each generation. To begin, we will use 100 generations and a population size of 100.
 
 > What are your predictions for the effect(s) of migration on allele frequencies? As migration increases, will you observe more or less allele frequency divergence from the ininital frequency? Briefly explain your predictions.
 
@@ -236,7 +236,7 @@ Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
   Initital_Frequency = 0.5,
-  Migration = 0
+  Migration = 0.0
 )
 ```
 
