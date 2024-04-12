@@ -9,10 +9,6 @@ format:
     self-contained: true
     css: ../custom.css
     link-external-newwindow: true
-  docx:
-    toc: true
-    number-sections: true
-    highlight-style: github
 webr: 
   packages: ["ggplot2", "reshape", "viridis", "dplyr"]
 filters: 
@@ -124,7 +120,7 @@ Given an initial allele frequency (in this case 0.5), 20 independent populations
 - Rate of mutation from *A* to *B* (`Mutation_AB`): 0
 - Rate of mutation from *B* to *A* (`Mutation_BA`): 0
 
-In this first simulation, fitness is equal among the genotypes, and there is no migration or mutation.
+In this first simulation, which uses the parameter values above, fitness is equal among the genotypes, and there is no migration or mutation.
 
 ```{r}
 #| echo: false
@@ -146,20 +142,22 @@ Simulate_Population(
   Mutation_BA = 0)
 ```
 
+Each line represents a single population that starts at generation 0. For each population it begins with a set number of individuals. Each generation, some reproduce and some do not depending on their fitness, and there can be migration or mutation. At each generation the frequency of one allele is calculated.
+
 There are a few things that we can note from just this one set of populations:
 
 - We only need to plot the frequency of one allele (*A*), because the frequency of the *B* allele is just 1 - *A*.
 - Evolution is occurring in the populations. We know this because the allele frequencies are changing across generations.
 - In this case, evolution is occurring without migration or mutation, and with equal fitness across all genotypes.
 - In some populations, the frequency goes up and in some it goes down.
-- In one population, the allele is lost completely at about generation 80.
+- In one population, the allele is lost completely at about generation 80. After this generation, all individuals will have the *B* allele.
 
 We will use this simulation framework to explore the effects of different factors on the process of evolution. There are many different combinations of each of these parameters, so we will only change one or two at a time, holding everything else constant.
 
 
 ## Effect of Population Size
 
-For this set of simulations, we will explore the role of population size in allele frequency change. Below the population size is set to 10. Run the simulation a few times and observe the patterns.
+For the first set of simulations, we will explore the role of population size in allele frequency change. Below the population size is set to 10 (`Population_Size = 10`). Run the simulation a few times and observe the patterns.
 
 Now gradually increase the population size, rerunning the simulation a few times for each population size. Try to keep the population size under 100000 or the simulations will run very slowly.
 
@@ -170,7 +168,7 @@ Simulate_Population(
 )
 ```
 
-> What do you observe about allele frequencies the populations as you increase population size from 10 to 100, 500, 1000, ..., etc.? How is a population size of 10 different from 100000?
+> What do you observe about allele frequencies the populations as you increase population size from 10 to 100, 500, 1000, ..., etc. up to 100,000? How is a population size of 10 different from 100,000?
 
 <textarea rows="7" cols="75">
 
@@ -192,7 +190,7 @@ Simulate_Population(
 Run those simulations using the code block below:
 
 - Use one small, one intermediate, and one large population size that you choose.
-- For each gradually increase the number of generations from 100 to 1000. Don't go over 1000 generations or the simulation will run slowly.
+- For each gradually increase the number of generations from 100 to 1000. Avoid going over 1000 generations or the simulation will run very slowly.
 
 ```{webr-r}
 #| fig-height: 4
@@ -202,7 +200,7 @@ Simulate_Population(
 )
 ```
 
-> Were your predictions correct? If not, how did your predictions differ from what you found in the simulations?
+> Were your predictions correct? If not, how did your predictions differ from what you observed in the simulations?
 
 <textarea rows="7" cols="75">
 
@@ -236,7 +234,7 @@ Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
   Initital_Frequency = 0.5,
-  Migration = 0.0
+  Migration = 0
 )
 ```
 
@@ -249,7 +247,9 @@ Simulate_Population(
 
 ## Effect of Selection (differential fitness)
 
+The parameters `Fitness_AA`, `Fitness_AB`, and `Fitness_BB` control the relative fitness of the *AA*, *AB*, and *BB* genotypes. It works best to keep them restricted to values between 0 and 1.
 
+Below we change the fitness of *BB* to 0.9 and of *AB* to 0.95 (imagine the additive effects of A and B, such that *AB* has an intermediate fitness). 
 
 ```{webr-r}
 Simulate_Population(
@@ -257,35 +257,113 @@ Simulate_Population(
   n_Generations = 100,
   Initital_Frequency = 0.5,
   Fitness_AA = 1,
-  Fitness_AB = 1,
-  Fitness_BB = 1
+  Fitness_AB = 0.95,
+  Fitness_BB = 0.90
 )
 ```
 
-> Start by changing the fitness of *BB* to 0.9 and of *AB* to 0.95 (imagine the additive effects of A and B, such that *AB* has an intermediate fitness).
+> What pattern of allele frequency change to do obeserve in the populations?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+Now we change the population size to 1000, the fitness of the *AB* genotype back to 1, and the *BB* genotype to 0.3. 
+
+```{webr-r}
+Simulate_Population(
+  Population_Size = 1000,
+  n_Generations = 100,
+  Initital_Frequency = 0.5,
+  Fitness_AA = 1,
+  Fitness_AB = 0.95,
+  Fitness_BB = 0.30
+)
+```
+
+> What pattern of allele frequency change to do observe in the populations? How does this pattern differ from the one above? What do these results tell you about the ability of deleterious alleles to persist in populations?
+
+<textarea rows="7" cols="75">
+
+</textarea>
 
 
-
-## Effect of Mutation
-
+Finally we change the population size back to 100, the fitness of the *AB* genotype back to 1, and both the *AA* and the *BB* genotype to 0.9. 
 
 ```{webr-r}
 Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
   Initital_Frequency = 0.5,
-  Mutation_AB = 0,
+  Fitness_AA = 0.9,
+  Fitness_AB = 1,
+  Fitness_BB = 0.9
+)
+```
+
+> What pattern of allele frequency change to do observe in the populations? Can you think of a biological explanation for this set of parameter values?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+
+## Effect of Mutation
+
+The `Mutation_AB` parameter controls the rate of change from *A* to *B* and the `Mutation_BA` parameter the reverse. In the code block below we start with the *A* to *B* rate at 0.05. 
+
+```{webr-r}
+Simulate_Population(
+  Population_Size = 100,
+  n_Generations = 100,
+  Initital_Frequency = 0.5,
+  Mutation_AB = 0.05,
   Mutation_BA = 0
 )
 ```
+
+> What pattern of allele frequency change to do observe in the populations? What do you hypothesize is going on in the populations?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+Use the code block below to try and find a set of values for the mutation parameters that will lead to allele frequencies that do not go to fixation (either 0 or 1).
+ 
+```{webr-r}
+Simulate_Population(
+  Population_Size = 100,
+  n_Generations = 100,
+  Initital_Frequency = 0.5,
+  Mutation_AB = 0.05,
+  Mutation_BA = 0
+)
+```
+
+> What values for the mutation parameters stabilize the variation in allele frequencies? Does this allow you to draw any conclusions about the role of mutation in natural populations (Hint: compare the mutation probabilties you have to no mutation)?
+
+<textarea rows="7" cols="75">
+
+</textarea>
+
+
+## Summation
+
+This exercise has allowed you explore four of the factors that are involved in the process of evolution:
+
+1. Drift
+2. Gene flow (migration)
+3. Differential survival (selection)
+4. Mutation
+
+> Which of these factors do you think is most important in driving evolution in populations? Note that there is not a single correct answer. We are just interested in hearing your thoughts.
+
+<textarea rows="7" cols="75">
+
+</textarea>
 
 
 ## Feedback
 
 We would appreciate your anonymous feedback on this exercise. If you choose to, [please fill out this optional 4-question survey](https://missouri.qualtrics.com/jfe/form/SV_cuPVg9y3KwEeW1M) to help us improve.
 
-
-## References
-
-::: {#refs}
-:::
