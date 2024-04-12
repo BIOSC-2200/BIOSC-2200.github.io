@@ -158,18 +158,18 @@ plotSingleRun <- function(sim,
                           n_Generations,
                           legend = FALSE,
                           scales = "fixed"){
-  print(ggplot(sim,
-               aes(x = n_Generations,
-                   y = value,
-                   color = variable)) + 
-          theme_bw() +
-          ylim(0, 1) +
-          theme(legend.position = "none",
-                panel.grid.minor = element_blank(),
-                axis.text = element_text(size = 12),
-                axis.title = element_text(size = 12, face = "bold"),
-                strip.background = element_blank())+
-          scale_color_viridis(discrete = TRUE)+
-          labs(x = "Generation", y = "Allele frequency") +
-          geom_line())
+  ggplot(sim,
+         aes(x = n_Generations,
+             y = value,
+             color = variable)) + 
+    theme_bw() +
+    ylim(0, 1) +
+    theme(legend.position = "none",
+          panel.grid.minor = element_blank(),
+          axis.text = element_text(size = 12),
+          axis.title = element_text(size = 12, face = "bold"),
+          strip.background = element_blank())+
+    scale_color_viridis(discrete = TRUE)+
+    labs(x = "Generation", y = "Allele frequency") +
+    geom_line()
 }
