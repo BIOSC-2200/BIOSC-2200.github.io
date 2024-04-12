@@ -125,10 +125,9 @@ Simulate_Population <- function(
   allele.freq_melt <- meltPlotData(allele.freq,
                                    n_Populations,
                                    n_Generations)
-  P <- plotSingleRun(allele.freq_melt,
-                     n_Populations = n_Populations,
-                     n_Generations = n_Generations)
-  print(P)
+  plotSingleRun(allele.freq_melt,
+                n_Populations = n_Populations,
+                n_Generations = n_Generations)
 }
 
 meltPlotData <- function(allele.freq.df,
@@ -158,10 +157,10 @@ plotSingleRun <- function(sim,
                           n_Generations,
                           legend = FALSE,
                           scales = "fixed"){
-  ggplot(sim,
-         aes(x = n_Generations,
-             y = value,
-             color = variable)) + 
+  P <- ggplot(sim,
+              aes(x = n_Generations,
+                  y = value,
+                  color = variable)) + 
     theme_bw() +
     ylim(0, 1) +
     theme(legend.position = "none",
@@ -172,4 +171,5 @@ plotSingleRun <- function(sim,
     scale_color_viridis(discrete = TRUE)+
     labs(x = "Generation", y = "Allele frequency") +
     geom_line()
+  return(P)
 }
