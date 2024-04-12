@@ -1,26 +1,31 @@
 # Adapted from https://github.com/cjbattey/driftR
 
 runPopSim <- function(
-    # n_Generations=100,
-  # n_Populations=2,
-  # p=0.5,
-  # Fitness_AA=1,
-  # Fitness_AB=1,
-  # Fitness_BB=1,
-  # n=100,
-  # Migration=0
 ){
+  # Limits
+  if (n_Populations > 1000) {
+    n_Populations <- 1000
+  }
+  
+  if (Population_Size > 100000) {
+    Population_Size <- 100000
+  }
+  
+  if (n_Generations > 1000) {
+    n_Generations <- 1000
+  }
+  
   n <- Population_Size
   p <- Initital_Frequency
   
   stats <- "p"
   infinitePop <- FALSE
   
-  allele.freq <- data.frame(matrix(ncol=4*n_Populations)) #initialize summary stat matrix
+  allele.freq <- data.frame(matrix(ncol = 4 * n_Populations)) # initialize summary stat matrix
   if(length(p)>1){
     allele.freq[1,(1:n_Populations)] <- p
   } else {
-    allele.freq[1,(1:n_Populations)] <- rep(p,n_Populations) #starting allele freqs
+    allele.freq[1,(1:n_Populations)] <- rep(p, n_Populations) #starting allele freqs
   }
   
   for(i in 1:n_Generations){ 
