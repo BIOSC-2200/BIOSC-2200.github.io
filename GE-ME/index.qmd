@@ -95,13 +95,13 @@ Recall that the requirements for a population to be in Hardy-Weinberg Equilibriu
 
 In reality, these condition are never strictly met. For example, it isn't possible to have an truly infinite population size. For each of the assumptions above, there is a mechanism which can cause the deviation from the predictions of Hardy-Weinberg Equilibrium: **evolution**:
 
-1. Small population sizes
+1. Drift
 2. Non-random mating (e.g., inbreeding, sexual selection)
 3. Addition of new alleles via migration (gene flow)
 4. Differential survival of individuals with certain combination of alleles (selection)
-5. Addition of new alleles via mutation
+5. Changing alleles via mutation
 
-Because evolution is the *change in allele frequencies over time*, we will be tracking allele frequencies in simulated populations across many generations. Simulations like the ones in this exercise are one of the primary ways that evolutionary biologists make predictions about the course of evolution. These predictions are often then testing experimentally in the laboratory or in natural populations in nature.
+Because evolution is the *change in allele frequencies over time*, we will be tracking allele frequencies in simulated populations across many generations. Simulations like the ones in this exercise are one of the primary ways that evolutionary biologists make predictions about the course of evolution. These predictions are often then tested experimentally in the laboratory or in natural populations in nature.
 
 
 ## Simulating evolution
@@ -340,7 +340,7 @@ Simulate_Population(
 )
 ```
 
-> What values for the mutation parameters stabilize the variation in allele frequencies? Does this allow you to draw any conclusions about the role of mutation in natural populations (Hint: compare the mutation probabilties you have to no mutation)?
+> What values for the mutation parameters stabilize the variation in allele frequencies? Does this allow you to draw any conclusions about the role of mutation in natural populations (Hint: Compare the mutation probabilities you decided upon to the case where there is no mutation)?
 
 <textarea rows="7" cols="75">
 
