@@ -262,7 +262,7 @@ Simulate_Population(
 )
 ```
 
-> What pattern of allele frequency change to do obeserve in the populations?
+> What pattern of allele frequency change to do observe in the populations?
 
 <textarea rows="7" cols="75">
 
