@@ -257,8 +257,8 @@ Simulate_Population(
   n_Generations = 100,
   Initital_Frequency = 0.5,
   Fitness_AA = 1,
-  Fitness_AB = 0.95,
-  Fitness_BB = 0.90
+  Fitness_AB = 1,
+  Fitness_BB = 1
 )
 ```
 
@@ -268,16 +268,16 @@ Simulate_Population(
 
 </textarea>
 
-Now we change the population size to 1000, the fitness of the *AB* genotype back to 1, and the *BB* genotype to 0.3. 
+Now we change the population size to 1000 and the fitness of the *AB* genotype to 1, and the *BB* genotype to 0.3. 
 
 ```{webr-r}
 Simulate_Population(
-  Population_Size = 1000,
+  Population_Size = 100,
   n_Generations = 100,
   Initital_Frequency = 0.5,
   Fitness_AA = 1,
-  Fitness_AB = 0.95,
-  Fitness_BB = 0.30
+  Fitness_AB = 1,
+  Fitness_BB = 1
 )
 ```
 
@@ -295,9 +295,9 @@ Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
   Initital_Frequency = 0.5,
-  Fitness_AA = 0.9,
+  Fitness_AA = 1,
   Fitness_AB = 1,
-  Fitness_BB = 0.9
+  Fitness_BB = 1
 )
 ```
 
