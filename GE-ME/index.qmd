@@ -112,7 +112,7 @@ Given an initial allele frequency (in this case 0.5), 20 independent populations
 
 - Number of generations (`n_Generations`): 100
 - Number of individuals in the population (`Population_Size`): 100
-- Initial allele frequency (`Initital_Frequency`): 0.5
+- Initial allele frequency (`Initial_Frequency`): 0.5
 - Fitness of the *AA* genotype (`Fitness_AA`): 1
 - Fitness of the *AB* genotype (`Fitness_AB`): 1
 - Fitness of the *BB* genotype (`Fitness_BB`): 1
@@ -130,7 +130,7 @@ Simulate_Population(
   n_Generations = 100,
   
   Population_Size = 100,
-  Initital_Frequency = 0.5,
+  Initial_Frequency = 0.5,
   
   Fitness_AA = 1,
   Fitness_AB = 1,
@@ -227,13 +227,13 @@ Migration is the rate of emigration: percentage of individuals that move to a ne
 To begin, we will use 100 generations and a population size of 100.
 
 - Gradually increase the `Migration` parameter from 0 by units of 0.01 until you get to 0.1.
-- Also feel free to change the `Initital_Frequency` if you want to see what effect that has.
+- Also feel free to change the `Initial_Frequency` if you want to see what effect that has.
 
 ```{webr-r}
 Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
-  Initital_Frequency = 0.5,
+  Initial_Frequency = 0.5,
   Migration = 0
 )
 ```
@@ -255,7 +255,7 @@ Below we change the fitness of *BB* to 0.9 and of *AB* to 0.95 (imagine the addi
 Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
-  Initital_Frequency = 0.5,
+  Initial_Frequency = 0.5,
   Fitness_AA = 1,
   Fitness_AB = 1,
   Fitness_BB = 1
@@ -274,7 +274,7 @@ Now we change the population size to 1000 and the fitness of the *AB* genotype t
 Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
-  Initital_Frequency = 0.5,
+  Initial_Frequency = 0.5,
   Fitness_AA = 1,
   Fitness_AB = 1,
   Fitness_BB = 1
@@ -294,7 +294,7 @@ Finally we change the population size back to 100, the fitness of the *AB* genot
 Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
-  Initital_Frequency = 0.5,
+  Initial_Frequency = 0.5,
   Fitness_AA = 1,
   Fitness_AB = 1,
   Fitness_BB = 1
@@ -316,7 +316,7 @@ The `Mutation_AB` parameter controls the rate of change from *A* to *B* and the 
 Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
-  Initital_Frequency = 0.5,
+  Initial_Frequency = 0.5,
   Mutation_AB = 0.05,
   Mutation_BA = 0
 )
@@ -334,7 +334,7 @@ Use the code block below to try and find a set of values for the mutation parame
 Simulate_Population(
   Population_Size = 100,
   n_Generations = 100,
-  Initital_Frequency = 0.5,
+  Initial_Frequency = 0.5,
   Mutation_AB = 0.05,
   Mutation_BA = 0
 )

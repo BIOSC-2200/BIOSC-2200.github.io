@@ -5,7 +5,7 @@ Simulate_Population <- function(
     n_Generations = 100,
     
     Population_Size = 100,
-    Initital_Frequency = 0.5,
+    Initial_Frequency = 0.5,
     
     Fitness_AA = 1,
     Fitness_AB = 1,
@@ -30,7 +30,7 @@ Simulate_Population <- function(
   }
   
   n <- Population_Size
-  p <- Initital_Frequency
+  p <- Initial_Frequency
   
   stats <- "p"
   infinitePop <- FALSE
