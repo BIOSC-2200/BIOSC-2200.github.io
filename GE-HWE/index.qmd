@@ -87,12 +87,12 @@ Separating microevolution from macroevolution like this might make it appear tha
 
 One final point to remember is that populations don't evolve in isolation. Species that live in communities with one another interact with both native and introduced species at many different trophic levels (@fig-galapagos).
 
-![In the Galápagos islands, the medium ground finch (*Geospiza fortis*, upper right) and Galápagos mockingbird (*Mimus parvulus*, lower left) are both under threat from an introduced nest fly (*Philornis downsi*, upper left). Simultaneously, these species have unique parasites, a feather mite and feather louse (lower right) that both respond to and impact the evoltionary history of these species. Image from [University of Utah](https://darwin.biology.utah.edu/GalapagosX.html)](https://darwin.biology.utah.edu/images/Galapagos%20images/galapagos%20pique.png){fig-alt="Image of a fly, two birds, and a louse." width=50% #fig-galapagos}
+![In the Galápagos islands, the medium ground finch (*Geospiza fortis*, upper right) and Galápagos mockingbird (*Mimus parvulus*, lower left) are both under threat from an introduced nest fly (*Philornis downsi*, upper left). Simultaneously, these species have unique parasites, a feather mite and feather louse (lower right) that both respond to and impact the evolutionary history of these species. Image from [University of Utah](https://darwin.biology.utah.edu/GalapagosX.html)](https://darwin.biology.utah.edu/images/Galapagos%20images/galapagos%20pique.png){fig-alt="Image of a fly, two birds, and a louse." width=50% #fig-galapagos}
 
 
 ## Hardy-Weinberg Equilibrium
 
-If evolution is the change in allele frequencies over time, what defines the *lack of change* in allele frequencies? In population genetics, no change in allele frequencies is called *Hardy-Weinberg Equilibrium* (often abbreviated HWE for simplicity). The equations for HWE were developed during the first decade of the 1900's, shortly after the re-discovery of Mendelian genetics.
+If evolution is the change in allele frequencies over time, what defines the *lack of change* in allele frequencies? In population genetics, no change in allele frequencies is called *Hardy-Weinberg Equilibrium* (often abbreviated HWE for simplicity). The equations for HWE were developed during the first decade of the 1900s, shortly after the re-discovery of Mendelian genetics.
 
 HWE allows us to predict genotype (and thus phenotype) frequencies under a specific set of conditions in which there are no additional forces, either internal or external, acting on a population:
 
@@ -104,7 +104,7 @@ HWE allows us to predict genotype (and thus phenotype) frequencies under a speci
 
 There are many processes that can lead to deviations from Hardy-Weinberg Equilibrium.
 
-> For each of the conditions above, (1) give an example of a process that would lead to a deviation from HWE and (2) predict whether that process would lead to *increased* or *decreased* genetic variation in the subsequent generation.
+> For each of the conditions above, (1) give an example of a process that would lead to a deviation from HWE, and (2) predict whether that process would lead to *increased* or *decreased* genetic variation in the subsequent generation.
 
 <textarea rows="7" cols="75">
 
@@ -116,7 +116,7 @@ Evolutionary biologists are often interested in determining if a population is i
 
 ## Evolution of single genes
 
-The first phenotypes that you learned about as well as those described in the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>) were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
+The first phenotypes that you learned about, as well as those described in the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>), were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
 
 The simplest case to use for exploring Hardy-Weinberg Equilibrium is a single allele in a diploid organism. In this case, there are only three possible genotypes for two alleles (*p* and *q*)^[p and q are most commonly used as the allele names, but you could substitute any pair: A and B, A~1~ and A~2~, etc.]:
 
@@ -149,7 +149,7 @@ There are a few things to note here:
 
 ### Probabilities of allele combinations
 
-We can use the rules of probability that you have learned about to determine the probability of an individual having each of the possible genotypes: *pp*, *qq*, or *pq*. Because allele assort independently, the probabilities are just the products of the probabilities.
+We can use the rules of probability that you have learned about to determine the probability of an individual having each of the possible genotypes: *pp*, *qq*, or *pq*. Because alleles assort independently, the probabilities are just the products of the probabilities.
 
 $$pp = 0.1 \times 0.1 = 0.01$$
 
@@ -184,6 +184,7 @@ We expect the following genotypes in the population:
 
 ```{webr-r}
 pop_size <- 1000  # Population size
+                  # Note that you can't put commas in numbers in code
 
 p <- 0.1          # Frequency of p
 q <- 1 - p        # Frequency of q
@@ -228,7 +229,7 @@ q <- num_q / (num_p + num_q)
 c(p, q)
 ```
 
-> In the first code block above, iteratively change the values of `pop_size` and `p`. Start by leaving `p` at 0.1 and change `pop_size` to larger or smaller values. Run the first code block and then the second. See how the frequencies of *p* and *q* change. Then set `pop_size` to 1000 and change the value for `p` to some number between 0 and 1. Again run the first code block and then the second. 
+> In the first code block above, iteratively change the values of `pop_size` and `p`. Start by leaving `p` at 0.1 and change `pop_size` to larger or smaller values. Run the first code block and then the second. See how the frequencies of *p* and *q* change. Then set `pop_size` back to 1,000 and change the value for `p` to some number between 0 and 1. Again run the first code block and then the second to re-run all the calculations. 
 
 <textarea rows="10" cols="75">
 How do the final frequencies for p and q change as you change population size?
@@ -248,13 +249,13 @@ $$p^2 + 2pq + q^2 = 1$$
 
 How can we use this information to statistically test whether a population satisfies the assumptions of HWE? 
 
-In the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a> and <a href="./TGI-Case-Study" target="_blank">Case study: Investigating a newly discovered muscle mutation in mice</a>), you learned about using the chi-squared test to determine if predicted counts of births per day and counts of mice from a test-cross showing the small muscle phenotype matched the theoretical predictions.
+In the first sets of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a> and <a href="./TGI-Case-Study" target="_blank">Case study: Investigating a newly discovered muscle mutation in mice</a>), you learned about using the chi-squared test to determine if predicted counts of births per day and counts of mice from a test-cross showing the small muscle phenotype matched the theoretical predictions.
 
 Because Hardy-Weinberg Equilibrium allows us to make predictions about the frequencies of alleles in a population, we can compare observed counts of alleles to the predicted counts of alleles. 
 
 If the population is in HWE, then the test will *not* be significant. Remember that the chi-squared test is really testing for deviations from the predictions. So the test will be significant (*P* < 0.05) if the counts *do not* match what we expect.
 
-Imagine a population with 500 diploid individuals. These 500 individuals will have 1000 total alleles. You observe the following genotypes among the 500 individuals:
+Imagine a population with 500 diploid individuals. These 500 individuals will have 1,000 total alleles. You observe the following genotypes among the 500 individuals:
 
 - *pp*: 5
 - *pq*: 95
@@ -282,7 +283,7 @@ c(p_frequency, q_frequency)
 
 *p* = 0.105 and *q* = 0.895 are the *observed* frequencies in the population.
 
-We use these two values to calculated the *expected* frequencies for *pp*, *pq*, and *qq*, *assuming the population is in HWE*.
+We use these two values to calculate the *expected* frequencies for *pp*, *pq*, and *qq*, *assuming the population is in HWE*.
 
 ```{webr-r}
 pp_expec_f <- p_frequency^2
@@ -304,7 +305,7 @@ qq_expec_ct <- qq_expec_f * 500
 c(pp_expec_ct, pq_expec_ct, qq_expec_ct)
 ```
 
-You will notice that we have fractional individuals: we expect 5.5125 *pp* individuals. While this would not happen in real life, for our calculations, it is not a problem.
+You will notice that we have fractional individuals; we expect 5.5125 *pp* individuals. While this would not happen in real life, for our calculations, it is not a problem.
 
 Recall that the equation for a chi-squared test is:
 
@@ -322,7 +323,7 @@ Counts <- tibble(
 Counts
 ```
 
-And then performing the chi-squared test is just a matter of calling the function `chisq.test()`:
+And now performing the chi-squared test is just a matter of calling the function `chisq.test()`:
 
 ```{webr-r}
 chisq.test(Counts$Observed, p = Counts$Expected, rescale.p = TRUE)
@@ -330,14 +331,14 @@ chisq.test(Counts$Observed, p = Counts$Expected, rescale.p = TRUE)
 
 The `Observed` column is the observed counts of each genotype. The `Expected` column is the expected counts of each genotype if the population is in HWE. `rescale.p = TRUE` tells the function that the supplied `Expected` values are in counts and not in probabilities.
 
-I this case, the observed counts do not deviate from the expected counts (*P* = 0.97). This result makes because the counts only differ by 1 in 500.
+I, this case, the observed counts do not deviate from the expected counts (*P* = 0.97). This result makes sense because the counts only differ by 1 in 500.
 
 
-### Case Study: Testing for HWE in Small Muscle Phenotype mice
+### Case Study: Testing for HWE in Small Muscle Phenotype Mice
 
 Let's apply what we have learned to the data for mice that have the small muscle phenotype from earlier exercise: <a href="./TGI-Case-Study" target="_blank">Case study: Investigating a newly discovered muscle mutation in mice</a>. 
 
-In three of the lines, it appeared that the frequency of the small muscle phenotype was increasing in two of the lines (3 and 6; @fig-mmgen). Although they all started at the same low level, the red lines appear to be increasing rapidly starting about generation 7.
+Comparing three of the replicate lines, it appeared that the frequency of the small muscle phenotype was increasing substantially in two of the lines (Lines 3 and 6; @fig-mmgen). Although the allele frequencies all started at the same low level, the red lines appear to be increasing rapidly starting about generation 7.
 
 ```{r}
 #| echo: false
@@ -380,13 +381,13 @@ ggplot(DD, aes(x = Generation, y = Frequency,
 
 ```
 
-We can a chi-squared test to determine whether these breeding lines deviate from HWE. If so, it would suggest that the allele for the small-muscle phenotype was being unintentionally favored in the Selected lines (red lines in @fig-mmgen).
+We can a use chi-squared test to determine whether these breeding lines deviate from HWE. If so, it would suggest that the allele for the small-muscle phenotype was being unintentionally favored in the Selected lines (red lines in @fig-mmgen).
 
-To fill in the equation for the chi-squared test, we need to know the observed and expected counts for genotypes. We can use the frequencies in the figure to determine the counts for each. We will only consider two generations: 14 and 22 for this test. 
+To fill in the equation for the chi-squared test, we need to know the observed and expected counts for genotypes. We can use the frequencies in the figure to determine the counts for each. For this test we will only consider only two generations: 14 and 22. 
 
 **If these lines are in HWE, then the frequencies of the mini-muscle allele will not change significantly between generations 14 and 22.**
 
-In this experiment, each generation has 200 individuals (the population size). Because the "mini-muscle" allele is a autosomal recessive, we know that all individuals that show the phenotype must be homozygous for the allele (*pp*). 
+In this experiment, each generation has 200 individuals (the population size). Because the "mini-muscle" allele is an autosomal recessive, we know that all individuals that show the phenotype must be homozygous for the allele (*pp*). 
 
 There appears to be a big change in the allele frequency in Line 6, so let's begin with that line. Line 6 is one that is selected for increased wheel activity. Although the mini-muscle allele was not directly selected for, it appears that the frequency increases across generations.
 
@@ -449,7 +450,9 @@ c(pp_Obs, pq_Obs, qq_Obs)
 
 The allele frequencies are now *p* = 0.82 and *q* = 0.18. The expected counts are: 136, 57.8, and 6.2
 
-We now have the expected counts from generation 14 that we would expect to find at generation 22 if the population followed HWE. Combing everything into a table:
+We now have the expected counts from generation 14 that we would also predict to be found at generation 22 *if the population followed HWE*.
+
+Combining all the counts into a table:
 
 ```{webr-r}
 Counts <- tibble(
@@ -487,7 +490,7 @@ chisq.test(Counts$Observed, p = Counts$Expected, rescale.p = TRUE)
 
 ### Testing a Control line
 
-Line 5 -- the blue line in @fig-mmgen -- is one of the randomly bred control lines. In the control lines, all of the mice are tested for their wheel-activity, but the breeders are chosen randomly. This procedure is in contrast to the Selected lines in which the breeders are the top males and females.
+Line 5 -- the blue line in @fig-mmgen -- is one of the randomly-bred control lines. In the control lines, all of the mice are tested for their wheel-activity, but the breeders are chosen randomly. This procedure is in contrast to the Selected lines in which the breeders are the top males and females.
 
 The counts for small-muscle phenotype mice at generations 14 and 22 for Line 5 are:
 
@@ -539,7 +542,7 @@ Counts <- tibble(
 Counts
 ```
 
-> At this point, we have what we needed to carry out the chi-squared test to determine if the observed counts at Generation 22 match the predicted counts for Line 5. What is your prediction for this test?
+> At this point, we have the data we need to carry out the chi-squared test to determine if the observed counts at Generation 22 match the predicted counts for Line 5. What is your prediction for this test?
 
 <textarea rows="5" cols="75">
 Enter your prediction here.
@@ -557,7 +560,7 @@ chisq.test(Counts$Observed, p = Counts$Expected, rescale.p = TRUE)
 
 </textarea>
 
-> What mechanism(s) can explain the changing allele frequency in Line 5, which is not under selection? Can you hypothesize why Line 5 does not appear to follow HWE?
+> What mechanism(s) can explain the changing allele frequency in Line 5, which is *not* under selection? Can you hypothesize why Line 5 does not appear to follow HWE?
 
 <textarea rows="5" cols="75">
 Enter your hypothesis here.

@@ -93,7 +93,7 @@ Recall that the requirements for a population to be in Hardy-Weinberg Equilibriu
 4. No selection
 5. No mutation
 
-In reality, these condition are never strictly met. For example, it isn't possible to have an truly infinite population size. For each of the assumptions above, there is a mechanism which can cause the deviation from the predictions of Hardy-Weinberg Equilibrium: **evolution**:
+In reality, these conditions are never strictly met. For example, it isn't possible to have an truly infinite population size. For each of the assumptions above, there is a mechanism which can cause the deviation from the predictions of Hardy-Weinberg Equilibrium: **evolution**:
 
 1. Drift
 2. Non-random mating (e.g., inbreeding, sexual selection)
@@ -106,7 +106,7 @@ Because evolution is the *change in allele frequencies over time*, we will be tr
 
 ## Simulating evolution
 
-The figure below shows a very simple but very powerful model of the process of evolution. We provide the simulation a set of parameters, and these parameters are fed into the equations that govern population biology. This is called a *stochastic simulation* because the randomness that in and inherent part of nature is modeled as part of the process. 
+The figure below shows a very simple but very powerful model of the process of evolution. We provide the simulation a set of parameters, and these parameters are fed into the equations that govern population biology. This is called a *stochastic simulation* because the randomness ("stochasticity") that is an inherent part of nature is modeled as part of the process.
 
 Given an initial allele frequency (in this case 0.5), 20 independent populations are allowed to evolve for 100 generations. Among the possible parameters we can set for these populations are:
 
@@ -142,7 +142,7 @@ Simulate_Population(
   Mutation_BA = 0)
 ```
 
-Each line represents a single population that starts at generation 0. For each population it begins with a set number of individuals. Each generation, some reproduce and some do not depending on their fitness, and there can be migration or mutation. At each generation the frequency of one allele is calculated.
+Each line represents a single population that starts at generation 0. For each population the population begins with a set number of individuals and allele frequency. Each generation, some individuals reproduce and, depending on their fitness, some do not. We also can simulate migration and/or mutation. At each generation the frequency of one allele is calculated. This process is repeated for each population.
 
 There are a few things that we can note from just this one set of populations:
 
@@ -150,16 +150,18 @@ There are a few things that we can note from just this one set of populations:
 - Evolution is occurring in the populations. We know this because the allele frequencies are changing across generations.
 - In this case, evolution is occurring without migration or mutation, and with equal fitness across all genotypes.
 - In some populations, the frequency goes up and in some it goes down.
-- In one population, the allele is lost completely at about generation 80. After this generation, all individuals will have the *B* allele.
+- In one population, the *A* allele is lost completely at about generation 80. After this generation, all individuals will have the *B* allele.
 
 We will use this simulation framework to explore the effects of different factors on the process of evolution. There are many different combinations of each of these parameters, so we will only change one or two at a time, holding everything else constant.
 
 
 ## Effect of Population Size
 
-For the first set of simulations, we will explore the role of population size in allele frequency change. Below the population size is set to 10 (`Population_Size = 10`). Run the simulation a few times and observe the patterns.
+For the first set of simulations, we will explore the role of population size in allele frequency change. Below, the population size is set to 10 (`Population_Size = 10`). Run the simulation a few times and observe the patterns.
 
-Now gradually increase the population size, rerunning the simulation a few times for each population size. Try to keep the population size under 100000 or the simulations will run very slowly.
+Now gradually increase the population size, rerunning the simulation a few times for each population size. Try to keep the population size under 100,000 or the simulations will run very slowly. 
+
+Remember that you can't use commas in the code, so 100,000 is `100000`.
 
 ```{webr-r}
 #| fig-height: 4
@@ -168,29 +170,29 @@ Simulate_Population(
 )
 ```
 
-> What do you observe about allele frequencies the populations as you increase population size from 10 to 100, 500, 1000, ..., etc. up to 100,000? How is a population size of 10 different from 100,000?
+> What do you observe about allele frequencies in the populations as you increase population size from 10 to 100, 500, 1,000, ..., etc. up to 100,000? How is a population size of 10 different from 100,000?
 
 <textarea rows="7" cols="75">
 
 </textarea>
 
-> What do you predict would happen to the allele frequencies if you kept increasing population size to infinity?
+> How do you think the allele frequencies would change if you kept increasing population size to infinity?
 
 <textarea rows="7" cols="75">
 
 </textarea>
 
 
-> What do you predict would happen to the allele frequencies if you allowed the simulation to run for more generations at very small (~10-20), intermediate (~1000-2000), and large (50000-100000) population sizes?
+> How do you predict the allele frequencies would change if you allowed the simulation to run for more generations at very small (~10-20), intermediate (~1,000-2,000), and large (50,000-100,000) population sizes?
 
 <textarea rows="7" cols="75">
 
 </textarea>
 
-Run those simulations using the code block below:
+Run these simulations using the code block below:
 
 - Use one small, one intermediate, and one large population size that you choose.
-- For each gradually increase the number of generations from 100 to 1000. Avoid going over 1000 generations or the simulation will run very slowly.
+- For each gradually increase the number of generations from 100 to 1,000. Avoid going over 1,000 generations or the simulation will run very slowly.
 
 ```{webr-r}
 #| fig-height: 4
@@ -238,7 +240,7 @@ Simulate_Population(
 )
 ```
 
-> What conclusions can you draw about the role of migration changing allele frequencies across generations?
+> What conclusions can you draw about the role of migration in changing allele frequencies across generations?
 
 <textarea rows="7" cols="75">
 
@@ -262,7 +264,7 @@ Simulate_Population(
 )
 ```
 
-> What pattern of allele frequency change to do observe in the populations?
+> What pattern of allele frequency change do you observe in the populations?
 
 <textarea rows="7" cols="75">
 
@@ -281,7 +283,7 @@ Simulate_Population(
 )
 ```
 
-> What pattern of allele frequency change to do observe in the populations? How does this pattern differ from the one above? What do these results tell you about the ability of deleterious alleles to persist in populations?
+> What pattern of allele frequency change do you observe in the populations? How does this pattern differ from the one above? What do these results tell you about the ability of deleterious alleles to persist in populations?
 
 <textarea rows="7" cols="75">
 
@@ -301,7 +303,7 @@ Simulate_Population(
 )
 ```
 
-> What pattern of allele frequency change to do observe in the populations? Can you think of a biological explanation for this set of parameter values?
+> What pattern of allele frequency change do you observe in the populations? Can you think of a biological explanation for this set of parameter values?
 
 <textarea rows="7" cols="75">
 
@@ -322,13 +324,13 @@ Simulate_Population(
 )
 ```
 
-> What pattern of allele frequency change to do observe in the populations? What do you hypothesize is going on in the populations?
+> What pattern of allele frequency change do you observe in the populations? What do you hypothesize is going on in the populations?
 
 <textarea rows="7" cols="75">
 
 </textarea>
 
-Use the code block below to try and find a set of values for the mutation parameters that will lead to allele frequencies that do not go to fixation (either 0 or 1).
+Use the code block below to try to find a set of values for the mutation parameters that will lead to allele frequencies that do not go to fixation (either 0 or 1).
  
 ```{webr-r}
 Simulate_Population(
