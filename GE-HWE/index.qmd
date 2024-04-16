@@ -106,7 +106,7 @@ There are many processes that can lead to deviations from Hardy-Weinberg Equilib
 
 > For each of the conditions above, (1) give an example of a process that would lead to a deviation from HWE, and (2) predict whether that process would lead to *increased* or *decreased* genetic variation in the subsequent generation.
 
-<textarea rows="7" cols="75">
+<textarea rows="15" cols="75">
 
 </textarea>
 
