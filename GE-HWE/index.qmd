@@ -104,7 +104,7 @@ HWE allows us to predict genotype (and thus phenotype) frequencies under a speci
 
 There are many processes that can lead to deviations from Hardy-Weinberg Equilibrium.
 
-> For each of the conditions above, (1) give an example of a process that would lead to a deviation from HWE, and (2) predict whether that process would lead to *increased* or *decreased* genetic variation in the subsequent generation.
+> For each of the conditions above, (1) give an example of a process that would lead to a deviation from HWE, and (2) predict whether that process would lead to *increased* or *decreased* genetic variation within a single population in the subsequent generation.
 
 <textarea rows="15" cols="75">
 
@@ -114,7 +114,7 @@ There are many processes that can lead to deviations from Hardy-Weinberg Equilib
 Evolutionary biologists are often interested in determining if a population is in Hardy-Weinberg Equilibrium. If a population is found to be violating HWE, then it suggests that one of the processes listed above is happening in that population.
 
 
-## Evolution of single genes
+## Evolution of single alleles
 
 The first phenotypes that you learned about, as well as those described in the first set of exercises (<a href="./TGI" target="_blank">Transmission of Genetic Information</a>), were Mendelian traits. In Mendelian traits, a single gene is responsible for a single trait. In this context, you also learned about dominant and recessive alleles (and their variations), which lead to different observable phenotypes.
 
