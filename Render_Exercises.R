@@ -1,5 +1,6 @@
-
-exs <- c("QT/index.qmd",
+exs <- c("GE-HWE/index.qmd",
+         "GE-ME/index.qmd",
+         "QT/index.qmd",
          "QT-Case-Study/index.qmd",
          "TGI/index.qmd",
          "TGI-Case-Study/index.qmd")
