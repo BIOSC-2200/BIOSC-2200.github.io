@@ -167,3 +167,4 @@ biomass_plot <- function() {
     labs(x = "Above Ground Biomass (mg)", y = "Percentage of Plants") +
     mytheme
 }
+
