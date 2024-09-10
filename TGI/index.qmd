@@ -9,6 +9,7 @@ format:
     self-contained: true
     css: ../custom.css
     link-external-newwindow: true
+    theme: cerulean
 webr: 
   packages: ["ggplot2", "dplyr", "forcats", "tibble"]
 filters: 
