@@ -6,6 +6,7 @@ exs <- c("GE-HWE/index.qmd",
          "TGI-Case-Study/index.qmd")
 
 for (ex in exs) {
+  message("Rendering ", ex)
   syscall <- paste0("quarto render ", ex, " --to html")
   system(syscall)
 }

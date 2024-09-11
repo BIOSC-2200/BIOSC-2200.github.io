@@ -31,3 +31,61 @@
 textarea {
   resize: both;
 }
+
+@media print {
+  /* General print styles */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  /* Ensure page breaks don't occur within elements */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  img, table, figure {
+    page-break-inside: avoid;
+  }
+
+  /* Add page breaks before major sections */
+  /* h1, h2 {
+    page-break-before: always;
+  } */
+
+  /* Adjust margins for printing */
+  @page {
+    margin: 2cm;
+  }
+
+  /* Hide unnecessary elements */
+  nav, .no-print {
+    display: none;
+  }
+
+  /* Ensure links are readable in print */
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /* Show URL after links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 80%;
+  }
+
+  /* Adjust code blocks for printing */
+  pre, code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Ensure proper rendering of MathJax equations */
+  .MathJax {
+    page-break-inside: avoid;
+  }
+}
