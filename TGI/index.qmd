@@ -2,6 +2,8 @@
 title: "Transmission of Genetic Information"
 engine: knitr
 format: 
+  docx:
+    reference-doc: ../word-styles-reference-01.docx
   html: 
     toc: true
     toc-depth: 3
@@ -218,7 +220,7 @@ If a large number of people have their blood typed, the proportions of people wi
 
 ### Combining probabilities
 
-Because of independent assortment, each of the 8 possible ABO types + Rh factor are independent of each other, which is to say that no one person can have multiple blood types. We can use the rules of addition to determine the probability that a randomly selected individual has a certain blood type. The first few are provided for you. See if you can figure out the rest (here we are just using R as a calculator).
+Because of independent assortment, each of the 8 possible ABO types + Rh factor is independent of each other, which is to say that no one person can have multiple blood types. We can use the rules of addition to determine the probability that a randomly selected individual has a certain blood type. The first few are provided for you. See if you can figure out the rest (here we are just using R as a calculator).
 
 Type O blood
 
