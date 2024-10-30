@@ -2,6 +2,8 @@
 title: "Case study: Investigating a newly discovered muscle mutation in mice"
 engine: knitr
 format: 
+  docx:
+    reference-doc: ../Key_style.docx
   html: 
     toc: true
     toc-depth: 3

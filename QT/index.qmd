@@ -2,6 +2,8 @@
 title: "Quantitative Traits"
 engine: knitr
 format: 
+  docx:
+    reference-doc: ../Key_style.docx
   html: 
     toc: true
     toc-depth: 3
@@ -156,7 +158,7 @@ choose(n = 2, k = 1) # Dd or dD
 choose(n = 2, k = 2) # DD
 ```
 
-Feel free to change the values for `n` (the number of alleles) and `k` (the number of D alleles) and try out some additional combinations. In general, `n` should greater than or equal to `k`, or you will have zero ways to get a particular combination^[As a side note, the binomial coefficient calculation is also used to calculate probabilities for lotteries (the Powerball odds of winning is 1 in `choose(69, 5) * choose(26, 1)`) and for poker hands (the odds of a royal flush in 5-card draw is 4 in `choose(52, 5)` or equivalently one in `choose(52, 5) / 4`), among other games of chance. In fact, much of the basics of probability were originally developed in the 17^th^ and 18^th^ centuries to try to understand (and cheat at) various forms of gambling.]
+Feel free to change the values for `n` (the number of alleles) and `k` (the number of D alleles) and try out some additional combinations. In general, `n` should greater than or equal to `k`, or you will have zero ways to get a particular combination.^[As a side note, the binomial coefficient calculation is also used to calculate probabilities for lotteries (the Powerball odds of winning is 1 in `choose(69, 5) * choose(26, 1)`) and for poker hands (the odds of a royal flush in 5-card draw is 4 in `choose(52, 5)` or equivalently one in `choose(52, 5) / 4`), among other games of chance. In fact, much of the basics of probability were originally developed in the 17^th^ and 18^th^ centuries to try to understand (and cheat at) various forms of gambling.]
 
 
 ### From coin flips to independent alleles
@@ -235,7 +237,7 @@ genotypes_plot(n_genes = 4)
 
 Return to the code block above and continue increasing the number of genes: 5, 6, 7, 8, 10, 15, 20, 50, 100, 200, 300^[With more than 500 there are more combinations than the computer can keep track of (about 10^308^), so the plot has a maximum of 500.]. Run the code each time to regenerate the plot.
 
-> What happens to the number of combination as the number of genes increases?
+> What happens to the number of combinations as the number of genes increases?
 
 <textarea rows="2" cols="75">
 

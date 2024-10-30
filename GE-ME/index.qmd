@@ -2,6 +2,8 @@
 title: "Genetics of Evolution - Mechanisms"
 engine: knitr
 format: 
+  docx:
+    reference-doc: ../Key_style.docx
   html: 
     toc: true
     toc-depth: 3
@@ -291,7 +293,7 @@ Simulate_Population(
 </textarea>
 
 
-Finally we change the population size back to 100, the fitness of the *AB* genotype back to 1, and both the *AA* and the *BB* genotype to 0.9. 
+Finally, we change the population size back to 100, the fitness of the *AB* genotype back to 1, and both the *AA* and the *BB* genotype to 0.9. 
 
 ```{webr-r}
 Simulate_Population(

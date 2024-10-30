@@ -3,7 +3,7 @@ title: "Transmission of Genetic Information"
 engine: knitr
 format: 
   docx:
-    reference-doc: ../word-styles-reference-01.docx
+    reference-doc: ../Key_style.docx
   html: 
     toc: true
     toc-depth: 3

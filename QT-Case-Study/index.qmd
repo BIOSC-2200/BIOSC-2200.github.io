@@ -2,6 +2,8 @@
 title: "Case study: The distribution of human height"
 engine: knitr
 format: 
+  docx:
+    reference-doc: ../Key_style.docx
   html: 
     toc: true
     toc-depth: 3
@@ -163,7 +165,7 @@ Our simulated set of plant biomasses reveals a major limitation of our approach:
 
 The answers lie in the assumptions that we made at the start. In a simple simulation experiment like this, we have to make simplifying assumptions that are often not realistic in real biological systems. We could, however, make our model complex to better approximate the natural world.^[Such simulation models with increasing levels of complexity are quite common in the field of genetics.] 
 
-Let's explore set of data to begin to see how biologists study quantitative traits in the real world.
+Let's explore a set of data to begin to see how biologists study quantitative traits in the real world.
 
 
 ## Case study: the distribution of human height

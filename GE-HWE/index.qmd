@@ -2,6 +2,8 @@
 title: "Genetics of Evolution - Hardy-Weinberg Equilibrium"
 engine: knitr
 format: 
+  docx:
+    reference-doc: ../Key_style.docx
   html: 
     toc: true
     toc-depth: 3
@@ -332,7 +334,7 @@ chisq.test(Counts$Observed, p = Counts$Expected, rescale.p = TRUE)
 
 The `Observed` column is the observed counts of each genotype. The `Expected` column is the expected counts of each genotype if the population is in HWE. `rescale.p = TRUE` tells the function that the supplied `Expected` values are in counts and not in probabilities.
 
-I, this case, the observed counts do not deviate from the expected counts (*P* = 0.97). This result makes sense because the counts only differ by 1 in 500.
+In this case, the observed counts do not deviate from the expected counts (*P* = 0.97). This result makes sense because the counts only differ by 1 in 500.
 
 
 ### Case Study: Testing for HWE in Small Muscle Phenotype Mice
